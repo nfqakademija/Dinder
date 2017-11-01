@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,9 +41,17 @@ class User extends BaseUser
      */
     private $location;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="user")
+     */
+    private $items;
+
     public function __construct()
     {
         parent::__construct();
+        $this->items = new ArrayCollection();
     }
 
     /**
@@ -50,7 +59,7 @@ class User extends BaseUser
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -74,7 +83,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getName()
+    public function getName(): string
     {
         return $this->name;
     }
@@ -98,7 +107,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getPhone()
+    public function getPhone(): string
     {
         return $this->phone;
     }
@@ -106,11 +115,11 @@ class User extends BaseUser
     /**
      * Set location
      *
-     * @param \AppBundle\Entity\Location $location
+     * @param Location $location
      *
      * @return User
      */
-    public function setLocation(\AppBundle\Entity\Location $location = null): User
+    public function setLocation(Location $location = null): User
     {
         $this->location = $location;
 
@@ -120,10 +129,20 @@ class User extends BaseUser
     /**
      * Get location
      *
-     * @return \AppBundle\Entity\Location
+     * @return Location
      */
-    public function getLocation()
+    public function getLocation(): Location
     {
         return $this->location;
+    }
+
+    /**
+     * Get items
+     *
+     * @return ArrayCollection
+     */
+    public function getItems(): ArrayCollection
+    {
+        return $this->items;
     }
 }

@@ -6,12 +6,12 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
- * Location
+ * Category
  *
- * @ORM\Table(name="location")
- * @ORM\Entity
+ * @ORM\Table(name="category")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\CategoryRepository")
  */
-class Location
+class Category
 {
     /**
      * @var int
@@ -32,12 +32,16 @@ class Location
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="User", mappedBy="location")
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="category")
      */
-    private $users;
+    private $items;
 
-    public function __construct() {
-        $this->users = new ArrayCollection();
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->items = new ArrayCollection();
     }
 
     /**
@@ -45,7 +49,7 @@ class Location
      *
      * @return int
      */
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -55,9 +59,9 @@ class Location
      *
      * @param string $title
      *
-     * @return Location
+     * @return Category
      */
-    public function setTitle(string $title): Location
+    public function setTitle(string $title): Category
     {
         $this->title = $title;
 
@@ -72,6 +76,16 @@ class Location
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * Get items
+     *
+     * @return ArrayCollection
+     */
+    public function getItems(): ArrayCollection
+    {
+        return $this->items;
     }
 }
 
