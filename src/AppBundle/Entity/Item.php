@@ -22,7 +22,7 @@ class Item
     private $id;
 
     /**
-     * @var mixed
+     * @var User
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="items")
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
@@ -44,7 +44,7 @@ class Item
     private $value;
 
     /**
-     * @var mixed
+     * @var Category
      *
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="items")
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
@@ -85,7 +85,7 @@ class Item
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -93,11 +93,11 @@ class Item
     /**
      * Set user
      *
-     * @param mixed $user
+     * @param User $user
      *
      * @return Item
      */
-    public function setUser($user)
+    public function setUser(User $user): Item
     {
         $this->user = $user;
 
@@ -107,9 +107,9 @@ class Item
     /**
      * Get user
      *
-     * @return mixed
+     * @return User
      */
-    public function getUser()
+    public function getUser(): User
     {
         return $this->user;
     }
@@ -121,7 +121,7 @@ class Item
      *
      * @return Item
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Item
     {
         $this->title = $title;
 
@@ -133,7 +133,7 @@ class Item
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
@@ -141,11 +141,11 @@ class Item
     /**
      * Set value
      *
-     * @param integer $value
+     * @param int $value
      *
      * @return Item
      */
-    public function setValue($value)
+    public function setValue(int $value): Item
     {
         $this->value = $value;
 
@@ -157,7 +157,7 @@ class Item
      *
      * @return int
      */
-    public function getValue()
+    public function getValue(): int
     {
         return $this->value;
     }
@@ -165,11 +165,11 @@ class Item
     /**
      * Set category
      *
-     * @param mixed $category
+     * @param Category $category
      *
      * @return Item
      */
-    public function setCategory($category)
+    public function setCategory(Category $category): Item
     {
         $this->category = $category;
 
@@ -179,9 +179,9 @@ class Item
     /**
      * Get category
      *
-     * @return mixed
+     * @return Category
      */
-    public function getCategory()
+    public function getCategory(): Category
     {
         return $this->category;
     }
@@ -189,11 +189,11 @@ class Item
     /**
      * Set approvals
      *
-     * @param integer $approvals
+     * @param int $approvals
      *
      * @return Item
      */
-    public function setApprovals($approvals)
+    public function setApprovals(int $approvals): Item
     {
         $this->approvals = $approvals;
 
@@ -205,7 +205,7 @@ class Item
      *
      * @return int
      */
-    public function getApprovals()
+    public function getApprovals(): int
     {
         return $this->approvals;
     }
@@ -213,11 +213,11 @@ class Item
     /**
      * Set rejections
      *
-     * @param integer $rejections
+     * @param int $rejections
      *
      * @return Item
      */
-    public function setRejections($rejections)
+    public function setRejections(int $rejections): Item
     {
         $this->rejections = $rejections;
 
@@ -229,7 +229,7 @@ class Item
      *
      * @return int
      */
-    public function getRejections()
+    public function getRejections(): int
     {
         return $this->rejections;
     }
@@ -241,7 +241,7 @@ class Item
      *
      * @return Item
      */
-    public function setCreated($created)
+    public function setCreated(\DateTime $created): Item
     {
         $this->created = $created;
 
@@ -253,7 +253,7 @@ class Item
      *
      * @return \DateTime
      */
-    public function getCreated()
+    public function getCreated(): \DateTime
     {
         return $this->created;
     }
@@ -265,7 +265,7 @@ class Item
      *
      * @return Item
      */
-    public function setExpires($expires)
+    public function setExpires(\DateTime $expires): Item
     {
         $this->expires = $expires;
 
@@ -277,7 +277,7 @@ class Item
      *
      * @return \DateTime
      */
-    public function getExpires()
+    public function getExpires(): \DateTime
     {
         return $this->expires;
     }

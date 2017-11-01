@@ -30,7 +30,7 @@ class Category
     private $title;
 
     /**
-     * @var mixed
+     * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Item", mappedBy="category")
      */
@@ -49,7 +49,7 @@ class Category
      *
      * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -61,7 +61,7 @@ class Category
      *
      * @return Category
      */
-    public function setTitle($title)
+    public function setTitle(string $title): Category
     {
         $this->title = $title;
 
@@ -73,25 +73,17 @@ class Category
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection
      */
-    public function getItems()
+    public function getItems(): ArrayCollection
     {
         return $this->items;
-    }
-
-    /**
-     * @param mixed $items
-     */
-    public function setItems($items)
-    {
-        $this->items = $items;
     }
 }
 
