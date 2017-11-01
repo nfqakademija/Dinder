@@ -4,7 +4,7 @@
 parameters:
     database_host:     mariadb
     database_port:     ~
-    database_name:     akademija
+    database_name:     dinder
     database_user:     root
     database_password: root
     # You should uncomment this if you want use pdo_sqlite
@@ -12,8 +12,8 @@ parameters:
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
-    mailer_user:       ~
-    mailer_password:   ~
+    mailer_user:       root
+    mailer_password:   root
 
     # A secret key that's used to generate certain security-related tokens
     secret:            SuperSecretAcademyHashKeyDoNotTellAnyone
