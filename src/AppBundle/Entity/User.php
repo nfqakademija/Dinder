@@ -34,6 +34,12 @@ class User extends BaseUser
      */
     private $phone;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="Location", inversedBy="users")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id")
+     */
+    private $location;
+
     public function __construct()
     {
         parent::__construct();
@@ -42,7 +48,7 @@ class User extends BaseUser
     /**
      * Get id
      *
-     * @return integer
+     * @return int
      */
     public function getId()
     {
@@ -95,5 +101,29 @@ class User extends BaseUser
     public function getPhone()
     {
         return $this->phone;
+    }
+
+    /**
+     * Set location
+     *
+     * @param \AppBundle\Entity\Location $location
+     *
+     * @return User
+     */
+    public function setLocation(\AppBundle\Entity\Location $location = null): User
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    /**
+     * Get location
+     *
+     * @return \AppBundle\Entity\Location
+     */
+    public function getLocation()
+    {
+        return $this->location;
     }
 }
