@@ -30,6 +30,8 @@ class Location
     private $title;
 
     /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="User", mappedBy="location")
      */
     private $users;
@@ -43,7 +45,7 @@ class Location
      *
      * @return int
      */
-    public function getId()
+    public function getId():int
     {
         return $this->id;
     }
@@ -67,7 +69,7 @@ class Location
      *
      * @return string
      */
-    public function getTitle()
+    public function getTitle(): string
     {
         return $this->title;
     }

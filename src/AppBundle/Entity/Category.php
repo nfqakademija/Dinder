@@ -79,6 +79,8 @@ class Category
     }
 
     /**
+     * Get items
+     *
      * @return ArrayCollection
      */
     public function getItems(): ArrayCollection
