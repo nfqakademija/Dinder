@@ -12,6 +12,8 @@ use Doctrine\ORM\Mapping as ORM;
 class User extends BaseUser
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
@@ -19,11 +21,15 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="text", nullable=true)
      */
     private $phone;
@@ -50,7 +56,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setName($name)
+    public function setName(string $name): User
     {
         $this->name = $name;
 
@@ -74,7 +80,7 @@ class User extends BaseUser
      *
      * @return User
      */
-    public function setPhone($phone)
+    public function setPhone(string $phone): User
     {
         $this->phone = $phone;
 
