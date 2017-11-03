@@ -3,6 +3,11 @@
 parameters:
 
 services:
-#    app.example:
-#        class: AppBundle\Service\ExampleService
-#        arguments: ["@doctrine.orm.entity_manager"]
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    AppBundle\:
+        resource: '../../src/AppBundle/*'
+        exclude: '../../src/AppBundle/{Entity,Repository}'
