@@ -1,0 +1,5 @@
+AppBundle\Entity\Location:
+    location_1:
+        title: Vilnius
+    location_2:
+        title: Kaunas

@@ -84,6 +84,9 @@ doctrine_migrations:
     name: Application Migrations
     organize_migrations: false
 
+hautelook_alice:
+    fixtures_path: 'Resources/fixtures'
+
 vich_uploader:
     db_driver: orm
     mappings:
