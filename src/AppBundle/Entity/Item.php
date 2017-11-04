@@ -52,6 +52,13 @@ class Item
     private $category;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="item")
+     */
+    private $images;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="approvals", type="integer")
@@ -78,6 +85,14 @@ class Item
      * @ORM\Column(name="expires", type="datetime")
      */
     private $expires;
+
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -183,6 +198,16 @@ class Item
     public function getCategory(): Category
     {
         return $this->category;
+    }
+
+    /**
+     * Get images
+     *
+     * @return ArrayCollection
+     */
+    public function getImages(): ArrayCollection
+    {
+        return $this->images;
     }
 
     /**
