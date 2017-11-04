@@ -1,0 +1,19 @@
+AppBundle\Entity\User:
+    admin:
+        username: admin
+        plainPassword: admin
+        email: admin@dinder.com
+        roles: [ROLE_SUPER_ADMIN]
+        enabled: true
+        name: <name()>
+        phone: <phoneNumber()>
+        location: '@location_1'
+    user:
+        username: user
+        plainPassword: user
+        email: user@dinder.com
+        roles: [ROLE_USER]
+        enabled: true
+        name: <name()>
+        phone: <phoneNumber()>
+        location: '@location_2'

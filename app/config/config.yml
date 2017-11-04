@@ -83,3 +83,6 @@ doctrine_migrations:
     table_name: migration_versions
     name: Application Migrations
     organize_migrations: false
+
+hautelook_alice:
+    fixtures_path: 'Resources/fixtures'
