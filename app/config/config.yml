@@ -94,3 +94,22 @@ vich_uploader:
             uri_prefix:         /images/items
             upload_destination: '%kernel.root_dir%/../web/images/items'
             namer:              vich_uploader.namer_uniqid
+
+easy_admin:
+    entities:
+        User:
+            class: AppBundle\Entity\User
+            form:
+                fields:
+                    - username
+                    - email
+                    - enabled
+                    - lastLogin
+                    - { property: 'plainPassword', type: 'text', type_options: { required: false } }
+                    - { property: 'roles', type: 'choice', type_options: { multiple: true, choices: { 'ROLE_USER': 'ROLE_USER', 'ROLE_ADMIN': 'ROLE_ADMIN' } } }
+        Location:
+            class: AppBundle\Entity\Location
+        Item:
+            class: AppBundle\Entity\Item
+        Category:
+            class: AppBundle\Entity\Category
