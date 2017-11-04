@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Items list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Value</th>
+                <th>Approvals</th>
+                <th>Rejections</th>
+                <th>Created</th>
+                <th>Expires</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for item in items %}
+            <tr>
+                <td><a href="{{ path('item_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
+                <td>{{ item.title }}</td>
+                <td>{{ item.value }}</td>
+                <td>{{ item.approvals }}</td>
+                <td>{{ item.rejections }}</td>
+                <td>{% if item.created %}{{ item.created|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if item.expires %}{{ item.expires|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('item_show', { 'id': item.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('item_edit', { 'id': item.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('item_new') }}">Create a new item</a>
+        </li>
+    </ul>
+{% endblock %}

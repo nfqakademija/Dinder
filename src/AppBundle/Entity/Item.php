@@ -2,6 +2,7 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -123,7 +124,7 @@ class Item
      *
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -147,7 +148,7 @@ class Item
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -171,7 +172,7 @@ class Item
      *
      * @return int
      */
-    public function getValue(): int
+    public function getValue(): ?int
     {
         return $this->value;
     }
@@ -195,7 +196,7 @@ class Item
      *
      * @return Category
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
     }
@@ -229,7 +230,7 @@ class Item
      *
      * @return int
      */
-    public function getApprovals(): int
+    public function getApprovals(): ?int
     {
         return $this->approvals;
     }
@@ -253,7 +254,7 @@ class Item
      *
      * @return int
      */
-    public function getRejections(): int
+    public function getRejections(): ?int
     {
         return $this->rejections;
     }
@@ -277,7 +278,7 @@ class Item
      *
      * @return \DateTime
      */
-    public function getCreated(): \DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
@@ -301,7 +302,7 @@ class Item
      *
      * @return \DateTime
      */
-    public function getExpires(): \DateTime
+    public function getExpires(): ?\DateTime
     {
         return $this->expires;
     }
