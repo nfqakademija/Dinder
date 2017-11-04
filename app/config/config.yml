@@ -86,3 +86,11 @@ doctrine_migrations:
 
 hautelook_alice:
     fixtures_path: 'Resources/fixtures'
+
+vich_uploader:
+    db_driver: orm
+    mappings:
+        item_image:
+            uri_prefix:         /images/items
+            upload_destination: '%kernel.root_dir%/../web/images/items'
+            namer:              vich_uploader.namer_uniqid

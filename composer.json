@@ -25,7 +25,8 @@
         "twig/twig": "~2.0",
         "incenteev/composer-parameter-handler": "^2.0",
         "friendsofsymfony/user-bundle": "~2.0",
-        "doctrine/doctrine-migrations-bundle": "^1.0"
+        "doctrine/doctrine-migrations-bundle": "^1.0",
+        "vich/uploader-bundle": "^1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "*",
