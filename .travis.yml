@@ -11,6 +11,7 @@ before_script:
   - php bin/console doctrine:schema:drop --force
   - php bin/console doctrine:schema:create
   - php bin/console doctrine:schema:validate
+  - php bin/console hautelook:fixtures:load --no-interaction
 script:
   - vendor/bin/phpcs -p --standard=PSR2 --extensions=php ./src
 notifications:
