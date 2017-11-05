@@ -5,7 +5,9 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\Item;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Entity\Image;
 
 /**
  * Item controller.
@@ -41,6 +43,12 @@ class ItemController extends Controller
     public function newAction(Request $request)
     {
         $item = new Item();
+
+        // Adding one image to be main
+        $imageMain = new Image();
+        $imageMain->setMain(true);
+        $item->addImage($imageMain);
+
         $form = $this->createForm('AppBundle\Form\ItemType', $item);
         $form->handleRequest($request);
 
@@ -51,6 +59,8 @@ class ItemController extends Controller
             $item->setExpires(new \DateTime('+30 days'));
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $item->setUser($user);
+
+            //$item->addImage($image);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($item);
