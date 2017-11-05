@@ -24,7 +24,8 @@ class ItemController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $items = $em->getRepository('AppBundle:Item')->findAll();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $items = $em->getRepository('AppBundle:Item')->findByUser($user);
 
         return $this->render('item/index.html.twig', array(
             'items' => $items,
