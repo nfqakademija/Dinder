@@ -36,7 +36,8 @@ class Location
      */
     private $users;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->users = new ArrayCollection();
     }
 
@@ -74,4 +75,3 @@ class Location
         return $this->title;
     }
 }
-
