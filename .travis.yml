@@ -5,8 +5,14 @@ php:
 services:
   - mysql
 before_script:
-# Get the token from github and put it in travis repo under GITHUB_COMPOSER_AUTH ENV variable, then uncomment line below.
-#  - composer config -g github-oauth.github.com $GITHUB_COMPOSER_AUTH
+  - cp app/config/parameters.yml.dist app/config/parameters.yml
   - composer install --no-interaction --prefer-dist
+  - php bin/console doctrine:database:create
+  - php bin/console doctrine:schema:drop --force
+  - php bin/console doctrine:schema:create
+  - php bin/console doctrine:schema:validate
 script:
   - vendor/bin/phpcs -p --standard=PSR2 --extensions=php ./src
+notifications:
+  slack:
+    secure: DPXtSvgPdchCkZva7K9t8fDaHOX02mw/dK9Whj2k2LlPn75EgvwFg9ZigIZbC6cyMMvi0ZhyBgf1D8IMkEZisppV3d3uUuyKriBXl3DVn4i+zS0EZT9ry7H72BTOm6IMmEL7C2kmXmOEiHFkVhuXVAN+jC+YL03b2xDYSovZfmrREgF7JeSdjJXQ96L7eXzpCXtwg7sux7R3/UJ1R/vuh/FidUz/vDA76sbsvbOuqoNxn/QxA8yAD9X/jfmbDfcPE/mh9RrrnSGdbrxvy2fYg8BinEDpDIivNCNsab7V6jzLmkamH+YSXwu1npuQ/F/isMt0JjgzAPd3fITHq0Y8OUfLlqYZRaP7G0I65yUyqlzMEpOhULjey0+b4V1JGFRVZlp6b7pGcXoE7O+bSgqxmj/Q2acdhM2CHClLAtFE/T9mnvMrX/8Y3uctOtzPQtia2qFwcVMIx3LA1FsR5JohxrSXX4hbCrQLpXop/NZlJAntJNdDDtht6T2oEGvWZGIdl6/08sAoICEZwXxHOkV4u5rHuAzVo2q0GdM5Hbk7bfocYUXz5rbrEwbY5TtBOjWF2dNNarrsGNIxWyTIG1CNuJG4awRavfoZhKehtefSy0wQ71jEO5BibMkvQN67kExoMdd3zbsHlnFQAX+jRBt7puUjNaezs4SV7GhWjUPGNN0=
