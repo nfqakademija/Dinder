@@ -1,0 +1,10 @@
+AppBundle\Entity\Item:
+    item_{1..1000}:
+        user: '@user'
+        title: <word()>
+        value: <randomDigitNotNull()>
+        category: '@category_*'
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+        expires: <dateTimeBetween('-1 month')>
