@@ -44,6 +44,13 @@ class ItemController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $item->setApprovals(0);
+            $item->setRejections(0);
+            $item->setCreated(new \DateTime('now'));
+            $item->setExpires(new \DateTime('+30 days'));
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+            $item->setUser($user);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($item);
             $em->flush();
