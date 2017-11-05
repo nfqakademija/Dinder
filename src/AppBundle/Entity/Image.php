@@ -58,7 +58,7 @@ class Image
      *
      * @ORM\Column(name="main", type="boolean")
      */
-    private $main;
+    private $main = false;
 
     /**
      * @var \DateTime
@@ -109,7 +109,7 @@ class Image
      *
      * @return Image
      */
-    public function setName(string $name): Image
+    public function setName(string $name = null): Image
     {
         $this->name = $name;
 
@@ -133,7 +133,7 @@ class Image
      *
      * @return Image
      */
-    public function setSize(int $size): Image
+    public function setSize(int $size = null): Image
     {
         $this->size = $size;
 

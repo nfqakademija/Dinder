@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -55,7 +56,7 @@ class Item
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="item")
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"all"})
      */
     private $images;
 
@@ -204,9 +205,9 @@ class Item
     /**
      * Get images
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getImages(): ArrayCollection
+    public function getImages(): Collection
     {
         return $this->images;
     }
@@ -305,5 +306,27 @@ class Item
     public function getExpires(): ?\DateTime
     {
         return $this->expires;
+    }
+
+    /**
+     * Add image
+     *
+     * @param Image $image
+     */
+    public function addImage(Image $image)
+    {
+        $image->setItem($this);
+
+        $this->images->add($image);
+    }
+
+    /**
+     * Remove image
+     *
+     * @param Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
     }
 }
