@@ -8,6 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Entity\Image;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Item controller.
@@ -20,9 +23,12 @@ class ItemController extends Controller
      * Lists all item entities.
      *
      * @Route("/", name="item_index")
+     *
      * @Method("GET")
+     *
+     * @return Response
      */
-    public function indexAction()
+    public function indexAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
 
@@ -38,7 +44,12 @@ class ItemController extends Controller
      * Creates a new item entity.
      *
      * @Route("/new", name="item_new")
+     *
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     *
+     * @return RedirectResponse|Response
      */
     public function newAction(Request $request)
     {
@@ -59,9 +70,6 @@ class ItemController extends Controller
             $item->setExpires(new \DateTime('+30 days'));
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $item->setUser($user);
-
-            //$item->addImage($image);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($item);
             $em->flush();
@@ -79,9 +87,14 @@ class ItemController extends Controller
      * Finds and displays a item entity.
      *
      * @Route("/{id}", name="item_show")
+     *
      * @Method("GET")
+     *
+     * @param Item $item
+     *
+     * @return Response
      */
-    public function showAction(Item $item)
+    public function showAction(Item $item): Response
     {
         $deleteForm = $this->createDeleteForm($item);
 
@@ -95,7 +108,13 @@ class ItemController extends Controller
      * Displays a form to edit an existing item entity.
      *
      * @Route("/{id}/edit", name="item_edit")
+     *
      * @Method({"GET", "POST"})
+     *
+     * @param Request $request
+     * @param Item $item
+     *
+     * @return RedirectResponse|Response
      */
     public function editAction(Request $request, Item $item)
     {
@@ -120,9 +139,15 @@ class ItemController extends Controller
      * Deletes a item entity.
      *
      * @Route("/{id}", name="item_delete")
+     *
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Item $item
+     *
+     * @return RedirectResponse
      */
-    public function deleteAction(Request $request, Item $item)
+    public function deleteAction(Request $request, Item $item): RedirectResponse
     {
         $form = $this->createDeleteForm($item);
         $form->handleRequest($request);
@@ -139,11 +164,11 @@ class ItemController extends Controller
     /**
      * Creates a form to delete a item entity.
      *
-     * @param Item $item The item entity
+     * @param Item $item
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form
      */
-    private function createDeleteForm(Item $item)
+    private function createDeleteForm(Item $item): Form
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('item_delete', array('id' => $item->getId())))
