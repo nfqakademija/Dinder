@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Item creation</h1>
+
+    {{ form_start(form) }}
+
+    <h2>Images</h2>
+    <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
+        {% for image in form.images %}
+            {{ form_row(image.file) }}
+        {% endfor %}
+    </ul>
+
+    {{ form_rest(form) }}
+    <input type="submit" value="Create" />
+    {{ form_end(form) }}
+
+    <ul>
+        <li>
+            <a href="{{ path('item_index') }}">Back to the list</a>
+        </li>
+    </ul>
+{% endblock %}

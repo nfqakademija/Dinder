@@ -2,6 +2,8 @@
 
 namespace AppBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -52,6 +54,13 @@ class Item
     private $category;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"all"})
+     */
+    private $images;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="approvals", type="integer")
@@ -78,6 +87,14 @@ class Item
      * @ORM\Column(name="expires", type="datetime")
      */
     private $expires;
+
+    /**
+     * Category constructor.
+     */
+    public function __construct()
+    {
+        $this->images = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -108,7 +125,7 @@ class Item
      *
      * @return User
      */
-    public function getUser(): User
+    public function getUser(): ?User
     {
         return $this->user;
     }
@@ -132,7 +149,7 @@ class Item
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -156,7 +173,7 @@ class Item
      *
      * @return int
      */
-    public function getValue(): int
+    public function getValue(): ?int
     {
         return $this->value;
     }
@@ -180,9 +197,19 @@ class Item
      *
      * @return Category
      */
-    public function getCategory(): Category
+    public function getCategory(): ?Category
     {
         return $this->category;
+    }
+
+    /**
+     * Get images
+     *
+     * @return Collection
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
     }
 
     /**
@@ -204,7 +231,7 @@ class Item
      *
      * @return int
      */
-    public function getApprovals(): int
+    public function getApprovals(): ?int
     {
         return $this->approvals;
     }
@@ -228,7 +255,7 @@ class Item
      *
      * @return int
      */
-    public function getRejections(): int
+    public function getRejections(): ?int
     {
         return $this->rejections;
     }
@@ -252,7 +279,7 @@ class Item
      *
      * @return \DateTime
      */
-    public function getCreated(): \DateTime
+    public function getCreated(): ?\DateTime
     {
         return $this->created;
     }
@@ -276,8 +303,30 @@ class Item
      *
      * @return \DateTime
      */
-    public function getExpires(): \DateTime
+    public function getExpires(): ?\DateTime
     {
         return $this->expires;
+    }
+
+    /**
+     * Add image
+     *
+     * @param Image $image
+     */
+    public function addImage(Image $image)
+    {
+        $image->setItem($this);
+
+        $this->images->add($image);
+    }
+
+    /**
+     * Remove image
+     *
+     * @param Image $image
+     */
+    public function removeImage(Image $image)
+    {
+        $this->images->removeElement($image);
     }
 }

@@ -1,0 +1,7 @@
+AppBundle\Entity\Image:
+    image_{1..1000}:
+        item: '@item_*'
+        name: <imageUrl()>
+        size: <numberBetween()>
+        main: <boolean()>
+        created: <dateTime()>

@@ -25,6 +25,14 @@ class Image
     private $id;
 
     /**
+     * @var Item
+     *
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="images")
+     * @ORM\JoinColumn(name="item_id", referencedColumnName="id")
+     */
+    private $item;
+
+    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
@@ -50,7 +58,7 @@ class Image
      *
      * @ORM\Column(name="main", type="boolean")
      */
-    private $main;
+    private $main = false;
 
     /**
      * @var \DateTime
@@ -71,13 +79,37 @@ class Image
     }
 
     /**
+     * Set item
+     *
+     * @param Item $item
+     *
+     * @return Image
+     */
+    public function setItem(Item $item): Image
+    {
+        $this->item = $item;
+
+        return $this;
+    }
+
+    /**
+     * Get item
+     *
+     * @return Item
+     */
+    public function getItem(): Item
+    {
+        return $this->item;
+    }
+
+    /**
      * Set name
      *
      * @param string $name
      *
      * @return Image
      */
-    public function setName(string $name): Image
+    public function setName(string $name = null): Image
     {
         $this->name = $name;
 
@@ -101,7 +133,7 @@ class Image
      *
      * @return Image
      */
-    public function setSize(int $size): Image
+    public function setSize(int $size = null): Image
     {
         $this->size = $size;
 
