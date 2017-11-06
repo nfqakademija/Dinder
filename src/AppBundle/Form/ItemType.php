@@ -2,6 +2,7 @@
 
 namespace AppBundle\Form;
 
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,10 @@ class ItemType extends AbstractType
         $builder
             ->add('title')
             ->add('value')
-            ->add('category')
+            ->add('category', EntityType::class, array(
+                'class' => 'AppBundle\Entity\Category',
+                'choice_label' => 'title',
+            ))
             ->add('images', CollectionType::class, array(
                 'entry_type' => ImageType::class,
                 'entry_options' => array('label' => false),
