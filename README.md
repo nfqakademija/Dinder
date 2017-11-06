@@ -4,6 +4,7 @@ DINDER - Rejoice in Exchange
 =======
 
 [![Build Status](https://travis-ci.org/nfqakademija/Dinder.svg?branch=master)](https://travis-ci.org/nfqakademija/Dinder)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nfqakademija/Dinder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nfqakademija/Dinder/?branch=master)
 [![Symfony](https://img.shields.io/badge/Symfony-%203.x-green.svg "Supports Symfony 3.x")](https://symfony.com/)
 
 # Table of Contents
