@@ -97,27 +97,27 @@ class Category
     }
 
     /**
-     * Add itemsToMatch
+     * Add itemToMatch
      *
-     * @param Item $itemsToMatch
+     * @param Item $itemToMatch
      *
      * @return Category
      */
-    public function addItemsToMatch(Item $itemsToMatch): Category
+    public function addItemToMatch(Item $itemToMatch): Category
     {
-        $this->itemsToMatch[] = $itemsToMatch;
+        $this->itemsToMatch[] = $itemToMatch;
 
         return $this;
     }
 
     /**
-     * Remove itemsToMatch
+     * Remove itemToMatch
      *
-     * @param Item $itemsToMatch
+     * @param Item $itemToMatch
      */
-    public function removeItemsToMatch(Item $itemsToMatch): void
+    public function removeItemToMatch(Item $itemToMatch): void
     {
-        $this->itemsToMatch->removeElement($itemsToMatch);
+        $this->itemsToMatch->removeElement($itemToMatch);
     }
 
     /**

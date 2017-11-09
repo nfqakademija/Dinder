@@ -344,26 +344,26 @@ class Item
     /**
      * Add categoryToMatch
      *
-     * @param Category $categoriesToMatch
+     * @param Category $categoryToMatch
      *
      * @return Item
      */
-    public function addCategoryToMatch(Category $categoriesToMatch): Item
+    public function addCategoryToMatch(Category $categoryToMatch): Item
     {
-        $categoriesToMatch->addItemsToMatch($this);
-        $this->categoriesToMatch[] = $categoriesToMatch;
+        $categoryToMatch->addItemToMatch($this);
+        $this->categoriesToMatch[] = $categoryToMatch;
 
         return $this;
     }
 
     /**
-     * Remove category
+     * Remove categoryToMatch
      *
-     * @param Category $categoriesToMatch
+     * @param Category $categoryToMatch
      */
-    public function removeCategoryToMatch(Category $categoriesToMatch): void
+    public function removeCategoryToMatch(Category $categoryToMatch): void
     {
-        $this->categoriesToMatch->removeElement($categoriesToMatch);
+        $this->categoriesToMatch->removeElement($categoryToMatch);
     }
 
     /**

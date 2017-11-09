@@ -156,28 +156,28 @@ class User extends BaseUser
     }
 
     /**
-     * Add locationsToMatch
+     * Add locationToMatch
      *
-     * @param Location $locationsToMatch
+     * @param Location $locationToMatch
      *
      * @return User
      */
-    public function addLocationsToMatch(Location $locationsToMatch): User
+    public function addLocationToMatch(Location $locationToMatch): User
     {
-        $locationsToMatch->addUsersToMatch($this);
-        $this->locationsToMatch[] = $locationsToMatch;
+        $locationToMatch->addUserToMatch($this);
+        $this->locationsToMatch[] = $locationToMatch;
 
         return $this;
     }
 
     /**
-     * Remove locationsToMatch
+     * Remove locationToMatch
      *
-     * @param Location $locationsToMatch
+     * @param Location $locationToMatch
      */
-    public function removeLocationsToMatch(Location $locationsToMatch): void
+    public function removeLocationToMatch(Location $locationToMatch): void
     {
-        $this->locationsToMatch->removeElement($locationsToMatch);
+        $this->locationsToMatch->removeElement($locationToMatch);
     }
 
     /**

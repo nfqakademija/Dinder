@@ -84,27 +84,27 @@ class Location
     }
 
     /**
-     * Add usersToMatch
+     * Add userToMatch
      *
-     * @param User $usersToMatch
+     * @param User $userToMatch
      *
      * @return Location
      */
-    public function addUsersToMatch(User $usersToMatch): Location
+    public function addUserToMatch(User $userToMatch): Location
     {
-        $this->usersToMatch[] = $usersToMatch;
+        $this->usersToMatch[] = $userToMatch;
 
         return $this;
     }
 
     /**
-     * Remove usersToMatch
+     * Remove userToMatch
      *
-     * @param User $usersToMatch
+     * @param User $userToMatch
      */
-    public function removeUsersToMatch(User $usersToMatch): void
+    public function removeUserToMatch(User $userToMatch): void
     {
-        $this->usersToMatch->removeElement($usersToMatch);
+        $this->usersToMatch->removeElement($userToMatch);
     }
 
     /**
