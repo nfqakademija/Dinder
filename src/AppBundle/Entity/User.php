@@ -36,6 +36,8 @@ class User extends BaseUser
     private $phone;
 
     /**
+     * @var Location
+     *
      * @ORM\ManyToOne(targetEntity="Location", inversedBy="users")
      * @ORM\JoinColumn(name="location_id", referencedColumnName="id")
      */
@@ -48,10 +50,19 @@ class User extends BaseUser
      */
     private $items;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Location", inversedBy="usersToMatch")
+     * @ORM\JoinTable(name="users_locations")
+     */
+    private $locationsToMatch;
+
     public function __construct()
     {
         parent::__construct();
         $this->items = new ArrayCollection();
+        $this->locationsToMatch = new ArrayCollection();
     }
 
     /**
@@ -144,5 +155,40 @@ class User extends BaseUser
     public function getItems(): ArrayCollection
     {
         return $this->items;
+    }
+
+    /**
+     * Add locationToMatch
+     *
+     * @param Location $locationToMatch
+     *
+     * @return User
+     */
+    public function addLocationToMatch(Location $locationToMatch): User
+    {
+        $locationToMatch->addUserToMatch($this);
+        $this->locationsToMatch[] = $locationToMatch;
+
+        return $this;
+    }
+
+    /**
+     * Remove locationToMatch
+     *
+     * @param Location $locationToMatch
+     */
+    public function removeLocationToMatch(Location $locationToMatch): void
+    {
+        $this->locationsToMatch->removeElement($locationToMatch);
+    }
+
+    /**
+     * Get locations
+     *
+     * @return ArrayCollection
+     */
+    public function getLocationsToMatch(): ArrayCollection
+    {
+        return $this->locationsToMatch;
     }
 }

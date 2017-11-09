@@ -36,9 +36,17 @@ class Location
      */
     private $users;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="locationsToMatch")
+     */
+    private $usersToMatch;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->usersToMatch = new ArrayCollection();
     }
 
     /**
@@ -46,7 +54,7 @@ class Location
      *
      * @return int
      */
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -73,5 +81,39 @@ class Location
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * Add userToMatch
+     *
+     * @param User $userToMatch
+     *
+     * @return Location
+     */
+    public function addUserToMatch(User $userToMatch): Location
+    {
+        $this->usersToMatch[] = $userToMatch;
+
+        return $this;
+    }
+
+    /**
+     * Remove userToMatch
+     *
+     * @param User $userToMatch
+     */
+    public function removeUserToMatch(User $userToMatch): void
+    {
+        $this->usersToMatch->removeElement($userToMatch);
+    }
+
+    /**
+     * Get usersToMatch
+     *
+     * @return ArrayCollection
+     */
+    public function getUsersToMatch(): ArrayCollection
+    {
+        return $this->usersToMatch;
     }
 }
