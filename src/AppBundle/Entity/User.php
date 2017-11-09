@@ -164,6 +164,7 @@ class User extends BaseUser
      */
     public function addLocation(Location $location): User
     {
+        $location->addLocationsToFilter($this);
         $this->locations[] = $location;
 
         return $this;
