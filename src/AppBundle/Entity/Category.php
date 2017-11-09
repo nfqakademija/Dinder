@@ -39,7 +39,7 @@ class Category
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Item", mappedBy="categories")
+     * @ORM\ManyToMany(targetEntity="Item", mappedBy="categoriesToMatch")
      */
     private $itemsToMatch;
 

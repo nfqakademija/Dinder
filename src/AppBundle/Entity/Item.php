@@ -96,7 +96,7 @@ class Item
      * @ORM\ManyToMany(targetEntity="Category", inversedBy="itemsToMatch")
      * @ORM\JoinTable(name="items_categories")
      */
-    private $categories;
+    private $categoriesToMatch;
 
     /**
      * Category constructor.
@@ -104,7 +104,7 @@ class Item
     public function __construct()
     {
         $this->images = new ArrayCollection();
-        $this->categories = new ArrayCollection();
+        $this->categoriesToMatch = new ArrayCollection();
     }
 
     /**
@@ -342,16 +342,16 @@ class Item
     }
 
     /**
-     * Add category
+     * Add categoryToMatch
      *
-     * @param Category $category
+     * @param Category $categoriesToMatch
      *
      * @return Item
      */
-    public function addCategory(Category $category): Item
+    public function addCategoryToMatch(Category $categoriesToMatch): Item
     {
-        $category->addItemsToMatch($this);
-        $this->categories[] = $category;
+        $categoriesToMatch->addItemsToMatch($this);
+        $this->categoriesToMatch[] = $categoriesToMatch;
 
         return $this;
     }
@@ -359,20 +359,20 @@ class Item
     /**
      * Remove category
      *
-     * @param Category $category
+     * @param Category $categoriesToMatch
      */
-    public function removeCategory(Category $category): void
+    public function removeCategoryToMatch(Category $categoriesToMatch): void
     {
-        $this->categories->removeElement($category);
+        $this->categoriesToMatch->removeElement($categoriesToMatch);
     }
 
     /**
-     * Get categories
+     * Get categoriesToMatch
      *
      * @return ArrayCollection
      */
-    public function getCategories(): ?ArrayCollection
+    public function getCategoriesToMatch(): ?ArrayCollection
     {
-        return $this->categories;
+        return $this->categoriesToMatch;
     }
 }

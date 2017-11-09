@@ -39,14 +39,14 @@ class Location
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="User", mappedBy="locations")
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="locationsToMatch")
      */
-    private $locationsToFilter;
+    private $usersToMatch;
 
     public function __construct()
     {
         $this->users = new ArrayCollection();
-        $this->locationsToFilter = new ArrayCollection();
+        $this->usersToMatch = new ArrayCollection();
     }
 
     /**
@@ -84,36 +84,36 @@ class Location
     }
 
     /**
-     * Add locationsToFilter
+     * Add usersToMatch
      *
-     * @param User $locationsToFilter
+     * @param User $usersToMatch
      *
      * @return Location
      */
-    public function addLocationsToFilter(User $locationsToFilter): Location
+    public function addUsersToMatch(User $usersToMatch): Location
     {
-        $this->locationsToFilter[] = $locationsToFilter;
+        $this->usersToMatch[] = $usersToMatch;
 
         return $this;
     }
 
     /**
-     * Remove locationsToFilter
+     * Remove usersToMatch
      *
-     * @param User $locationsToFilter
+     * @param User $usersToMatch
      */
-    public function removeLocationsToFilter(User $locationsToFilter): void
+    public function removeUsersToMatch(User $usersToMatch): void
     {
-        $this->locationsToFilter->removeElement($locationsToFilter);
+        $this->usersToMatch->removeElement($usersToMatch);
     }
 
     /**
-     * Get locationsToFilter
+     * Get usersToMatch
      *
      * @return ArrayCollection
      */
-    public function getLocationsToFilter(): ArrayCollection
+    public function getUsersToMatch(): ArrayCollection
     {
-        return $this->locationsToFilter;
+        return $this->usersToMatch;
     }
 }

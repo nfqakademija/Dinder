@@ -51,16 +51,16 @@ class User extends BaseUser
     /**
      * @var ArrayCollection
      *
-     * @ORM\ManyToMany(targetEntity="Location", inversedBy="locationsToFilter")
+     * @ORM\ManyToMany(targetEntity="Location", inversedBy="usersToMatch")
      * @ORM\JoinTable(name="users_locations")
      */
-    private $locations;
+    private $locationsToMatch;
 
     public function __construct()
     {
         parent::__construct();
         $this->items = new ArrayCollection();
-        $this->locations = new ArrayCollection();
+        $this->locationsToMatch = new ArrayCollection();
     }
 
     /**
@@ -156,28 +156,28 @@ class User extends BaseUser
     }
 
     /**
-     * Add location
+     * Add locationsToMatch
      *
-     * @param Location $location
+     * @param Location $locationsToMatch
      *
      * @return User
      */
-    public function addLocation(Location $location): User
+    public function addLocationsToMatch(Location $locationsToMatch): User
     {
-        $location->addLocationsToFilter($this);
-        $this->locations[] = $location;
+        $locationsToMatch->addUsersToMatch($this);
+        $this->locationsToMatch[] = $locationsToMatch;
 
         return $this;
     }
 
     /**
-     * Remove location
+     * Remove locationsToMatch
      *
-     * @param Location $location
+     * @param Location $locationsToMatch
      */
-    public function removeLocation(Location $location): void
+    public function removeLocationsToMatch(Location $locationsToMatch): void
     {
-        $this->locations->removeElement($location);
+        $this->locationsToMatch->removeElement($locationsToMatch);
     }
 
     /**
@@ -185,8 +185,8 @@ class User extends BaseUser
      *
      * @return ArrayCollection
      */
-    public function getLocations(): ArrayCollection
+    public function getLocationsToMatch(): ArrayCollection
     {
-        return $this->locations;
+        return $this->locationsToMatch;
     }
 }
