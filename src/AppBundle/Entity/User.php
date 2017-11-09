@@ -36,6 +36,8 @@ class User extends BaseUser
     private $phone;
 
     /**
+     * @var Location
+     *
      * @ORM\ManyToOne(targetEntity="Location", inversedBy="users")
      * @ORM\JoinColumn(name="location_id", referencedColumnName="id")
      */
