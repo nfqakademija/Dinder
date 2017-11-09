@@ -89,11 +89,22 @@ class Item
     private $expires;
 
     /**
+     * Collection that holds the list of categories from which user prefers to find a match
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Category", inversedBy="itemsToMatch")
+     * @ORM\JoinTable(name="items_categories")
+     */
+    private $categories;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -313,7 +324,7 @@ class Item
      *
      * @param Image $image
      */
-    public function addImage(Image $image)
+    public function addImage(Image $image): void
     {
         $image->setItem($this);
 
@@ -325,8 +336,43 @@ class Item
      *
      * @param Image $image
      */
-    public function removeImage(Image $image)
+    public function removeImage(Image $image): void
     {
         $this->images->removeElement($image);
+    }
+
+    /**
+     * Add category
+     *
+     * @param Category $category
+     *
+     * @return Item
+     */
+    public function addCategory(Category $category): Item
+    {
+        $category->addItemsToMatch($this);
+        $this->categories[] = $category;
+
+        return $this;
+    }
+
+    /**
+     * Remove category
+     *
+     * @param Category $category
+     */
+    public function removeCategory(Category $category): void
+    {
+        $this->categories->removeElement($category);
+    }
+
+    /**
+     * Get categories
+     *
+     * @return ArrayCollection
+     */
+    public function getCategories(): ?ArrayCollection
+    {
+        return $this->categories;
     }
 }

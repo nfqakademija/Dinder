@@ -36,9 +36,17 @@ class Location
      */
     private $users;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="locations")
+     */
+    private $locationsToFilter;
+
     public function __construct()
     {
         $this->users = new ArrayCollection();
+        $this->locationsToFilter = new ArrayCollection();
     }
 
     /**
@@ -46,7 +54,7 @@ class Location
      *
      * @return int
      */
-    public function getId():int
+    public function getId(): int
     {
         return $this->id;
     }
@@ -73,5 +81,39 @@ class Location
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    /**
+     * Add locationsToFilter
+     *
+     * @param User $locationsToFilter
+     *
+     * @return Location
+     */
+    public function addLocationsToFilter(User $locationsToFilter): Location
+    {
+        $this->locationsToFilter[] = $locationsToFilter;
+
+        return $this;
+    }
+
+    /**
+     * Remove locationsToFilter
+     *
+     * @param User $locationsToFilter
+     */
+    public function removeLocationsToFilter(User $locationsToFilter): void
+    {
+        $this->locationsToFilter->removeElement($locationsToFilter);
+    }
+
+    /**
+     * Get locationsToFilter
+     *
+     * @return ArrayCollection
+     */
+    public function getLocationsToFilter(): ArrayCollection
+    {
+        return $this->locationsToFilter;
     }
 }

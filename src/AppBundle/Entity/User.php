@@ -48,10 +48,19 @@ class User extends BaseUser
      */
     private $items;
 
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Location", inversedBy="locationsToFilter")
+     * @ORM\JoinTable(name="users_locations")
+     */
+    private $locations;
+
     public function __construct()
     {
         parent::__construct();
         $this->items = new ArrayCollection();
+        $this->locations = new ArrayCollection();
     }
 
     /**
@@ -144,5 +153,39 @@ class User extends BaseUser
     public function getItems(): ArrayCollection
     {
         return $this->items;
+    }
+
+    /**
+     * Add location
+     *
+     * @param Location $location
+     *
+     * @return User
+     */
+    public function addLocation(Location $location): User
+    {
+        $this->locations[] = $location;
+
+        return $this;
+    }
+
+    /**
+     * Remove location
+     *
+     * @param Location $location
+     */
+    public function removeLocation(Location $location): void
+    {
+        $this->locations->removeElement($location);
+    }
+
+    /**
+     * Get locations
+     *
+     * @return ArrayCollection
+     */
+    public function getLocations(): ArrayCollection
+    {
+        return $this->locations;
     }
 }

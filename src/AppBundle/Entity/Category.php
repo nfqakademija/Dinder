@@ -37,11 +37,19 @@ class Category
     private $items;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\ManyToMany(targetEntity="Item", mappedBy="categories")
+     */
+    private $itemsToMatch;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->items = new ArrayCollection();
+        $this->itemsToMatch = new ArrayCollection();
     }
 
     /**
@@ -86,5 +94,39 @@ class Category
     public function getItems(): ArrayCollection
     {
         return $this->items;
+    }
+
+    /**
+     * Add itemsToMatch
+     *
+     * @param Item $itemsToMatch
+     *
+     * @return Category
+     */
+    public function addItemsToMatch(Item $itemsToMatch): Category
+    {
+        $this->itemsToMatch[] = $itemsToMatch;
+
+        return $this;
+    }
+
+    /**
+     * Remove itemsToMatch
+     *
+     * @param Item $itemsToMatch
+     */
+    public function removeItemsToMatch(Item $itemsToMatch): void
+    {
+        $this->itemsToMatch->removeElement($itemsToMatch);
+    }
+
+    /**
+     * Get itemsToMatch
+     *
+     * @return ArrayCollection
+     */
+    public function getItemsToMatch(): ArrayCollection
+    {
+        return $this->itemsToMatch;
     }
 }
