@@ -98,8 +98,16 @@ class ItemController extends Controller
     {
         $deleteForm = $this->createDeleteForm($item);
 
+        $itemsToMatch = $this
+            ->getDoctrine()
+            ->getRepository(Item::class)
+            ->findAvailableMatches($item, $this->getUser());
+
+        shuffle($itemsToMatch);
+
         return $this->render('item/show.html.twig', array(
             'item' => $item,
+            'items_to_match' => $itemsToMatch,
             'delete_form' => $deleteForm->createView(),
         ));
     }

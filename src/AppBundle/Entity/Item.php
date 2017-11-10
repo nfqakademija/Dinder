@@ -375,4 +375,20 @@ class Item
     {
         return $this->categoriesToMatch;
     }
+
+    /**
+     * Get categoriesToMatchArray
+     *
+     * @return array
+     */
+    public function getCategoriesToMatchArray(): array
+    {
+        $result = [];
+
+        foreach ($this->categoriesToMatch as $category) {
+            $result[] = $category->getId();
+        }
+
+        return $result;
+    }
 }
