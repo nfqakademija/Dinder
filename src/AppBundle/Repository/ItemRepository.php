@@ -28,7 +28,8 @@ class ItemRepository extends EntityRepository
                 'min_value' => $item->getValue() - 3,
                 'max_value' => $item->getValue() + 3,
                 'categories' => $item->getCategoriesToMatchArray(),
-            ]);
+            ])
+            ->orderBy('RAND()');
 
         return $qb->getQuery()->getResult();
     }
