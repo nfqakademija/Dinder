@@ -68,7 +68,7 @@ class ItemController extends Controller
             $item->setRejections(0);
             $item->setStatus(Item::STATUS_ACTIVE);
             $item->setCreated(new \DateTime('now'));
-            $item->setExpires(new \DateTime('+30 days'));
+            $item->setExpires(new \DateTime('+' . $this->getParameter('item_valid_days') . ' days'));
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $item->setUser($user);
             $em = $this->getDoctrine()->getManager();
@@ -102,7 +102,7 @@ class ItemController extends Controller
         $itemsToMatch = $this
             ->getDoctrine()
             ->getRepository(Item::class)
-            ->findAvailableMatches($item, $this->getUser(), $margin = 3, $limit = 5);
+            ->findAvailableMatches($item, $this->getUser(), $this->getParameter('item_match_margin'), $this->getParameter('item_match_limit'));
 
         return $this->render('item/show.html.twig', array(
             'item' => $item,

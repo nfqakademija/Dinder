@@ -110,18 +110,22 @@ class Item
     private $categoriesToMatch;
 
     /**
+     * Collection of matches which are proposed by this item
+     *
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Match", mappedBy="itemOwner")
      */
-    private $matchesOwn;
+    private $matchesOwnItem;
 
     /**
+     * Collection of matches which are proposed to this item
+     *
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="Match", mappedBy="itemRespondent")
      */
-    private $matchesResponse;
+    private $matchesResponseItem;
 
     /**
      * Category constructor.
@@ -130,8 +134,8 @@ class Item
     {
         $this->images = new ArrayCollection();
         $this->categoriesToMatch = new ArrayCollection();
-        $this->matchesOwn = new ArrayCollection();
-        $this->matchesResponse = new ArrayCollection();
+        $this->matchesOwnItem = new ArrayCollection();
+        $this->matchesResponseItem = new ArrayCollection();
     }
 
     /**
@@ -444,70 +448,70 @@ class Item
     }
 
     /**
-     * Add matchesOwn
+     * Add matchesOwnItem
      *
      * @param Match $match
      *
      * @return Item
      */
-    public function addMatchesOwn(Match $match): Item
+    public function addMatchesOwnItem(Match $match): Item
     {
-        $this->matchesOwn[] = $match;
+        $this->matchesOwnItem[] = $match;
 
         return $this;
     }
 
     /**
-     * Remove matchesOwn
+     * Remove matchesOwnItem
      *
      * @param Match $match
      */
-    public function removeMatchesOwn(Match $match): void
+    public function removeMatchesOwnItem(Match $match): void
     {
-        $this->matchesOwn->removeElement($match);
+        $this->matchesOwnItem->removeElement($match);
     }
 
     /**
-     * Get matchesOwn
+     * Get matchesOwnItem
      *
      * @return ArrayCollection
      */
-    public function getMatchesOwn(): ArrayCollection
+    public function getMatchesOwnItem(): ArrayCollection
     {
-        return $this->matchesOwn;
+        return $this->matchesOwnItem;
     }
 
     /**
-     * Add matchesResponse
+     * Add matchesResponseItem
      *
      * @param Match $match
      *
      * @return Item
      */
-    public function addMatchesResponse(Match $match): Item
+    public function addMatchesResponseItem(Match $match): Item
     {
-        $this->matchesResponse[] = $match;
+        $this->matchesResponseItem[] = $match;
 
         return $this;
     }
 
     /**
-     * Remove matchesResponse
+     * Remove matchesResponseItem
      *
      * @param Match $match
      */
-    public function removeMatchesResponse(Match $match): void
+    public function removeMatchesResponseItem(Match $match): void
     {
-        $this->matchesResponse->removeElement($match);
+        $this->matchesResponseItem->removeElement($match);
     }
 
     /**
-     * Get matchesResponse
+     * Get matchesResponseItem
      *
      * @return ArrayCollection
      */
-    public function getMatchesResponse(): ArrayCollection
+    public function getMatchesResponseItem(): ArrayCollection
     {
-        return $this->matchesResponse;
+        return $this->matchesResponseItem;
     }
 }

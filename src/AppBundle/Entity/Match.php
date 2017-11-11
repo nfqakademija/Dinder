@@ -34,7 +34,7 @@ class Match
     /**
      * @var Item
      *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesOwn")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesOwnItem")
      * @ORM\JoinColumn(name="item_owner_id", referencedColumnName="id")
      */
     private $itemOwner;
@@ -42,7 +42,7 @@ class Match
     /**
      * @var Item
      *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesResponse")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesResponseItem")
      * @ORM\JoinColumn(name="item_respondent_id", referencedColumnName="id")
      */
     private $itemRespondent;
