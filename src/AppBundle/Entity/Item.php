@@ -514,4 +514,23 @@ class Item
     {
         return $this->matchesResponseItem;
     }
+
+    /**
+     * Get main image
+     *
+     * @return Image
+     */
+    public function getMainImage(): ?Image
+    {
+        foreach ($this->images->getIterator() as $image) {
+            if ($image->getMain() === true) {
+                return $image;
+            }
+        }
+        if ($this->images->count()) {
+            return $this->images->first();
+        }
+
+        return null;
+    }
 }
