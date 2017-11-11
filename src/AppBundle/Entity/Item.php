@@ -110,12 +110,28 @@ class Item
     private $categoriesToMatch;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="item_owner")
+     */
+    private $matches_own;
+
+    /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="item_respondent")
+     */
+    private $matches_response;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->categoriesToMatch = new ArrayCollection();
+        $this->matches_own = new ArrayCollection();
+        $this->matches_response = new ArrayCollection();
     }
 
     /**
@@ -425,5 +441,73 @@ class Item
     public function getStatus(): int
     {
         return $this->status;
+    }
+
+    /**
+     * Add matchesOwn
+     *
+     * @param Match $match
+     *
+     * @return Item
+     */
+    public function addMatchesOwn(Match $match): Item
+    {
+        $this->matches_own[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove matchesOwn
+     *
+     * @param Match $match
+     */
+    public function removeMatchesOwn(Match $match): void
+    {
+        $this->matches_own->removeElement($match);
+    }
+
+    /**
+     * Get matchesOwn
+     *
+     * @return ArrayCollection
+     */
+    public function getMatchesOwn(): ArrayCollection
+    {
+        return $this->matches_own;
+    }
+
+    /**
+     * Add matchesResponse
+     *
+     * @param Match $match
+     *
+     * @return Item
+     */
+    public function addMatchesResponse(Match $match): Item
+    {
+        $this->matches_response[] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove matchesResponse
+     *
+     * @param Match $match
+     */
+    public function removeMatchesResponse(Match $match): void
+    {
+        $this->matches_response->removeElement($match);
+    }
+
+    /**
+     * Get matchesResponse
+     *
+     * @return ArrayCollection
+     */
+    public function getMatchesResponse(): ArrayCollection
+    {
+        return $this->matches_response;
     }
 }
