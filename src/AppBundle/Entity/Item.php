@@ -342,15 +342,15 @@ class Item
     }
 
     /**
-     * Add categoryToMatch
+     * Add categoriesToMatch
      *
      * @param Category $categoryToMatch
      *
      * @return Item
      */
-    public function addCategoryToMatch(Category $categoryToMatch): Item
+    public function addCategoriesToMatch(Category $categoryToMatch): Item
     {
-        $categoryToMatch->addItemToMatch($this);
+        $categoryToMatch->addItemsToMatch($this);
         $this->categoriesToMatch[] = $categoryToMatch;
 
         return $this;
@@ -361,7 +361,7 @@ class Item
      *
      * @param Category $categoryToMatch
      */
-    public function removeCategoryToMatch(Category $categoryToMatch): void
+    public function removeCategoriesToMatch(Category $categoryToMatch): void
     {
         $this->categoriesToMatch->removeElement($categoryToMatch);
     }

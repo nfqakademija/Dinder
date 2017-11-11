@@ -97,13 +97,13 @@ class Category
     }
 
     /**
-     * Add itemToMatch
+     * Add itemsToMatch
      *
      * @param Item $itemToMatch
      *
      * @return Category
      */
-    public function addItemToMatch(Item $itemToMatch): Category
+    public function addItemsToMatch(Item $itemToMatch): Category
     {
         $this->itemsToMatch[] = $itemToMatch;
 
@@ -115,7 +115,7 @@ class Category
      *
      * @param Item $itemToMatch
      */
-    public function removeItemToMatch(Item $itemToMatch): void
+    public function removeItemsToMatch(Item $itemToMatch): void
     {
         $this->itemsToMatch->removeElement($itemToMatch);
     }

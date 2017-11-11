@@ -84,13 +84,13 @@ class Location
     }
 
     /**
-     * Add userToMatch
+     * Add usersToMatch
      *
      * @param User $userToMatch
      *
      * @return Location
      */
-    public function addUserToMatch(User $userToMatch): Location
+    public function addUsersToMatch(User $userToMatch): Location
     {
         $this->usersToMatch[] = $userToMatch;
 
@@ -98,11 +98,11 @@ class Location
     }
 
     /**
-     * Remove userToMatch
+     * Remove usersToMatch
      *
      * @param User $userToMatch
      */
-    public function removeUserToMatch(User $userToMatch): void
+    public function removeUsersToMatch(User $userToMatch): void
     {
         $this->usersToMatch->removeElement($userToMatch);
     }

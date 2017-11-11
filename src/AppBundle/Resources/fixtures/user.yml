@@ -7,8 +7,8 @@ AppBundle\Entity\User:
         enabled: true
         name: <name()>
         phone: <phoneNumber()>
-        location: '@location_1'
-    user:
+        location: '@location_*'
+    user_1:
         username: user
         plainPassword: user
         email: user@dinder.com
@@ -16,4 +16,13 @@ AppBundle\Entity\User:
         enabled: true
         name: <name()>
         phone: <phoneNumber()>
-        location: '@location_2'
+        location: '@location_*'
+    user_{2..100}:
+        username: <safeEmail()>
+        plainPassword: user
+        email: <safeEmail()>
+        roles: [ROLE_USER]
+        enabled: true
+        name: <name()>
+        phone: <phoneNumber()>
+        location: '@location_*'

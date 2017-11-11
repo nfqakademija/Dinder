@@ -1,5 +1,3 @@
 AppBundle\Entity\Location:
-    location_1:
-        title: Vilnius
-    location_2:
-        title: Kaunas
+    location_{1..10}:
+        title: <word()>
