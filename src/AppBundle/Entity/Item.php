@@ -382,7 +382,7 @@ class Item
     public function addCategoriesToMatch(Category $categoryToMatch): Item
     {
         $categoryToMatch->addItemsToMatch($this);
-        $this->categoriesToMatch[] = $categoryToMatch;
+        $this->categoriesToMatch[ ] = $categoryToMatch;
 
         return $this;
     }
@@ -414,10 +414,10 @@ class Item
      */
     public function getCategoriesToMatchArray(): array
     {
-        $result = [];
+        $result = [ ];
 
         foreach ($this->categoriesToMatch as $category) {
-            $result[] = $category->getId();
+            $result[ ] = $category->getId();
         }
 
         return $result;
@@ -456,7 +456,7 @@ class Item
      */
     public function addMatchesOwnItem(Match $match): Item
     {
-        $this->matchesOwnItem[] = $match;
+        $this->matchesOwnItem[ ] = $match;
 
         return $this;
     }
@@ -490,7 +490,7 @@ class Item
      */
     public function addMatchesResponseItem(Match $match): Item
     {
-        $this->matchesResponseItem[] = $match;
+        $this->matchesResponseItem[ ] = $match;
 
         return $this;
     }

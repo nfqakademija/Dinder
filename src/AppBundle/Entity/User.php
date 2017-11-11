@@ -167,7 +167,7 @@ class User extends BaseUser
     public function addLocationsToMatch(Location $locationToMatch): User
     {
         $locationToMatch->addUsersToMatch($this);
-        $this->locationsToMatch[] = $locationToMatch;
+        $this->locationsToMatch[ ] = $locationToMatch;
 
         return $this;
     }

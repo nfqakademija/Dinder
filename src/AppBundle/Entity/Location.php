@@ -92,7 +92,7 @@ class Location
      */
     public function addUsersToMatch(User $userToMatch): Location
     {
-        $this->usersToMatch[] = $userToMatch;
+        $this->usersToMatch[ ] = $userToMatch;
 
         return $this;
     }

@@ -18,7 +18,7 @@ class ItemRepository extends EntityRepository
     {
         $items = $this
             ->createQueryBuilder('i')
-            ->select(['i.id'])
+            ->select([ 'i.id' ])
             ->leftJoin('i.user', 'iu')
             ->leftJoin('i.matchesOwnItem', 'imo')
             ->leftJoin('i.matchesResponseItem', 'imr')
@@ -41,11 +41,11 @@ class ItemRepository extends EntityRepository
             ->getScalarResult();
 
         if (count($items) === 0) {
-            return [];
+            return [ ];
         }
 
-        $ids = array_map(function ($n) {
-            return (int)$n['id'];
+        $ids = array_map(function($n) {
+            return (int) $n[ 'id' ];
         }, $items);
 
         shuffle($ids);
@@ -54,7 +54,7 @@ class ItemRepository extends EntityRepository
             ->createQueryBuilder('i')
             ->select([
                 'i',
-                'FIELD(i.id, ' . implode(', ', $ids) . ') as HIDDEN field',
+                'FIELD(i.id, '.implode(', ', $ids).') as HIDDEN field',
             ])
             ->where('i.id IN (:ids)')
             ->setParameter('ids', $ids)

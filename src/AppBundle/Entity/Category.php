@@ -105,7 +105,7 @@ class Category
      */
     public function addItemsToMatch(Item $itemToMatch): Category
     {
-        $this->itemsToMatch[] = $itemToMatch;
+        $this->itemsToMatch[ ] = $itemToMatch;
 
         return $this;
     }

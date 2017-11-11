@@ -68,7 +68,7 @@ class ItemController extends Controller
             $item->setRejections(0);
             $item->setStatus(Item::STATUS_ACTIVE);
             $item->setCreated(new \DateTime('now'));
-            $item->setExpires(new \DateTime('+' . $this->getParameter('item_valid_days') . ' days'));
+            $item->setExpires(new \DateTime('+'.$this->getParameter('item_valid_days').' days'));
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $item->setUser($user);
             $em = $this->getDoctrine()->getManager();

@@ -22,9 +22,9 @@ class FieldFunction extends FunctionNode
         $lexer = $parser->getLexer();
 
         while (count($this->values) < 1 ||
-            $lexer->lookahead['type'] !== Lexer::T_CLOSE_PARENTHESIS) {
+            $lexer->lookahead[ 'type' ] !== Lexer::T_CLOSE_PARENTHESIS) {
             $parser->match(Lexer::T_COMMA);
-            $this->values[] = $parser->ArithmeticPrimary();
+            $this->values[ ] = $parser->ArithmeticPrimary();
         }
 
         $parser->match(Lexer::T_CLOSE_PARENTHESIS);
@@ -32,9 +32,9 @@ class FieldFunction extends FunctionNode
 
     public function getSql(SqlWalker $sqlWalker): string
     {
-        $query = '(CASE ' . $this->field->dispatch($sqlWalker);
+        $query = '(CASE '.$this->field->dispatch($sqlWalker);
         for ($i = 0, $limiti = count($this->values); $i < $limiti; $i++) {
-            $query .= ' WHEN ' . $this->values[$i]->dispatch($sqlWalker) . ' THEN ' . ($i + 1);
+            $query .= ' WHEN '.$this->values[ $i ]->dispatch($sqlWalker).' THEN '.($i + 1);
         }
         $query .= ' ELSE 0 END)';
 
