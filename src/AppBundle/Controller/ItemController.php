@@ -101,7 +101,7 @@ class ItemController extends Controller
         $itemsToMatch = $this
             ->getDoctrine()
             ->getRepository(Item::class)
-            ->findAvailableMatches($item, $this->getUser());
+            ->findAvailableMatches($item, $this->getUser(), $margin = 3, $limit = 5);
 
         return $this->render('item/show.html.twig', array(
             'item' => $item,

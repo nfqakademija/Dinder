@@ -14,23 +14,47 @@ use Doctrine\ORM\EntityRepository;
  */
 class ItemRepository extends EntityRepository
 {
-    public function findAvailableMatches(Item $item, User $user): array
+    public function findAvailableMatches(Item $item, User $user, int $margin, int $limit): array
     {
-        $qb = $this
+        $items = $this
             ->createQueryBuilder('i')
+            ->select(['i.id'])
             ->leftJoin('i.user', 'iu')
             ->where('iu.location = :location')
+            ->andWhere('iu.id != :id')
             ->andWhere('i.category IN (:categories)')
             ->andWhere('i.value >= :min_value')
             ->andWhere('i.value <= :max_value')
             ->setParameters([
                 'location' => $user->getLocation(),
-                'min_value' => $item->getValue() - 3,
-                'max_value' => $item->getValue() + 3,
+                'id' => $user->getId(),
+                'min_value' => $item->getValue() - $margin,
+                'max_value' => $item->getValue() + $margin,
                 'categories' => $item->getCategoriesToMatchArray(),
-            ])
-            ->orderBy('RAND()');
+            ])->getQuery()
+            ->getScalarResult();
 
-        return $qb->getQuery()->getResult();
+        if(count($items) === 0) {
+            return [];
+        }
+
+        $ids = array_map(function($n) {
+            return (int)$n['id'];
+        }, $items);
+
+        shuffle($ids);
+
+        return $this
+            ->createQueryBuilder('i')
+            ->select([
+                'i',
+                'FIELD(i.id, ' . implode(', ', $ids) . ') as HIDDEN field',
+            ])
+            ->where('i.id IN (:ids)')
+            ->setParameter('ids', $ids)
+            ->setMaxResults($limit)
+            ->orderBy('field')
+            ->getQuery()
+            ->getResult();
     }
 }
