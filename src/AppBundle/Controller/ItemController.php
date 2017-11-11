@@ -97,12 +97,15 @@ class ItemController extends Controller
      */
     public function showAction(Item $item): Response
     {
+        $margin = $this->getParameter('item_match_margin');
+        $limit = $this->getParameter('item_match_limit');
+
         $deleteForm = $this->createDeleteForm($item);
 
         $itemsToMatch = $this
             ->getDoctrine()
             ->getRepository(Item::class)
-            ->findAvailableMatches($item, $this->getUser(), $this->getParameter('item_match_margin'), $this->getParameter('item_match_limit'));
+            ->findAvailableMatches($item, $this->getUser(), $margin, $limit);
 
         return $this->render('item/show.html.twig', array(
             'item' => $item,

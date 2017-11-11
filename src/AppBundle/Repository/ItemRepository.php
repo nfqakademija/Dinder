@@ -44,7 +44,7 @@ class ItemRepository extends EntityRepository
             return [ ];
         }
 
-        $ids = array_map(function($n) {
+        $ids = array_map(function ($n) {
             return (int) $n[ 'id' ];
         }, $items);
 
