@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Category
  *
- * @ORM\Table(name="match")
+ * @ORM\Table(name="item_match")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MatchRepository")
  */
 class Match
@@ -34,18 +34,18 @@ class Match
     /**
      * @var Item
      *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matches_own")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesOwn")
      * @ORM\JoinColumn(name="item_owner_id", referencedColumnName="id")
      */
-    private $item_owner;
+    private $itemOwner;
 
     /**
      * @var Item
      *
-     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matches_response")
+     * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesResponse")
      * @ORM\JoinColumn(name="item_respondent_id", referencedColumnName="id")
      */
-    private $item_respondent;
+    private $itemRespondent;
 
     /**
      * Get id
@@ -90,7 +90,7 @@ class Match
      */
     public function setItemOwner(Item $itemOwner = null): Match
     {
-        $this->item_owner = $itemOwner;
+        $this->itemOwner = $itemOwner;
 
         return $this;
     }
@@ -102,7 +102,7 @@ class Match
      */
     public function getItemOwner(): Item
     {
-        return $this->item_owner;
+        return $this->itemOwner;
     }
 
     /**
@@ -114,7 +114,7 @@ class Match
      */
     public function setItemRespondent(Item $itemRespondent = null): Match
     {
-        $this->item_respondent = $itemRespondent;
+        $this->itemRespondent = $itemRespondent;
 
         return $this;
     }
@@ -126,6 +126,6 @@ class Match
      */
     public function getItemRespondent(): Item
     {
-        return $this->item_respondent;
+        return $this->itemRespondent;
     }
 }

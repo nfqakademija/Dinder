@@ -20,12 +20,16 @@ class ItemRepository extends EntityRepository
             ->createQueryBuilder('i')
             ->select(['i.id'])
             ->leftJoin('i.user', 'iu')
+            ->leftJoin('i.matchesOwn', 'imo')
+            ->leftJoin('i.matchesResponse', 'imr')
             ->where('iu.location = :location')
             ->andWhere('i.status = :status_active')
             ->andWhere('iu.id != :id')
             ->andWhere('i.category IN (:categories)')
             ->andWhere('i.value >= :min_value')
             ->andWhere('i.value <= :max_value')
+            ->andWhere('imo.id IS NULL')
+            ->andWhere('imr.id IS NULL')
             ->setParameters([
                 'location' => $user->getLocation(),
                 'status_active' => Item::STATUS_ACTIVE,

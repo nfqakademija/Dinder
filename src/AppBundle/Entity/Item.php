@@ -112,16 +112,16 @@ class Item
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Match", mappedBy="item_owner")
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="itemOwner")
      */
-    private $matches_own;
+    private $matchesOwn;
 
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Match", mappedBy="item_respondent")
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="itemRespondent")
      */
-    private $matches_response;
+    private $matchesResponse;
 
     /**
      * Category constructor.
@@ -130,8 +130,8 @@ class Item
     {
         $this->images = new ArrayCollection();
         $this->categoriesToMatch = new ArrayCollection();
-        $this->matches_own = new ArrayCollection();
-        $this->matches_response = new ArrayCollection();
+        $this->matchesOwn = new ArrayCollection();
+        $this->matchesResponse = new ArrayCollection();
     }
 
     /**
@@ -452,7 +452,7 @@ class Item
      */
     public function addMatchesOwn(Match $match): Item
     {
-        $this->matches_own[] = $match;
+        $this->matchesOwn[] = $match;
 
         return $this;
     }
@@ -464,7 +464,7 @@ class Item
      */
     public function removeMatchesOwn(Match $match): void
     {
-        $this->matches_own->removeElement($match);
+        $this->matchesOwn->removeElement($match);
     }
 
     /**
@@ -474,7 +474,7 @@ class Item
      */
     public function getMatchesOwn(): ArrayCollection
     {
-        return $this->matches_own;
+        return $this->matchesOwn;
     }
 
     /**
@@ -486,7 +486,7 @@ class Item
      */
     public function addMatchesResponse(Match $match): Item
     {
-        $this->matches_response[] = $match;
+        $this->matchesResponse[] = $match;
 
         return $this;
     }
@@ -498,7 +498,7 @@ class Item
      */
     public function removeMatchesResponse(Match $match): void
     {
-        $this->matches_response->removeElement($match);
+        $this->matchesResponse->removeElement($match);
     }
 
     /**
@@ -508,6 +508,6 @@ class Item
      */
     public function getMatchesResponse(): ArrayCollection
     {
-        return $this->matches_response;
+        return $this->matchesResponse;
     }
 }
