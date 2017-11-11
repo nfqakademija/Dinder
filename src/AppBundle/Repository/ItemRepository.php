@@ -34,11 +34,11 @@ class ItemRepository extends EntityRepository
             ])->getQuery()
             ->getScalarResult();
 
-        if(count($items) === 0) {
+        if (count($items) === 0) {
             return [];
         }
 
-        $ids = array_map(function($n) {
+        $ids = array_map(function ($n) {
             return (int)$n['id'];
         }, $items);
 
