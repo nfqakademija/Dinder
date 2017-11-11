@@ -21,11 +21,18 @@ class ItemType extends AbstractType
             ->add('category', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
+                'placeholder' => '- Choose a category -',
+            ))
+            ->add('categoriesToMatch', EntityType::class, array(
+                'class' => 'AppBundle\Entity\Category',
+                'choice_label' => 'title',
+                'multiple' => true,
             ))
             ->add('images', CollectionType::class, array(
                 'entry_type' => ImageType::class,
                 'entry_options' => array('label' => false),
                 'allow_add' => true,
+                'allow_delete' => true,
                 'by_reference' => false,
             ))
         ;
