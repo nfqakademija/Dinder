@@ -14,6 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Item
 {
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = 2;
+    public const STATUS_TRADED = 3;
+
     /**
      * @var int
      *
@@ -22,6 +26,13 @@ class Item
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
 
     /**
      * @var User
@@ -99,12 +110,32 @@ class Item
     private $categoriesToMatch;
 
     /**
+     * Collection of matches which are proposed by this item
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="itemOwner")
+     */
+    private $matchesOwnItem;
+
+    /**
+     * Collection of matches which are proposed to this item
+     *
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="Match", mappedBy="itemRespondent")
+     */
+    private $matchesResponseItem;
+
+    /**
      * Category constructor.
      */
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->categoriesToMatch = new ArrayCollection();
+        $this->matchesOwnItem = new ArrayCollection();
+        $this->matchesResponseItem = new ArrayCollection();
     }
 
     /**
@@ -342,16 +373,16 @@ class Item
     }
 
     /**
-     * Add categoryToMatch
+     * Add categoriesToMatch
      *
      * @param Category $categoryToMatch
      *
      * @return Item
      */
-    public function addCategoryToMatch(Category $categoryToMatch): Item
+    public function addCategoriesToMatch(Category $categoryToMatch): Item
     {
-        $categoryToMatch->addItemToMatch($this);
-        $this->categoriesToMatch[] = $categoryToMatch;
+        $categoryToMatch->addItemsToMatch($this);
+        $this->categoriesToMatch[ ] = $categoryToMatch;
 
         return $this;
     }
@@ -361,7 +392,7 @@ class Item
      *
      * @param Category $categoryToMatch
      */
-    public function removeCategoryToMatch(Category $categoryToMatch): void
+    public function removeCategoriesToMatch(Category $categoryToMatch): void
     {
         $this->categoriesToMatch->removeElement($categoryToMatch);
     }
@@ -374,5 +405,113 @@ class Item
     public function getCategoriesToMatch(): ?ArrayCollection
     {
         return $this->categoriesToMatch;
+    }
+
+    /**
+     * Get categoriesToMatchArray
+     *
+     * @return array
+     */
+    public function getCategoriesToMatchArray(): array
+    {
+        $result = [ ];
+
+        foreach ($this->categoriesToMatch as $category) {
+            $result[ ] = $category->getId();
+        }
+
+        return $result;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Item
+     */
+    public function setStatus(int $status): Item
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
+    }
+
+    /**
+     * Add matchesOwnItem
+     *
+     * @param Match $match
+     *
+     * @return Item
+     */
+    public function addMatchesOwnItem(Match $match): Item
+    {
+        $this->matchesOwnItem[ ] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove matchesOwnItem
+     *
+     * @param Match $match
+     */
+    public function removeMatchesOwnItem(Match $match): void
+    {
+        $this->matchesOwnItem->removeElement($match);
+    }
+
+    /**
+     * Get matchesOwnItem
+     *
+     * @return ArrayCollection
+     */
+    public function getMatchesOwnItem(): ArrayCollection
+    {
+        return $this->matchesOwnItem;
+    }
+
+    /**
+     * Add matchesResponseItem
+     *
+     * @param Match $match
+     *
+     * @return Item
+     */
+    public function addMatchesResponseItem(Match $match): Item
+    {
+        $this->matchesResponseItem[ ] = $match;
+
+        return $this;
+    }
+
+    /**
+     * Remove matchesResponseItem
+     *
+     * @param Match $match
+     */
+    public function removeMatchesResponseItem(Match $match): void
+    {
+        $this->matchesResponseItem->removeElement($match);
+    }
+
+    /**
+     * Get matchesResponseItem
+     *
+     * @return ArrayCollection
+     */
+    public function getMatchesResponseItem(): ArrayCollection
+    {
+        return $this->matchesResponseItem;
     }
 }

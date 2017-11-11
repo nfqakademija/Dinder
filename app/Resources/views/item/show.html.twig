@@ -33,6 +33,16 @@
                 <th>Expires</th>
                 <td>{% if item.expires %}{{ item.expires|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
+            <tr>
+                <th>Items to match</th>
+                <td>
+                    <ul>
+                        {% for item_to_match in items_to_match %}
+                            <li>{{ item_to_match.id }} - {{ item_to_match.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
 

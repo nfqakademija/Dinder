@@ -1,9 +1,11 @@
 AppBundle\Entity\Item:
     item_{1..1000}:
-        user: '@user'
+        user: '@user_*'
+        status: 1
         title: <word()>
         value: <randomDigitNotNull()>
         category: '@category_*'
+        categoriesToMatch: ['@category_<numberBetween(1, 3)>', '@category_<numberBetween(4, 7)>', '@category_<numberBetween(8, 10)>']
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>

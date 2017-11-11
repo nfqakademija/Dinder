@@ -7,6 +7,9 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    item_valid_days: 30
+    item_match_margin: 3
+    item_match_limit: 5
 
 framework:
     #esi:             ~
@@ -60,6 +63,9 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
+        dql:
+            numeric_functions:
+                Field: AppBundle\DQL\FieldFunction
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -66,8 +66,9 @@ class ItemController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $item->setApprovals(0);
             $item->setRejections(0);
+            $item->setStatus(Item::STATUS_ACTIVE);
             $item->setCreated(new \DateTime('now'));
-            $item->setExpires(new \DateTime('+30 days'));
+            $item->setExpires(new \DateTime('+'.$this->getParameter('item_valid_days').' days'));
             $user = $this->get('security.token_storage')->getToken()->getUser();
             $item->setUser($user);
             $em = $this->getDoctrine()->getManager();
@@ -96,10 +97,19 @@ class ItemController extends Controller
      */
     public function showAction(Item $item): Response
     {
+        $margin = $this->getParameter('item_match_margin');
+        $limit = $this->getParameter('item_match_limit');
+
         $deleteForm = $this->createDeleteForm($item);
+
+        $itemsToMatch = $this
+            ->getDoctrine()
+            ->getRepository(Item::class)
+            ->findAvailableMatches($item, $this->getUser(), $margin, $limit);
 
         return $this->render('item/show.html.twig', array(
             'item' => $item,
+            'items_to_match' => $itemsToMatch,
             'delete_form' => $deleteForm->createView(),
         ));
     }
