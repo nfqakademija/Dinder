@@ -1,6 +1,7 @@
 AppBundle\Entity\Item:
     item_{1..1000}:
         user: '@user_*'
+        status: 1
         title: <word()>
         value: <randomDigitNotNull()>
         category: '@category_*'

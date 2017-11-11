@@ -21,12 +21,14 @@ class ItemRepository extends EntityRepository
             ->select(['i.id'])
             ->leftJoin('i.user', 'iu')
             ->where('iu.location = :location')
+            ->andWhere('i.status = :status_active')
             ->andWhere('iu.id != :id')
             ->andWhere('i.category IN (:categories)')
             ->andWhere('i.value >= :min_value')
             ->andWhere('i.value <= :max_value')
             ->setParameters([
                 'location' => $user->getLocation(),
+                'status_active' => Item::STATUS_ACTIVE,
                 'id' => $user->getId(),
                 'min_value' => $item->getValue() - $margin,
                 'max_value' => $item->getValue() + $margin,

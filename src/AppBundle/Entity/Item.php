@@ -14,6 +14,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Item
 {
+    public CONST STATUS_ACTIVE = 1;
+    public CONST STATUS_INACTIVE = 2;
+    public CONST STATUS_TRADED = 3;
+
     /**
      * @var int
      *
@@ -22,6 +26,13 @@ class Item
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="status", type="integer")
+     */
+    private $status;
 
     /**
      * @var User
@@ -390,5 +401,29 @@ class Item
         }
 
         return $result;
+    }
+
+    /**
+     * Set status
+     *
+     * @param integer $status
+     *
+     * @return Item
+     */
+    public function setStatus(int $status): Item
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return integer
+     */
+    public function getStatus(): int
+    {
+        return $this->status;
     }
 }
