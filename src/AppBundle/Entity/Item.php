@@ -14,9 +14,9 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Item
 {
-    public CONST STATUS_ACTIVE = 1;
-    public CONST STATUS_INACTIVE = 2;
-    public CONST STATUS_TRADED = 3;
+    public const STATUS_ACTIVE = 1;
+    public const STATUS_INACTIVE = 2;
+    public const STATUS_TRADED = 3;
 
     /**
      * @var int
