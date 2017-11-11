@@ -18,9 +18,9 @@ AppBundle\Entity\User:
         phone: <phoneNumber()>
         location: '@location_*'
     user_{2..100}:
-        username: <safeEmail()>
+        username (unique): <safeEmail()>
         plainPassword: user
-        email: <safeEmail()>
+        email (unique): <safeEmail()>
         roles: [ROLE_USER]
         enabled: true
         name: <name()>
