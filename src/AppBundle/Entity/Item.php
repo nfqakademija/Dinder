@@ -400,9 +400,9 @@ class Item
     /**
      * Get categoriesToMatch
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getCategoriesToMatch(): ?ArrayCollection
+    public function getCategoriesToMatch(): Collection
     {
         return $this->categoriesToMatch;
     }
