@@ -11,3 +11,9 @@ services:
     AppBundle\:
         resource: '../../src/AppBundle/*'
         exclude: '../../src/AppBundle/{Entity,Repository}'
+
+    app_bundle.listener.removed_file_listener:
+        class: AppBundle\EventListener\RemovedFileListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.post_remove, method: onPostRemove }

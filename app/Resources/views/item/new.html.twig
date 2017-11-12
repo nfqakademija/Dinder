@@ -8,7 +8,7 @@
     <h2>Images</h2>
     <ul class="images" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
         {% for image in form.images %}
-            {{ form_row(image.file) }}
+            {{ form_row(image) }}
         {% endfor %}
     </ul>
 

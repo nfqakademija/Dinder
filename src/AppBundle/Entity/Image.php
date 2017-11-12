@@ -85,7 +85,7 @@ class Image
      *
      * @return Image
      */
-    public function setItem(Item $item): Image
+    public function setItem(Item $item = null): Image
     {
         $this->item = $item;
 
@@ -121,7 +121,7 @@ class Image
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }

@@ -1,49 +1,45 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Items list</h1>
-
-    <table>
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Title</th>
-                <th>Value</th>
-                <th>Approvals</th>
-                <th>Rejections</th>
-                <th>Created</th>
-                <th>Expires</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for item in items %}
-            <tr>
-                <td><a href="{{ path('item_show', { 'id': item.id }) }}">{{ item.id }}</a></td>
-                <td>{{ item.title }}</td>
-                <td>{{ item.value }}</td>
-                <td>{{ item.approvals }}</td>
-                <td>{{ item.rejections }}</td>
-                <td>{% if item.created %}{{ item.created|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{% if item.expires %}{{ item.expires|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('item_show', { 'id': item.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('item_edit', { 'id': item.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('item_new') }}">Create a new item</a>
-        </li>
-    </ul>
+    <div class="container">
+        <div>
+            <a class="btn btn-default" href="{{ path('item_new') }}" role="button">Create a new item</a>
+        </div>
+        <h1>My items</h1>
+        <div class="row">
+            {% for item in items %}
+                <div class="col-sm-6 col-md-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">{{ item.title }}</div>
+                        <div class="pabel-body">
+                            <a href="{{ path('item_show', { 'id': item.id }) }}" class="thumbnail">
+                                {# <img src="{{ vich_uploader_asset(item.mainImage, 'file') }}" alt="{{ item.title }}"> #}
+                                <img src="{{ item.mainImage.name|default('https://lorempixel.com/640/480/no/picture') }}" alt="{{ item.title }}">
+                                <span class="badge">&euro;{{ item.value }}</span>
+                                <span class="text-right label label-default">{{ item.category.title }}</span>
+                            </a>
+                            <ul>
+                                {% for categoryToMatch in item.categoriesToMatch %}
+                                    <li>{{ categoryToMatch.title }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        <ul class="list-group">
+                            <li class="list-group-item">
+                                Approved
+                                <span class="badge">{{ item.approvals }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                Rejected
+                                <span class="badge">{{ item.rejections }}</span>
+                            </li>
+                        </ul>
+                        <div class="panel-footer">
+                            <a class="btn btn-default" href="{{ path('item_edit', { 'id': item.id }) }}" role="button">edit</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

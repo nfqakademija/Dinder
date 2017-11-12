@@ -67,7 +67,7 @@ class Item
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $images;
 
@@ -370,6 +370,8 @@ class Item
     public function removeImage(Image $image): void
     {
         $this->images->removeElement($image);
+
+        $image->setItem(null);
     }
 
     /**
@@ -400,9 +402,9 @@ class Item
     /**
      * Get categoriesToMatch
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getCategoriesToMatch(): ?ArrayCollection
+    public function getCategoriesToMatch(): Collection
     {
         return $this->categoriesToMatch;
     }
@@ -513,5 +515,24 @@ class Item
     public function getMatchesResponseItem(): ArrayCollection
     {
         return $this->matchesResponseItem;
+    }
+
+    /**
+     * Get main image
+     *
+     * @return Image
+     */
+    public function getMainImage(): ?Image
+    {
+        foreach ($this->images->getIterator() as $image) {
+            if ($image->getMain() === true) {
+                return $image;
+            }
+        }
+        if ($this->images->count()) {
+            return $this->images->first();
+        }
+
+        return null;
     }
 }
