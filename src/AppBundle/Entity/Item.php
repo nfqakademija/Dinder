@@ -67,7 +67,7 @@ class Item
     /**
      * @var ArrayCollection
      *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
      */
     private $images;
 
@@ -370,6 +370,8 @@ class Item
     public function removeImage(Image $image): void
     {
         $this->images->removeElement($image);
+
+        $image->setItem(null);
     }
 
     /**
