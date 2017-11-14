@@ -18,6 +18,7 @@ before_script:
   - php bin/console doctrine:schema:drop --force
   - php bin/console doctrine:schema:create
   - php bin/console doctrine:schema:validate
+  - ./delete-fixtures-images.sh
   - php bin/console hautelook:fixtures:load --no-interaction
 
 script:
