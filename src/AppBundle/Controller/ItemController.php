@@ -126,7 +126,7 @@ class ItemController extends Controller
      */
     public function rejectAction(Item $item, Item $rejected): Response
     {
-        if($item->getUser() !== $this->getUser()) {
+        if ($item->getUser() !== $this->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
@@ -154,7 +154,7 @@ class ItemController extends Controller
      */
     public function acceptAction(Item $item, Item $accepted): Response
     {
-        if($item->getUser() !== $this->getUser()) {
+        if ($item->getUser() !== $this->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
