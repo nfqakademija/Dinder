@@ -38,7 +38,11 @@
                 <td>
                     <ul>
                         {% for item_to_match in items_to_match %}
-                            <li>{{ item_to_match.id }} - {{ item_to_match.title }}</li>
+                            <li>
+                                {{ item_to_match.id }} - {{ item_to_match.title }}
+                                <a class="btn btn-primary" href="{{ path('item_reject', {'id': item.id, 'rejected': item_to_match.id}) }}">Reject</a>
+                                <a class="btn btn-primary" href="{{ path('item_accept', {'id': item.id, 'accepted': item_to_match.id}) }}">Accept</a>
+                            </li>
                         {% endfor %}
                     </ul>
                 </td>
