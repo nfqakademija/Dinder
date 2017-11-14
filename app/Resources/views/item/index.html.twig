@@ -13,8 +13,11 @@
                         <div class="panel-heading">{{ item.title }}</div>
                         <div class="pabel-body">
                             <a href="{{ path('item_show', { 'id': item.id }) }}" class="thumbnail">
-                                {# <img src="{{ vich_uploader_asset(item.mainImage, 'file') }}" alt="{{ item.title }}"> #}
-                                <img src="{{ item.mainImage.name|default('https://lorempixel.com/640/480/no/picture') }}" alt="{{ item.title }}">
+                                {% if item.mainImage %}
+                                    <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
+                                {% else %}
+                                    <img src="https://lorempixel.com/640/480/no/picture" alt="no image" />
+                                {% endif %}
                                 <span class="badge">&euro;{{ item.value }}</span>
                                 <span class="text-right label label-default">{{ item.category.title }}</span>
                             </a>
