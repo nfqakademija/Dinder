@@ -3,6 +3,7 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
+use AppBundle\Entity\Match;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -112,6 +113,62 @@ class ItemController extends Controller
             'items_to_match' => $itemsToMatch,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+
+    /**
+     * Adds item to rejected list
+     *
+     * @Route("/{id}/reject/{rejected}", name="item_reject")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function rejectAction(Item $item, Item $rejected): Response
+    {
+        if ($item->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $match = new Match();
+        $match->setItemOwner($item);
+        $match->setItemRespondent($rejected);
+        $match->setStatus(Match::STATUS_REJECTED);
+
+        $em->persist($match);
+        $em->flush();
+
+        return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+    }
+
+    /**
+     * Adds item to match wishlist
+     *
+     * @Route("/{id}/accept/{accepted}", name="item_accept")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function acceptAction(Item $item, Item $accepted): Response
+    {
+        if ($item->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $match = new Match();
+        $match->setItemOwner($item);
+        $match->setItemRespondent($accepted);
+        $match->setStatus(Match::STATUS_ACCEPTED);
+
+        $em->persist($match);
+        $em->flush();
+
+        return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
     }
 
     /**
