@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * User controller.
@@ -20,8 +21,10 @@ class UserController extends Controller
      * @Route("/", name="user_show")
      *
      * @Method("GET")
+     *
+     * @return Response
      */
-    public function showAction()
+    public function showAction(): Response
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
@@ -39,9 +42,9 @@ class UserController extends Controller
      *
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return Response
      */
-    public function editAction(Request $request)
+    public function editAction(Request $request): Response
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
         $editForm = $this->createForm('AppBundle\Form\UserType', $user);

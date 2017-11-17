@@ -50,9 +50,9 @@ class ItemController extends Controller
      *
      * @param Request $request
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
-    public function newAction(Request $request)
+    public function newAction(Request $request): Response
     {
         $item = new Item();
 
@@ -181,9 +181,9 @@ class ItemController extends Controller
      * @param Request $request
      * @param Item $item
      *
-     * @return RedirectResponse|Response
+     * @return Response
      */
-    public function editAction(Request $request, Item $item)
+    public function editAction(Request $request, Item $item): Response
     {
         $deleteForm = $this->createDeleteForm($item);
         $editForm = $this->createForm('AppBundle\Form\ItemType', $item);
