@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * Location
  *
  * @ORM\Table(name="location")
- * @ORM\Entity(repositoryClass="LocationRepository")
+ * @ORM\Entity
  */
 class Location
 {
