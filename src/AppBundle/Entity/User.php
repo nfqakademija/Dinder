@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -150,9 +151,9 @@ class User extends BaseUser
     /**
      * Get items
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getItems(): ArrayCollection
+    public function getItems(): Collection
     {
         return $this->items;
     }
@@ -185,9 +186,9 @@ class User extends BaseUser
     /**
      * Get locations
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getLocationsToMatch(): ArrayCollection
+    public function getLocationsToMatch(): Collection
     {
         return $this->locationsToMatch;
     }

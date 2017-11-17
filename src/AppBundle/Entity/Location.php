@@ -3,13 +3,14 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Location
  *
  * @ORM\Table(name="location")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="LocationRepository")
  */
 class Location
 {
@@ -92,7 +93,7 @@ class Location
      */
     public function addUsersToMatch(User $userToMatch): Location
     {
-        $this->usersToMatch[ ] = $userToMatch;
+        $this->usersToMatch[] = $userToMatch;
 
         return $this;
     }
@@ -110,10 +111,19 @@ class Location
     /**
      * Get usersToMatch
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getUsersToMatch(): ArrayCollection
+    public function getUsersToMatch(): Collection
     {
         return $this->usersToMatch;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 }
