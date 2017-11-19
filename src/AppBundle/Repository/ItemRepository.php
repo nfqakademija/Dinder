@@ -39,7 +39,6 @@ class ItemRepository extends EntityRepository
     {
         $items = $this
             ->createQueryBuilder('i')
-            ->select([ 'i.id' ])
             ->leftJoin('i.user', 'iu')
             ->leftJoin('i.matchesOwnItem', 'imo', Expr\Join::WITH, 'imo.status != :status_rejected')
             ->leftJoin('i.matchesResponseItem', 'imr')
@@ -59,30 +58,12 @@ class ItemRepository extends EntityRepository
                 'max_value' => $item->getValue() + $margin,
                 'categories' => $item->getCategoriesToMatchArray(),
                 'status_rejected' => Match::STATUS_REJECTED,
-            ])->getQuery()
-            ->getScalarResult();
-
-        if (count($items) === 0) {
-            return [ ];
-        }
-
-        $ids = array_map(function ($n) {
-            return (int) $n[ 'id' ];
-        }, $items);
-
-        shuffle($ids);
-
-        return $this
-            ->createQueryBuilder('i')
-            ->select([
-                'i',
-                'FIELD(i.id, '.implode(', ', $ids).') as HIDDEN field',
             ])
-            ->where('i.id IN (:ids)')
-            ->setParameter('ids', $ids)
+            ->orderBy('RAND()')
             ->setMaxResults($limit)
-            ->orderBy('field')
             ->getQuery()
             ->getResult();
+
+        return $items;
     }
 }

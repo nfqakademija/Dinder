@@ -65,7 +65,7 @@ doctrine:
         auto_mapping: true
         dql:
             numeric_functions:
-                Field: AppBundle\DQL\FieldFunction
+                Rand: AppBundle\DQL\RandFunction
 
 # Swiftmailer Configuration
 swiftmailer:
