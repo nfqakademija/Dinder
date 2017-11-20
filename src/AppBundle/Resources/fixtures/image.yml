@@ -1,5 +1,5 @@
 AppBundle\Entity\Image:
-    image_{1..1000}:
+    image_{1..100}:
         item: '@item_*'
         name: <image('web/images/items', 640, 480, 'technics', 0)>
         size: <numberBetween()>
