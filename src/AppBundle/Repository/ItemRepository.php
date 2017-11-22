@@ -66,4 +66,21 @@ class ItemRepository extends EntityRepository
 
         return $items;
     }
+
+    /**
+     * Returns array the most popular items
+     *
+     * @param int $limit
+     *
+     * @return array
+     */
+    public function findFeatured(int $limit): array
+    {
+        return $this
+            ->createQueryBuilder('i')
+            ->orderBy('i.approvals')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

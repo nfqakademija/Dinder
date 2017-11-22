@@ -425,7 +425,7 @@ margin-bottom: 30px;
 }
 
 .transparent-header .mega-menu > section.menu-list-items .menu-links > li > a {
-    color: #191919;
+    color: #fff;
 }
 
 
@@ -1343,4 +1343,9 @@ margin-bottom: 20px;
     padding: 20px 15px;
 }
 
+}
+@media (min-width: 768px) and (max-width: 992px) {
+    .transparent-header .mega-menu > section.menu-list-items .menu-links > li > a {
+        color: #191919;
+    }
 }

@@ -1,26 +1,107 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Homepage - {{ parent() }}{% endblock %}
-
-{% block stylesheets %}
-    <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-    {{ parent() }}
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-weight: 100;
-            font-family: 'Lato';
-        }
-
-        .title {
-            margin: 20px auto;
-            text-align: center;
-            font-size: 96px;
-        }
-    </style>
-{% endblock %}
+{% block title %}Dinder{% endblock %}
 
 {% block body %}
-    <div class="title">NFQ Akademija</div>
+    <!-- =-=-=-=-=-=-= Home Tabs =-=-=-=-=-=-= -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-panel">
+                        <h3 class="main-title">Most wanted</h3>
+                    </div>
+                    <div class="row">
+                        {% for item in featured_items %}
+                            <div class="col-md-4 col-xs-12 col-sm-6">
+                                <!-- Ad Box -->
+                                <div class="category-grid-box">
+                                    <!-- Ad Img -->
+                                    <div class="category-grid-img">
+                                        {% if item.mainImage %}
+                                            <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
+                                        {% else %}
+                                            <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                        {% endif %}
+                                    </div>
+                                    <!-- Ad Img End -->
+                                    <div class="short-description">
+                                        <!-- Ad Category -->
+                                        <div class="category-title"> <span>{{ item.category.title }}</span> </div>
+                                        <!-- Ad Title -->
+                                        <h3>{{ item.title }}</h3>
+                                        <!-- Price -->
+                                        <div class="price">{{ item.value }}€</div>
+                                    </div>
+                                    <!-- Addition Info -->
+                                    <div class="ad-info">
+                                        <ul>
+                                            <li><i class="fa fa-thumbs-up"></i>{{ item.approvals }}</li>
+                                            <li><i class="fa fa-thumbs-down"></i>{{ item.rejections }}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!-- Ad Box End -->
+                            </div>
+                            {% if loop.index0 % 3 == 2 %}
+                                <div class="clearfix visible-md visible-lg"></div>
+                            {% endif %}
+                            {% if loop.index0 % 2 == 1 %}
+                                <div class="clearfix visible-sm"></div>
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-panel">
+                        <h3 class="main-title">Success story</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 col-xs-12 col-sm-6">
+                    <!-- Ad Box -->
+                    <div class="category-grid-box">
+                        <!-- Ad Img -->
+                        <div class="category-grid-img">
+                            <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                        </div>
+                        <!-- Ad Img End -->
+                        <div class="short-description">
+                            <!-- Ad Category -->
+                            <div class="category-title"> <span>Chancellery</span> </div>
+                            <!-- Ad Title -->
+                            <h3>One red paperclip</h3>
+                            <!-- Price -->
+                            <div class="price">0.01€</div>
+                        </div>
+                    </div>
+                    <!-- Ad Box End -->
+                </div>
+                <div class="col-md-4 col-xs-12 col-sm-6">
+                    <!-- Ad Box -->
+                    <div class="category-grid-box">
+                        <!-- Ad Img -->
+                        <div class="category-grid-img">
+                            <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                        </div>
+                        <!-- Ad Img End -->
+                        <div class="short-description">
+                            <!-- Ad Category -->
+                            <div class="category-title"> <span>Real Estate</span> </div>
+                            <!-- Ad Title -->
+                            <h3>Two-story farmhouse</h3>
+                            <!-- Price -->
+                            <div class="price">1,000,000.00€</div>
+                        </div>
+                    </div>
+                    <!-- Ad Box End -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- =-=-=-=-=-=-= Home Tabs End =-=-=-=-=-=-= -->
 {% endblock %}

@@ -8,7 +8,7 @@ Designed and Development by: ScriptsBundle
 ====================================
 [ CSS TABLE CONTENT ]
 ------------------------------------
-    1.0 -  Page Preloader
+    1.0 -  Page Preloader[removed]
 	2.0 -  Counter FunFacts
     3.0 -  List Grid Style Switcher
 	4.0 -  Sticky Ads
@@ -36,11 +36,6 @@ Designed and Development by: ScriptsBundle
 */
 (function($) {
     "use strict";
-
-    /* ======= Preloader ======= */
-    setTimeout(function() {
-        $('body').addClass('loaded');
-    }, 3000);
 
     /* ======= Counter FunFacts ======= */
     var timer = $('.timer');
