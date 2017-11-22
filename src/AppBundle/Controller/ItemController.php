@@ -4,14 +4,18 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
+use AppBundle\Entity\Image;
+use AppBundle\Entity\Category;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Entity\Image;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Exception\InvalidArgumentException;
 
 /**
  * Item controller.
@@ -34,10 +38,12 @@ class ItemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $items = $em->getRepository('AppBundle:Item')->findByUser($user);
+        $items = $em->getRepository(Item::class)->findBy(['user' => $user]);
+        $categories = $em->getRepository(Category::class)->findAll();
 
         return $this->render('item/index.html.twig', array(
             'items' => $items,
+            'categories' => $categories
         ));
     }
 
@@ -169,6 +175,73 @@ class ItemController extends Controller
         $em->flush();
 
         return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+    }
+
+    /**
+     * Adds category to item categoryToMatch list
+     *
+     * @Route("/category-add", name="item_category_add")
+     *
+     * @Method("POST")
+     *
+     * @return Response
+     */
+    public function categoryAddAction(Request $request): Response
+    {
+        $itemId = $request->get('item', null);
+        $categoryId = $request->get('category', null);
+
+        if (!$itemId || !$categoryId) {
+            throw new InvalidArgumentException('Missing parameter');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $item = $em->getRepository(Item::class)->find($itemId);
+        $category = $em->getRepository(Category::class)->find($categoryId);
+
+        if (!$item || !$category) {
+            throw new NoResultException();
+        }
+
+        if ($item->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        if (count($item->getCategoriesToMatch()) > 2) {
+            throw $this->createAccessDeniedException("Item has reached the maximum limit of categories");
+        }
+
+        $item->addCategoriesToMatch($category);
+
+        try {
+            $this->getDoctrine()->getManager()->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw $this->createAccessDeniedException("This category is already in item's categories list");
+        }
+
+        return $this->redirectToRoute('item_index');
+    }
+
+    /**
+     * Removes category from item categoryToMatch list
+     *
+     * @Route("/{id}/category-remove/{category}", name="item_category_remove")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function categoryRemoveAction(Item $item, Category $category): Response
+    {
+        if ($item->getUser() !== $this->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $item->removeCategoriesToMatch($category);
+
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('item_index');
     }
 
     /**

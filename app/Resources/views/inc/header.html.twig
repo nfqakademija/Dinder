@@ -1,22 +1,75 @@
-<header>
-    <div class="name fancy-font">
-        <img src="{{ asset('images/logo.png') }}" alt="dinder"/>
+<div class="transparent-header">
+    <!-- Top Bar -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <!-- Header Top Left -->
+                <div class="header-top-left col-md-8 col-sm-6 col-xs-12 hidden-xs">
+                    <ul class="listnone">
+                        <li><a href="#"><i class="fa fa-heart-o" aria-hidden="true"></i> About</a></li>
+                        <li><a href="#"><i class="fa fa-folder-open-o" aria-hidden="true"></i> FAQS</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-globe" aria-hidden="true"></i> Language <span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">English</a></li>
+                                <li><a href="#">Lithuanian</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!-- Header Top Right Social -->
+                <div class="header-right col-md-4 col-sm-6 col-xs-12 ">
+                    <div class="pull-right">
+                        <ul class="listnone">
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <li><a href="{{ path('fos_user_security_logout') }}"><i class="fa fa-sign-out" aria-hidden="true"></i> Log out</a></li>
+                                <li><a href="{{ path('user_show') }}"><i class="icon-profile-male" aria-hidden="true"></i> User Profile</a></li>
+                            {% else %}
+                                <li><a href="{{ path('fos_user_security_login') }}"><i class="fa fa-sign-in" aria-hidden="true"></i> Log in</a></li>
+                                <li><a href="{{ path('fos_user_registration_register') }}"><i class="fa fa-unlock" aria-hidden="true"></i> Register</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="titles">
-        <h1>Rejoice in exchange</h1>
+    <!-- Top Bar End -->
+    <!-- Navigation Menu -->
+    <nav id="menu-1" class="mega-menu">
+        <!-- menu list items container -->
+        <section class="menu-list-items">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12">
+                        <!-- menu logo -->
+                        <ul class="menu-logo">
+                            <li>
+                                <a href="{{ path('homepage') }}"><img src="{{ asset('images/logo.png') }}" alt="Dinder"> </a>
+                            </li>
+                        </ul>
+                        <!-- menu links -->
+                        <ul class="menu-links">
+                            <li><a href="{{ path('item_index') }}">My Items</a></li>
+                        </ul>
+                        <ul class="menu-search-bar">
+                            <li>
+                                <a href="{{ path('item_new') }}" class="btn btn-light"><i class="fa fa-plus" aria-hidden="true"></i> Add New Item</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </nav>
+</div>
+<!-- Navigation Menu End -->
+<!-- =-=-=-=-=-=-= Transparent Header End =-=-=-=-=-=-= -->
+<!-- Home Banner 1 -->
+<section id="hero" class="hero bg-img">
+    <div class="content">
+        <p>Rejoice in <b>Exchange</b></p>
     </div>
-    <div class="social">
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <a href="{{ path('fos_user_security_logout') }}" title="Logout">
-                <i class="fa fa-sign-out" aria-hidden="true"></i>
-            </a>
-        {% else %}
-            <a href="{{ path('fos_user_registration_register') }}" title="Register">
-                <i class="fa fa-user-plus" aria-hidden="true"></i>
-            </a>
-            <a href="{{ path('fos_user_security_login') }}" title="Login">
-                <i class="fa fa-sign-in" aria-hidden="true"></i>
-            </a>
-        {% endif %}
-    </div>
-</header>
+    <!-- .content -->
+</section>
+<!-- Home Banner 1 End -->
