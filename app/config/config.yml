@@ -10,6 +10,7 @@ parameters:
     item_valid_days: 30
     item_match_margin: 3
     item_match_limit: 5
+    item_featured_limit: 3
 
 framework:
     #esi:             ~
