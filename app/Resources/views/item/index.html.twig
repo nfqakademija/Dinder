@@ -1,48 +1,57 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="container">
-        <div>
-            <a class="btn btn-default" href="{{ path('item_new') }}" role="button">Create a new item</a>
-        </div>
-        <h1>My items</h1>
-        <div class="row">
-            {% for item in items %}
-                <div class="col-sm-6 col-md-4">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">{{ item.title }}</div>
-                        <div class="pabel-body">
-                            <a href="{{ path('item_show', { 'id': item.id }) }}" class="thumbnail">
-                                {% if item.mainImage %}
-                                    <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
-                                {% else %}
-                                    <img src="https://lorempixel.com/640/480/no/picture" alt="no image" />
-                                {% endif %}
-                                <span class="badge">&euro;{{ item.value }}</span>
-                                <span class="text-right label label-default">{{ item.category.title }}</span>
-                            </a>
-                            <ul>
-                                {% for categoryToMatch in item.categoriesToMatch %}
-                                    <li>{{ categoryToMatch.title }}</li>
-                                {% endfor %}
-                            </ul>
+    <!-- =-=-=-=-=-=-= Home Tabs =-=-=-=-=-=-= -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="heading-panel">
+                        <h3 class="main-title">My Items</h3>
+                    </div>
+                    <div class="row">
+                        {% for item in items %}
+                            <div class="col-md-4 col-xs-12 col-sm-6">
+                            <!-- Ad Box -->
+                            <div class="item-edit"><a href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a></div>
+                            <div class="category-grid-box">
+                                <!-- Ad Img -->
+                                <div class="category-grid-img">
+                                    {% if item.mainImage %}
+                                        <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
+                                    {% else %}
+                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                    {% endif %}
+                                </div>
+                                <!-- Ad Img End -->
+                                <div class="short-description">
+                                    <!-- Ad Category -->
+                                    <div class="category-title"> <span>{{ item.category.title }}</span> </div>
+                                    <!-- Ad Title -->
+                                    <h3><a title="" href="{{ path('item_show', { 'id': item.id }) }}">{{ item.title }}</a></h3>
+                                    <!-- Price -->
+                                    <div class="price">€{{ item.value }}</div>
+                                    <div><h5>Preferred categories:</h5>
+                                        {% for categoryToMatch in item.categoriesToMatch %}
+                                            <span class="badge">{{ categoryToMatch.title }}</span>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <!-- Addition Info -->
+                                <div class="ad-info">
+                                    <ul>
+                                        <li><i class="fa fa-thumbs-up"></i>{{ item.approvals }}</li>
+                                        <li><i class="fa fa-thumbs-down"></i>{{ item.rejections }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Ad Box End -->
                         </div>
-                        <ul class="list-group">
-                            <li class="list-group-item">
-                                Approved
-                                <span class="badge">{{ item.approvals }}</span>
-                            </li>
-                            <li class="list-group-item">
-                                Rejected
-                                <span class="badge">{{ item.rejections }}</span>
-                            </li>
-                        </ul>
-                        <div class="panel-footer">
-                            <a class="btn btn-default" href="{{ path('item_edit', { 'id': item.id }) }}" role="button">edit</a>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
-            {% endfor %}
+            </div>
         </div>
-    </div>
+    </section>
+    <!-- =-=-=-=-=-=-= Home Tabs End =-=-=-=-=-=-= -->
 {% endblock %}
