@@ -6,53 +6,57 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    <div class="heading-panel">
+                        <h3 class="main-title">My Items</h3>
+                    </div>
                     <div class="row">
                         {% for item in items %}
                             <div class="col-md-4 col-xs-12 col-sm-6">
                             <!-- Ad Box -->
+                            <div class="item-edit"><a href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a></div>
                             <div class="category-grid-box">
                                 <!-- Ad Img -->
                                 <div class="category-grid-img">
                                     {% if item.mainImage %}
                                         <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
                                     {% else %}
-                                        <img src="https://lorempixel.com/640/480/no/picture" alt="no image" />
+                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
                                     {% endif %}
-                                </div>
-                                <div>
-                                    <ul>
-                                        {% for categoryToMatch in item.categoriesToMatch %}
-                                            <li>
-                                                {{ categoryToMatch.title }}
-                                                <a href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
-                                                    <i class="fa fa-trash" aria-hidden="true"></i>
-                                                </a>
-                                            </li>
-                                        {% endfor %}
-                                    </ul>
-                                    {% if item.categoriesToMatch|length < 3 %}
-                                        <form action="{{ path('item_category_add') }}" method="POST">
-                                            <input type="hidden" name="item" value="{{ item.id }}"/>
-                                            <select class="select2" name="category">
-                                                {% for category in categories %}
-                                                    {% if category.id not in item.getCategoriesToMatchArray %}
-                                                        <option value="{{ category.id }}">{{ category.title }}</option>
-                                                    {% endif %}
-                                                {% endfor %}
-                                            </select>
-                                            <button class="btn btn-default btn-xs">Add</button>
-                                        </form>
-                                    {% endif %}
-                                    <a href="{{ path('item_edit', { 'id': item.id }) }}">Edit</a>
                                 </div>
                                 <!-- Ad Img End -->
                                 <div class="short-description">
                                     <!-- Ad Category -->
-                                    <div class="category-title"> <span><a href="#">{{ item.category.title }}</a></span> </div>
+                                    <div class="category-title"> <span>{{ item.category.title }}</span> </div>
                                     <!-- Ad Title -->
                                     <h3><a title="" href="{{ path('item_show', { 'id': item.id }) }}">{{ item.title }}</a></h3>
                                     <!-- Price -->
                                     <div class="price">€{{ item.value }}</div>
+
+                                    <div><h5>Categories to match:</h5>
+                                        <ul>
+                                            {% for categoryToMatch in item.categoriesToMatch %}
+                                                <li>
+                                                    {{ categoryToMatch.title }}
+                                                    <a href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+                                                        <i class="fa fa-trash" aria-hidden="true"></i>
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                        {% if item.categoriesToMatch|length < 3 %}
+                                            <form action="{{ path('item_category_add') }}" method="POST">
+                                                <input type="hidden" name="item" value="{{ item.id }}"/>
+                                                <select class="select2" name="category">
+                                                    {% for category in categories %}
+                                                        {% if category.id not in item.getCategoriesToMatchArray %}
+                                                            <option value="{{ category.id }}">{{ category.title }}</option>
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                </select>
+                                                <button class="btn btn-default btn-xs">Add</button>
+                                            </form>
+                                        {% endif %}
+                                    </div>
                                 </div>
                                 <!-- Addition Info -->
                                 <div class="ad-info">

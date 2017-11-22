@@ -46,6 +46,8 @@ gulp.task('minify-css', function() {
         dir.assets + 'style/responsive-media.css',
         // Template Color
         dir.assets + 'style/defualt.css',
+        // Image Collection
+        dir.assets + 'style/image-collection.css',
         ])
         .pipe(cleanCSS({compatibility: 'ie8'}))
         .pipe(concat('template.css'))

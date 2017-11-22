@@ -1,0 +1,15 @@
+.ImageCollection-title {
+  padding-bottom: 20px;
+}
+
+.ImageCollection-list .form-group {
+  margin-bottom: 5px;
+}
+
+.ImageCollection-item > div, .ImageCollection-remove {
+  display: inline-block;
+}
+
+.ImageCollection-add {
+  margin-bottom: 40px;
+}
