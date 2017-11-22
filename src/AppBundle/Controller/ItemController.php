@@ -191,7 +191,7 @@ class ItemController extends Controller
         $itemId = $request->get('item', null);
         $categoryId = $request->get('category', null);
 
-        if(!$itemId || !$categoryId) {
+        if (!$itemId || !$categoryId) {
             throw new InvalidArgumentException('Missing parameter');
         }
 
@@ -199,7 +199,7 @@ class ItemController extends Controller
         $item = $em->getRepository(Item::class)->find($itemId);
         $category = $em->getRepository(Category::class)->find($categoryId);
 
-        if(!$item || !$category) {
+        if (!$item || !$category) {
             throw new NoResultException();
         }
 
@@ -207,7 +207,7 @@ class ItemController extends Controller
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
-        if(count($item->getCategoriesToMatch()) > 2) {
+        if (count($item->getCategoriesToMatch()) > 2) {
             throw $this->createAccessDeniedException("Item has reached the maximum limit of categories");
         }
 
