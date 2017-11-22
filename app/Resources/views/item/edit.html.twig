@@ -1,29 +1,42 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Item edit</h1>
-
-    {{ form_start(edit_form) }}
-
-    <h2>Images</h2>
-    <ul class="images" data-prototype="{{ form_widget(edit_form.images.vars.prototype)|e('html_attr') }}">
-        {% for image in edit_form.images %}
-            {{ form_row(image) }}
-        {% endfor %}
-    </ul>
-
-    {{ form_rest(edit_form) }}
-    <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
-
-    <ul>
-        <li>
-            <a href="{{ path('item_index') }}">Back to the list</a>
-        </li>
-        <li>
+    <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
+    <section class="section-padding gray ">
+        <!-- Main Container -->
+        <div class="container">
+            <!-- Row -->
+            <div class="row">
+                <div class="col-md-12">
+                    <!-- end post-padding -->
+                    <div class="post-ad-form extra-padding postdetails">
+                        <div class="heading-panel">
+                            <h3 class="main-title text-left">
+                                Edit Item
+                            </h3>
+                        </div>
+                        {{ form_start(edit_form, {'attr': {'class': 'submit-form'}}) }}
+                        <div class="ImageCollection">
+                            <h4 class="ImageCollection-title">Images</h4>
+                            <div class="ImageCollection-list" data-prototype="{{ form_widget(edit_form.images.vars.prototype)|e('html_attr') }}">
+                                {% for image in edit_form.images %}
+                                    {{ form_row(image) }}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {{ form_rest(edit_form) }}
+                        <button class="btn btn-theme">Submit</button>
+                        {{ form_end(edit_form) }}
+                    </div>
+                    <!-- end post-ad-form-->
+                </div>
+                <!-- end col -->
+            </div>
             {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
+            <input class="btn btn-theme pull-right" type="submit" value="Delete">
             {{ form_end(delete_form) }}
-        </li>
-    </ul>
+            <!-- end row -->
+        </div>
+        <!-- Main Container End -->
+    </section>
 {% endblock %}

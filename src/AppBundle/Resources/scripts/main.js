@@ -1,10 +1,10 @@
 // setup an "add image" link
 var $addImageLink = $('<a href="#" class="add_image_link">Add image</a>');
-var $newLinkLi = $('<li></li>').append($addImageLink);
+var $newLinkLi = $('<div class="ImageCollection-add"></div>').append($addImageLink);
 
 jQuery(document).ready(function() {
     // Get the ul that holds the collection of images
-    var $collectionHolder = $('ul.images');
+    var $collectionHolder = $('.ImageCollection-list');
 
     // add the "add image" anchor and li to the images ul
     $collectionHolder.append($newLinkLi);
@@ -18,11 +18,11 @@ jQuery(document).ready(function() {
         e.preventDefault();
 
         // add a new image form (see code block below)
-        addTagForm($collectionHolder, $newLinkLi);
+        addImagesForm($collectionHolder, $newLinkLi);
     });
 });
 
-function addTagForm($collectionHolder, $newLinkLi) {
+function addImagesForm($collectionHolder, $newLinkLi) {
     // Get the data-prototype explained earlier
     var prototype = $collectionHolder.data('prototype');
 
@@ -37,11 +37,10 @@ function addTagForm($collectionHolder, $newLinkLi) {
     $collectionHolder.data('index', index + 1);
 
     // Display the form in the page in an li, before the "Add image" link li
-    var $newFormLi = $('<li></li>').append(newForm);
+    var $newFormLi = $('<div class="ImageCollection-item"></div>').append(newForm);
 
     // also add a remove button, just for this example
-    $newFormLi.append('<a href="#" class="remove-image">x</a>');
-
+    $newFormLi.append('<div class="ImageCollection-remove"><a href="#" class="remove-image">x</a></div>');
     $newLinkLi.before($newFormLi);
 
     // handle the removal, just for this example
