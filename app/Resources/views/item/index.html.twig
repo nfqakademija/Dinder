@@ -22,9 +22,27 @@
                                 <div>
                                     <ul>
                                         {% for categoryToMatch in item.categoriesToMatch %}
-                                            <li>{{ categoryToMatch.title }}</li>
+                                            <li>
+                                                {{ categoryToMatch.title }}
+                                                <a href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </a>
+                                            </li>
                                         {% endfor %}
                                     </ul>
+                                    {% if item.categoriesToMatch|length < 3 %}
+                                        <form action="{{ path('item_category_add') }}" method="POST">
+                                            <input type="hidden" name="item" value="{{ item.id }}"/>
+                                            <select class="select2" name="category">
+                                                {% for category in categories %}
+                                                    {% if category.id not in item.getCategoriesToMatchArray %}
+                                                        <option value="{{ category.id }}">{{ category.title }}</option>
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                            <button class="btn btn-default btn-xs">Add</button>
+                                        </form>
+                                    {% endif %}
                                     <a href="{{ path('item_edit', { 'id': item.id }) }}">Edit</a>
                                 </div>
                                 <!-- Ad Img End -->
