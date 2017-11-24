@@ -9,7 +9,7 @@ services:
   - docker
 
 before_script:
-  - ./launch-me.sh
+  - ./provision.sh
   - docker-compose exec fpm bin/console doctrine:mapping:info
   - docker-compose exec fpm bin/console doctrine:schema:validate
 
