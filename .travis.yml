@@ -10,10 +10,8 @@ services:
 
 before_script:
   - ./provision.sh
-  - docker-compose exec fpm chmod 777 -R var/cache
-  - docker-compose exec fpm chmod 777 -R var/logs
-  - docker-compose exec fpm bin/console doctrine:mapping:info
-  - docker-compose exec fpm bin/console doctrine:schema:validate
+  - docker-compose exec -u 1000 fpm bin/console doctrine:mapping:info
+  - docker-compose exec -u 1000 fpm bin/console doctrine:schema:validate
 
 script:
   - vendor/bin/phpcs -p --colors --standard=PSR2 --extensions=php ./src
