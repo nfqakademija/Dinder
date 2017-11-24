@@ -10,7 +10,6 @@ services:
 
 before_script:
   - ./provision.sh
-  - docker-compose exec fpm bin/console doctrine:mapping:info
   - docker-compose exec fpm bin/console doctrine:schema:validate
 
 script:
