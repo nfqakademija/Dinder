@@ -1,4 +1,4 @@
-sudo: false
+sudo: required
 
 language: php
 
@@ -7,19 +7,13 @@ php:
 
 services:
   - mysql
+  - docker
 
 before-install:
     - composer self-update
 
 before_script:
-  - cp app/config/parameters.yml.dist app/config/parameters.yml
-  - composer install --no-interaction --prefer-dist
-  - php bin/console doctrine:database:create
-  - php bin/console doctrine:schema:drop --force
-  - php bin/console doctrine:schema:create
-  - php bin/console doctrine:schema:validate
-  - ./delete-fixtures-images.sh
-  - php bin/console hautelook:fixtures:load --no-interaction
+  - ./launch-me.sh
 
 script:
   - vendor/bin/phpcs -p --colors --standard=PSR2 --extensions=php ./src
