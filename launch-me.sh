@@ -2,7 +2,7 @@
 
 cp .env.dist .env
 docker-compose up -d
-docker-compose exec fpm composer install --prefer-dist -n
+composer install --prefer-dist -n
 docker-compose run npm npm install
 docker-compose exec fpm bin/console doc:database:drop --force
 docker-compose exec fpm bin/console doc:database:create

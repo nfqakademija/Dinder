@@ -6,14 +6,12 @@ php:
   - 7.1
 
 services:
-  - mysql
   - docker
-
-before-install:
-    - composer self-update
 
 before_script:
   - ./launch-me.sh
+  - docker-compose exec fpm bin/console doctrine:mapping:info
+  - docker-compose exec fpm bin/console doctrine:schema:validate
 
 script:
   - vendor/bin/phpcs -p --colors --standard=PSR2 --extensions=php ./src
