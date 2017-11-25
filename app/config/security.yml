@@ -28,3 +28,4 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/item, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/match, role: IS_AUTHENTICATED_FULLY }

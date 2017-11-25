@@ -37,11 +37,27 @@ class ItemRepository extends EntityRepository
 
     public function findAvailableMatches(Item $item, User $user, int $margin, int $limit): array
     {
+        $subquery = $this->createQueryBuilder('s')
+            ->select('s.id')
+            ->leftJoin('s.matchesResponseItem', 'sm')
+            ->where('sm.status = :status_accepted')
+            ->andWhere('sm.itemOwner = :id')
+            ->setParameters([
+                'status_accepted' => Match::STATUS_ACCEPTED,
+                'id' => $item->getId(),
+            ])
+            ->getQuery()->getArrayResult();
+
+        $exclude = array_map(function ($match) {
+            return $match['id'];
+        }, $subquery);
+
+        $exclude[] = $item->getId();
+
         $items = $this
             ->createQueryBuilder('i')
             ->leftJoin('i.user', 'iu')
             ->leftJoin('i.matchesOwnItem', 'imo', Expr\Join::WITH, 'imo.status != :status_rejected')
-            ->leftJoin('i.matchesResponseItem', 'imr')
             ->where('iu.location = :location')
             ->andWhere('i.status = :status_active')
             ->andWhere('iu.id != :id')
@@ -49,7 +65,7 @@ class ItemRepository extends EntityRepository
             ->andWhere('i.value >= :min_value')
             ->andWhere('i.value <= :max_value')
             ->andWhere('imo.itemOwner IS NULL')
-            ->andWhere('imr.itemRespondent IS NULL')
+            ->andWhere('i.id NOT IN (:exclude)')
             ->setParameters([
                 'location' => $user->getLocation(),
                 'status_active' => Item::STATUS_ACTIVE,
@@ -58,6 +74,7 @@ class ItemRepository extends EntityRepository
                 'max_value' => $item->getValue() + $margin,
                 'categories' => $item->getCategoriesToMatchArray(),
                 'status_rejected' => Match::STATUS_REJECTED,
+                'exclude' => $exclude,
             ])
             ->orderBy('RAND()')
             ->setMaxResults($limit)
