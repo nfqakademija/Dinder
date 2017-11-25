@@ -48,7 +48,7 @@ class ItemRepository extends EntityRepository
             ])
             ->getQuery()->getArrayResult();
 
-        $exclude = array_map (function($match) {
+        $exclude = array_map(function ($match) {
             return $match['id'];
         }, $subquery);
 
