@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Match;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
@@ -21,7 +22,7 @@ class MatchRepository extends EntityRepository
      *
      * @return array
      */
-    public function findMatchesByUser(User $user, int $status = 1): array
+    public function findMatchesByUser(User $user, int $status = Match::STATUS_ACCEPTED): array
     {
         $matches = $this->createQueryBuilder('m')
             ->leftJoin('m.itemRespondent', 'i')
