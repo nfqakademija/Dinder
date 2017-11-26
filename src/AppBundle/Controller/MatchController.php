@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -33,5 +34,55 @@ class MatchController extends Controller
         return $this->render('match/index.html.twig', array(
             'matches' => $matches,
         ));
+    }
+
+
+    /**
+     * @Route("/{id}/trade", name="match_trade")
+     *
+     * @Method("GET")
+     *
+     * @param Match $match
+     *
+     * @return Response
+     */
+    public function tradeAction(Match $match): Response
+    {
+        $ownedItem = $match->getItemRespondent();
+        $offeredItem = $match->getItemOwner();
+
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        if ($currentUser !== $ownedItem->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $ownedItem
+            ->setStatus(Item::STATUS_TRADED)
+            ->setUser($offeredItem->getUser());
+
+        $offeredItem
+            ->setStatus(Item::STATUS_TRADED)
+            ->setUser($currentUser);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($match);
+
+        $em->flush();
+
+        return $this->redirectToRoute('match_index');
+    }
+
+    /**
+     * @Route("/{id}/decline", name="match_decline")
+     *
+     * @Method("GET")
+     *
+     * @param Match $match
+     *
+     * @return Response
+     */
+    public function declineAction(Match $match): Response
+    {
+        return $this->redirectToRoute('match_index');
     }
 }

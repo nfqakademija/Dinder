@@ -84,6 +84,14 @@
                                             <!-- Ad Box End -->
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-md-offset-3 col-xs-6">
+                                            <a class="btn btn-default btn-block" href="{{ path('match_decline', {id: match.id}) }}">Decline</a>
+                                        </div>
+                                        <div class="col-md-3 col-xs-6">
+                                            <a class="btn btn-theme btn-block" href="{{ path('match_trade', {id: match.id}) }}">Trade</a>
+                                        </div>
+                                    </div>
                                 </div>
                             {% endfor %}
                         </div>
