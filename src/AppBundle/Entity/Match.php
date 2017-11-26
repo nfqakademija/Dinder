@@ -14,6 +14,7 @@ class Match
 {
     public const STATUS_REJECTED = 0;
     public const STATUS_ACCEPTED = 1;
+    public const STATUS_DECLINED = 2;
 
     /**
      * @var int

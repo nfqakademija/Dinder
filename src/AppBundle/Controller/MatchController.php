@@ -83,6 +83,14 @@ class MatchController extends Controller
      */
     public function declineAction(Match $match): Response
     {
+        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
+        if ($currentUser !== $match->getItemRespondent()->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $match->setStatus(Match::STATUS_DECLINED);
+        $this->getDoctrine()->getManager()->flush();
+
         return $this->redirectToRoute('match_index');
     }
 }
