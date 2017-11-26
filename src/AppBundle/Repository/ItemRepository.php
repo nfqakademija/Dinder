@@ -6,7 +6,6 @@ use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query\Expr;
 
 /**
  * ItemRepository
@@ -40,10 +39,11 @@ class ItemRepository extends EntityRepository
         $subquery = $this->createQueryBuilder('s')
             ->select('s.id')
             ->leftJoin('s.matchesResponseItem', 'sm')
-            ->where('sm.status = :status_accepted')
+            ->where('sm.status = :status_accepted OR sm.status = :status_rejected')
             ->andWhere('sm.itemOwner = :id')
             ->setParameters([
                 'status_accepted' => Match::STATUS_ACCEPTED,
+                'status_rejected' => Match::STATUS_REJECTED,
                 'id' => $item->getId(),
             ])
             ->getQuery()->getArrayResult();
@@ -57,14 +57,12 @@ class ItemRepository extends EntityRepository
         $items = $this
             ->createQueryBuilder('i')
             ->leftJoin('i.user', 'iu')
-            ->leftJoin('i.matchesOwnItem', 'imo', Expr\Join::WITH, 'imo.status != :status_rejected')
             ->where('iu.location = :location')
             ->andWhere('i.status = :status_active')
             ->andWhere('iu.id != :id')
             ->andWhere('i.category IN (:categories)')
             ->andWhere('i.value >= :min_value')
             ->andWhere('i.value <= :max_value')
-            ->andWhere('imo.itemOwner IS NULL')
             ->andWhere('i.id NOT IN (:exclude)')
             ->setParameters([
                 'location' => $user->getLocation(),
@@ -73,7 +71,6 @@ class ItemRepository extends EntityRepository
                 'min_value' => $item->getValue() - $margin,
                 'max_value' => $item->getValue() + $margin,
                 'categories' => $item->getCategoriesToMatchArray(),
-                'status_rejected' => Match::STATUS_REJECTED,
                 'exclude' => $exclude,
             ])
             ->orderBy('RAND()')
