@@ -115,6 +115,4 @@ class MatchController extends Controller
 
         return $this->redirectToRoute('match_index');
     }
-
-
 }
