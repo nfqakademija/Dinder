@@ -22,10 +22,34 @@ class MatchRepository extends EntityRepository
      *
      * @return array
      */
-    public function findMatchesByUser(User $user, int $status = Match::STATUS_ACCEPTED): array
+    public function findMatchesByRespondent(User $user, int $status = Match::STATUS_ACCEPTED): array
     {
         $matches = $this->createQueryBuilder('m')
             ->leftJoin('m.itemRespondent', 'i')
+            ->where('i.user = :user')
+            ->andWhere('m.status = :status')
+            ->setParameters([
+                'user' => $user,
+                'status' => $status,
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return $matches;
+    }
+
+    /**
+     * Return array of incoming item matches for given user
+     *
+     * @param User $user
+     * @param int $status
+     *
+     * @return array
+     */
+    public function findMatchesByOwner(User $user, int $status = Match::STATUS_ACCEPTED): array
+    {
+        $matches = $this->createQueryBuilder('m')
+            ->leftJoin('m.itemOwner', 'i')
             ->where('i.user = :user')
             ->andWhere('m.status = :status')
             ->setParameters([

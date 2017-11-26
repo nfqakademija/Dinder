@@ -29,10 +29,12 @@ class MatchController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $matches = $em->getRepository(Match::class)->findMatchesByUser($user);
+        $offers = $em->getRepository(Match::class)->findMatchesByRespondent($user);
+        $declined = $em->getRepository(Match::class)->findMatchesByOwner($user, Match::STATUS_DECLINED);
 
         return $this->render('match/index.html.twig', array(
-            'matches' => $matches,
+            'declines' => $declined,
+            'matches' => $offers,
         ));
     }
 
@@ -51,8 +53,7 @@ class MatchController extends Controller
         $ownedItem = $match->getItemRespondent();
         $offeredItem = $match->getItemOwner();
 
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        if ($currentUser !== $ownedItem->getUser()) {
+        if ($this->getUser() !== $ownedItem->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
@@ -62,7 +63,7 @@ class MatchController extends Controller
 
         $offeredItem
             ->setStatus(Item::STATUS_TRADED)
-            ->setUser($currentUser);
+            ->setUser($this->getUser());
 
         $em = $this->getDoctrine()->getManager();
         $em->remove($match);
@@ -83,8 +84,7 @@ class MatchController extends Controller
      */
     public function declineAction(Match $match): Response
     {
-        $currentUser = $this->get('security.token_storage')->getToken()->getUser();
-        if ($currentUser !== $match->getItemRespondent()->getUser()) {
+        if ($this->getUser() !== $match->getItemRespondent()->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
@@ -93,4 +93,28 @@ class MatchController extends Controller
 
         return $this->redirectToRoute('match_index');
     }
+
+    /**
+     * @Route("/{id}/remove", name="decline_remove")
+     *
+     * @Method("GET")
+     *
+     * @param Match $match
+     *
+     * @return Response
+     */
+    public function removeDeclineAction(Match $match): Response
+    {
+        if ($this->getUser() !== $match->getItemOwner()->getUser() || $match->getStatus() !== Match::STATUS_DECLINED) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($match);
+        $em->flush();
+
+        return $this->redirectToRoute('match_index');
+    }
+
+
 }
