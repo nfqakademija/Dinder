@@ -19,11 +19,16 @@
                                         <!-- Ad Box -->
                                         <div class="category-grid-box">
                                             <!-- Ad Img -->
-                                            {% if decline.itemRespondent.mainImage %}
-                                                <img src="{{ vich_uploader_asset(decline.itemRespondent.mainImage, 'file')}}" alt="{{ decline.itemRespondent.title }}" />
-                                            {% else %}
-                                                <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                            {% endif %}
+                                            <div class="category-grid-img">
+                                                {% if decline.itemRespondent.mainImage %}
+                                                    <img src="{{ vich_uploader_asset(decline.itemRespondent.mainImage, 'file')}}" alt="{{ decline.itemRespondent.title }}" />
+                                                {% else %}
+                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                {% endif %}
+                                                <p class="item-description">
+                                                    {{ decline.itemRespondent.description }}
+                                                </p>
+                                            </div>
                                             <!-- Ad Img End -->
                                             <div class="short-description">
                                                 <!-- Ad Title -->
@@ -39,11 +44,16 @@
                                         <!-- Ad Box -->
                                         <div class="category-grid-box">
                                             <!-- Ad Img -->
-                                            {% if decline.itemOwner.mainImage %}
-                                                <img src="{{ vich_uploader_asset(decline.itemOwner.mainImage, 'file')}}" alt="{{ decline.itemOwner.title }}" />
-                                            {% else %}
-                                                <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                            {% endif %}
+                                            <div class="category-grid-img">
+                                                {% if decline.itemOwner.mainImage %}
+                                                    <img src="{{ vich_uploader_asset(decline.itemOwner.mainImage, 'file')}}" alt="{{ decline.itemOwner.title }}" />
+                                                {% else %}
+                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                {% endif %}
+                                                <p class="item-description">
+                                                    {{ decline.itemOwner.description }}
+                                                </p>
+                                            </div>
                                             <!-- Ad Img End -->
                                             <div class="short-description">
                                                 <!-- Ad Title -->
@@ -88,11 +98,16 @@
                                             <!-- Ad Box -->
                                             <div class="category-grid-box">
                                                 <!-- Ad Img -->
-                                                {% if match.itemRespondent.mainImage %}
-                                                    <img src="{{ vich_uploader_asset(match.itemRespondent.mainImage, 'file')}}" alt="{{ match.itemRespondent.title }}" />
-                                                {% else %}
-                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                {% endif %}
+                                                <div class="category-grid-img">
+                                                    {% if match.itemRespondent.mainImage %}
+                                                        <img src="{{ vich_uploader_asset(match.itemRespondent.mainImage, 'file')}}" alt="{{ match.itemRespondent.title }}" />
+                                                    {% else %}
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                    {% endif %}
+                                                    <p class="item-description">
+                                                        {{ match.itemRespondent.description }}
+                                                    </p>
+                                                </div>
                                                 <!-- Ad Img End -->
                                                 <div class="short-description">
                                                     <!-- Ad Category -->
@@ -117,11 +132,16 @@
                                             <!-- Ad Box -->
                                             <div class="category-grid-box">
                                                 <!-- Ad Img -->
-                                                {% if match.itemOwner.mainImage %}
-                                                    <img src="{{ vich_uploader_asset(match.itemOwner.mainImage, 'file')}}" alt="{{ match.itemOwner.title }}" />
-                                                {% else %}
-                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                {% endif %}
+                                                <div class="category-grid-img">
+                                                    {% if match.itemOwner.mainImage %}
+                                                        <img src="{{ vich_uploader_asset(match.itemOwner.mainImage, 'file')}}" alt="{{ match.itemOwner.title }}" />
+                                                    {% else %}
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                    {% endif %}
+                                                    <p class="item-description">
+                                                        {{ match.itemOwner.description }}
+                                                    </p>
+                                                </div>
                                                 <!-- Ad Img End -->
                                                 <div class="short-description">
                                                     <!-- Ad Category -->

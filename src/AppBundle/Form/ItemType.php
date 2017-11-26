@@ -18,6 +18,7 @@ class ItemType extends AbstractType
         $builder
             ->add('title')
             ->add('value')
+            ->add('description')
             ->add('category', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',

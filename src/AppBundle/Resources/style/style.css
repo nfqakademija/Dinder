@@ -1537,6 +1537,19 @@ ul.category-list-style li a span {
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
+.category-grid-box .category-grid-img .item-description {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #fff;
+	opacity: 0;
+	-webkit-transition: all 0.6s ease 0s;
+	-moz-transition: all 0.6s ease 0s;
+	-ms-transition: all 0.6s ease 0s;
+	-o-transition: all 0.6s ease 0s;
+	transition: all 0.6s ease 0s;
+}
 .category-grid-box > h3 {
 	color: #1b1d21;
 	float: left;
@@ -1584,6 +1597,9 @@ ul.category-list-style li a span {
 	/* Chrome, Safari, Opera */
     
 	transform: scale(1);
+}
+.category-grid-box:hover .category-grid-img .item-description {
+	opacity: 1;
 }
 .category-grid-box .user-preview {
 	position: absolute;

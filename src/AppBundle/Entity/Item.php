@@ -86,6 +86,13 @@ class Item
     private $rejections;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="text")
+     */
+    private $description;
+
+    /**
      * @var \DateTime
      *
      * @ORM\Column(name="created", type="datetime")
@@ -534,5 +541,29 @@ class Item
         }
 
         return null;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return Item
+     */
+    public function setDescription(string $description): Item
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
     }
 }
