@@ -13,8 +13,8 @@
     <!-- =-=-=-=-=-=-= Mobile Specific =-=-=-=-=-=-= -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     {% block stylesheets %}
-        <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
-        <link rel="stylesheet" href="{{ asset('css/template.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('build/css/style.css') }}"/>
+        {#<link rel="stylesheet" href="{{ asset('css/template.css') }}"/>#}
     {% endblock %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -45,7 +45,11 @@
 <a href="#0" class="cd-top">Top</a>
     <div id="app"></div>
 {% block javascripts %}
-    <script src="{{ asset('build/bundle.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="{{ asset('build/js/vendor.js') }}"></script>
+    <script src="{{ asset('build/js/bundle.js') }}"></script>
 {% endblock %}
 
 </body>

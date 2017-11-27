@@ -21,7 +21,7 @@ export default class Swinger extends React.Component {
 
         // throwOut method call
         card.throwOut(100, 200, Swing.DIRECTION.RIGHT);
-    }
+    };
 
     render() {
         return (
