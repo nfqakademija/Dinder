@@ -17,11 +17,16 @@
                                 <!-- Ad Box -->
                                 <div class="category-grid-box">
                                     <!-- Ad Img -->
-                                    {% if item.mainImage %}
-                                        <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
-                                    {% else %}
-                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                    {% endif %}
+                                    <div class="category-grid-img">
+                                        {% if item.mainImage %}
+                                            <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
+                                        {% else %}
+                                            <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                        {% endif %}
+                                        <p class="item-description">
+                                            {{ item.description }}
+                                        </p>
+                                    </div>
                                     <!-- Ad Img End -->
                                     <div class="short-description">
                                         <!-- Ad Category -->

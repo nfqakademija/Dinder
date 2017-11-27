@@ -3,6 +3,7 @@ AppBundle\Entity\Item:
         user: '@user_*'
         status: 1
         title: <word()>
+        description: <sentence()>
         value: <randomDigitNotNull()>
         category: '@category_*'
         categoriesToMatch: ['@category_<numberBetween(1, 3)>', '@category_<numberBetween(4, 7)>', '@category_<numberBetween(8, 10)>']
