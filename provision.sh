@@ -5,8 +5,7 @@ if [[ ! -f .env ]]; then
 fi
 docker-compose up -d
 docker-compose exec fpm composer install --prefer-dist -n
-docker-compose run npm npm install
-docker-compose run npm npx webpack
+docker-compose run npm bash -c "npm install && ./node_modules/.bin/webpack"
 if [[ $1 == '--schema' ]]; then
     docker-compose exec fpm bin/console doc:database:drop --force
     docker-compose exec fpm bin/console doc:database:create
