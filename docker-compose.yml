@@ -36,6 +36,7 @@ services:
       - ".docker/.npm:/home/.npm"
       - "./:/home/app"
       - "/usr/local/lib/node_modules"
+    command: "true"
     networks:
       - frontend
   mariadb-data:
