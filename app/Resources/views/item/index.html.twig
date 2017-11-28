@@ -6,8 +6,92 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
+                    {% if traded_items %}
+                        <div class="heading-panel">
+                            <h3 class="main-title">Traded Items</h3>
+                        </div>
+                        <div class="row">
+                            {% for item in traded_items  %}
+                                <div class="col-md-4 col-xs-12 col-sm-6">
+                                    <!-- Ad Box -->
+                                    <div class="category-grid-box">
+                                        <!-- Ad Img -->
+                                        <div class="category-grid-img">
+                                            {% if item.mainImage %}
+                                                <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
+                                            {% else %}
+                                                <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                            {% endif %}
+                                            <a class="btn btn-light link-exchange" href="{{ path('item_activate', {id: item.id}) }}">
+                                                <i class="fa fa-refresh" aria-hidden="true"></i> Activate
+                                            </a>
+                                            <a class="ad-status" href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a>
+                                        </div>
+                                        <!-- Ad Img End -->
+                                        <div class="short-description">
+                                            <!-- Ad Category -->
+                                            <div class="category-title"> <span>{{ item.category.title }}</span> </div>
+                                            <!-- Ad Title -->
+                                            <h3>{{ item.title }}</h3>
+                                            <div class="description">{{ item.description }}</div>
+                                            <!-- Price -->
+                                            <div class="price">{{ item.value }}€</div>
+
+                                            <hr/>
+
+                                            <div><h4>Categories to match:</h4>
+                                                <ul>
+                                                    {% for categoryToMatch in item.categoriesToMatch %}
+                                                        <li>
+                                                            {{ categoryToMatch.title }}
+                                                            <a href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+                                                                <i class="fa fa-trash" aria-hidden="true"></i>
+                                                            </a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                                {% if item.categoriesToMatch|length < 3 %}
+                                                    <form action="{{ path('item_category_add') }}" method="POST">
+                                                        <input type="hidden" name="item" value="{{ item.id }}"/>
+                                                        <div class="row">
+                                                            <div class="col-xs-12">
+                                                                <select class="select2" name="category">
+                                                                    {% for category in categories %}
+                                                                        {% if category.id not in item.getCategoriesToMatchArray %}
+                                                                            <option value="{{ category.id }}">{{ category.title }}</option>
+                                                                        {% endif %}
+                                                                    {% endfor %}
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-xs-12">
+                                                                <button class="btn btn-light btn-block">Add</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <!-- Addition Info -->
+                                        <div class="ad-info">
+                                            <ul>
+                                                <li><i class="fa fa-thumbs-up"></i>{{ item.approvals }}</li>
+                                                <li><i class="fa fa-thumbs-down"></i>{{ item.rejections }}</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- Ad Box End -->
+                                </div>
+                                {% if loop.index0 % 3 == 2 %}
+                                    <div class="clearfix visible-md visible-lg"></div>
+                                {% endif %}
+                                {% if loop.index0 % 2 == 1 %}
+                                    <div class="clearfix visible-sm"></div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                     <div class="heading-panel">
-                        <h3 class="main-title">My Items</h3>
+                        <h3 class="main-title">Active Items</h3>
                     </div>
                     <div class="row">
                         {% for item in items %}
