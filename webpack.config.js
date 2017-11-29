@@ -11,6 +11,7 @@ module.exports = {
         app: [
             path.resolve(__dirname, './src/AppBundle/Resources/scss/main.scss'),
             path.resolve(__dirname, './src/AppBundle/Resources/js/index.js'),
+            path.resolve(__dirname, './src/AppBundle/Resources/js/modal.js'),
             path.resolve(__dirname, './src/AppBundle/Resources/js/main.js'),
         ],
         vendor: [

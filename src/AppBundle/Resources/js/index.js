@@ -4,5 +4,5 @@ import Swinger from "./swing";
 
 ReactDOM.render(
     <Swinger />,
-    document.getElementById('app')
+    document.getElementById('swing')
 );
