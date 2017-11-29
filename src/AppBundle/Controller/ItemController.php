@@ -151,6 +151,7 @@ class ItemController extends Controller
     {
         $margin = $this->getParameter('item_match_margin');
         $limit = $this->getParameter('item_match_limit');
+        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 
         $itemsToMatch = $this
             ->getDoctrine()
@@ -163,8 +164,10 @@ class ItemController extends Controller
             $items[] = [
                 'id' => $itemToMatch->getId(),
                 'title' => $itemToMatch->getTitle(),
+                'description' => $itemToMatch->getDescription(),
+                'category' => $itemToMatch->getCategory()->getTitle(),
                 'value' => $itemToMatch->getValue(),
-                'image' => $itemToMatch->getMainImage() ? $itemToMatch->getMainImage() : $this->container->get('assets.packages')->getUrl('images/default.jpg'),
+                'image' => $itemToMatch->getMainImage() ? $helper->asset($itemToMatch->getMainImage(), 'file') : $this->container->get('assets.packages')->getUrl('images/default.jpg'),
             ];
         }
 
