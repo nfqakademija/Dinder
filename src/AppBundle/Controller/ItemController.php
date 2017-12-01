@@ -171,7 +171,7 @@ class ItemController extends Controller
             ];
         }
 
-        return new JsonResponse(['items' => $items]);
+        return new JsonResponse($items);
     }
 
     /**

@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Swing, { Stack, Card, Direction } from 'react-swing';
+import Swing, {Stack, Card, Direction} from 'react-swing';
+import MyCard from './card';
 
 export default class Swinger extends React.Component {
     config = {
@@ -8,8 +9,17 @@ export default class Swinger extends React.Component {
     };
 
     state = {
-        stack: null
+        stack: null,
+        cards: []
     };
+
+    componentWillMount() {
+        fetch(fetchUrl, {
+            credentials: 'same-origin'
+        })
+            .then(res => res.json())
+            .then((json) => this.setState({cards: json}))
+    }
 
     throwCard = () => {
         // Swing Card Directions
@@ -31,6 +41,12 @@ export default class Swinger extends React.Component {
     throwOut = (e) => {
         const el = ReactDOM.findDOMNode(e.target);
         const card = this.state.stack.getCard(el);
+        const newSet = this.state.cards;
+
+        newSet.unshift();
+
+        this.setState({cards: newSet});
+
         card.destroy();
         el.parentNode.removeChild(el);
 
@@ -41,10 +57,20 @@ export default class Swinger extends React.Component {
                 'respondent': e.target.dataset.id,
                 'status': Swing.DIRECTION.RIGHT === e.throwDirection ? 1 : 0
             },
-            success: function(data) {
+            success: function (data) {
                 console.log(data);
             }
         });
+
+        this.setState({stack: stack.destroyCard(card)});
+
+        if (this.state.cards.length <= 3) {
+            fetch(fetchUrl, {
+                credentials: 'same-origin'
+            })
+                .then(res => res.json())
+                .then(json => this.setState({cards: [...this.state.cards, ...json]}))
+        }
     }
 
     render() {
@@ -55,17 +81,13 @@ export default class Swinger extends React.Component {
                         config={this.config}
                         className="stack"
                         tagName="div"
-                        setStack={(stack) => this.setState({stack:stack})}
+                        setStack={(stack) => this.setState({stack: stack})}
                         ref="stack"
                         throwout={(e) => this.throwOut(e)}
                     >
-                        {/*
-                            children elements is will be Card
-                        */}
-                        <div className="card clubs" data-id="1" ref="card1" throwout={(e)=>console.log('card throwout',e)}>♣</div>
-                        <div className="card diamonds" data-id="2" ref="card2">♦</div>
-                        <div className="card hearts" data-id="3" ref="card3">♥</div>
-                        <div className="card spades" data-id="4" ref="card4">♠</div>
+                        {this.state.cards.map((c, i) => {
+                            return <MyCard index={i} onThrow={(e) => console.log(e)} card={c}/>
+                        })}
                     </Swing>
                 </div>
                 <div className="control">

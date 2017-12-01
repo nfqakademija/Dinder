@@ -1,30 +1,20 @@
 "use strict";
 
 import React from 'react';
-import Item from './item';
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
+import Swinger from "./swing";
 
 $(function() {
     $('.link-exchange').click(function() {
-        const $me = $(this);
-        itemId = $me.data('id');
+        itemId = $(this).data('id');
+        fetchUrl = $(this).attr('href');
 
-        $.ajax({
-            url: $me.attr('href'),
-            success: function(data) {
-                const modal = $('#exchangeModal')
-                const body = modal.find('.modal-body').get(0);
+        $('#exchangeModal').modal('show');
 
-                for(let i = 0; i < data.items.length; i++) {
-                    ReactDOM.render(
-                        <Item {...data.items[i]}/>,
-                        body
-                    );
-                }
-
-                modal.modal('show');
-            }
-        });
+        ReactDOM.render(
+            <Swinger />,
+            document.getElementById('swing')
+        );
 
         return false;
     });
