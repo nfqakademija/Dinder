@@ -105,7 +105,7 @@
                                         {% else %}
                                             <img src="{{ asset('images/default.jpg') }}" alt="no image" />
                                         {% endif %}
-                                        <a class="btn btn-light link-exchange" href="{{ path('item_show', {id: item.id}) }}">
+                                        <a class="btn btn-light link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
                                             <i class="fa fa-exchange" aria-hidden="true"></i> Exchange
                                         </a>
                                         <a class="ad-status" href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a>
@@ -177,4 +177,26 @@
         </div>
     </section>
     <!-- =-=-=-=-=-=-= Home Tabs End =-=-=-=-=-=-= -->
+
+    <div class="modal fade" id="exchangeModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body">
+                    <div id="swing"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var matchUrl = '{{ path('item_match') }}';
+        var fetchUrl = null;
+        var itemId = null;
+    </script>
+    {{ parent() }}
 {% endblock %}

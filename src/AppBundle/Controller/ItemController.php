@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,6 +39,7 @@ class ItemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
+
         $activeItems = $em->getRepository(Item::class)->findBy([
             'user' => $user,
             'status' => Item::STATUS_ACTIVE,
@@ -46,6 +48,7 @@ class ItemController extends Controller
             'user' => $user,
             'status' => Item::STATUS_TRADED,
         ]);
+      
         $categories = $em->getRepository(Category::class)->findAll();
 
         return $this->render('item/index.html.twig', array(
@@ -100,26 +103,50 @@ class ItemController extends Controller
     }
 
     /**
-     * Make item active for matches.
+     * Adds/removes item to/from match wishlist
      *
-     * @Route("/{id}/activate", name="item_activate")
+     * @Route("/match", name="item_match")
      *
      * @Method("GET")
      *
-     * @param Item $item
-     *
      * @return Response
      */
-    public function activateAction(Item $item): Response
+    public function matchAction(Request $request): Response
     {
-        if ($this->getUser() !== $item->getUser()) {
+        $itemOwnerId = $request->get('item', null);
+        $itemRespondentId = $request->get('respondent', null);
+        $status = $request->get('status', null);
+
+        if (!$itemOwnerId ||
+            !$itemRespondentId ||
+            $status === null ||
+            !in_array($status, [Match::STATUS_ACCEPTED, Match::STATUS_REJECTED])) {
+            throw new InvalidArgumentException('Missing parameter');
+        }
+
+        $em = $this->getDoctrine()->getManager();
+        $itemOwner = $em->getRepository(Item::class)->find($itemOwnerId);
+        $itemRespondent = $em->getRepository(Item::class)->find($itemRespondentId);
+
+        if (!$itemOwner || !$itemRespondent) {
+            throw new NoResultException();
+        }
+
+        if ($itemOwner->getUser() !== $this->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
-        $item->setStatus(Item::STATUS_ACTIVE);
-        $this->getDoctrine()->getManager()->flush();
+        $em = $this->getDoctrine()->getManager();
 
-        return $this->redirectToRoute('item_index');
+        $match = new Match();
+        $match->setItemOwner($itemOwner);
+        $match->setItemRespondent($itemRespondent);
+        $match->setStatus($status);
+
+        $em->persist($match);
+        $em->flush();
+
+        return new JsonResponse([], 200);
     }
 
     /**
@@ -137,75 +164,33 @@ class ItemController extends Controller
     {
         $margin = $this->getParameter('item_match_margin');
         $limit = $this->getParameter('item_match_limit');
-
-        $deleteForm = $this->createDeleteForm($item);
+        $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
 
         $itemsToMatch = $this
             ->getDoctrine()
             ->getRepository(Item::class)
             ->findAvailableMatches($item, $this->getUser(), $margin, $limit);
 
-        return $this->render('item/show.html.twig', array(
-            'item' => $item,
-            'items_to_match' => $itemsToMatch,
-            'delete_form' => $deleteForm->createView(),
-        ));
-    }
+        $items = [];
 
-    /**
-     * Adds item to rejected list
-     *
-     * @Route("/{id}/reject/{rejected}", name="item_reject")
-     *
-     * @Method("GET")
-     *
-     * @return Response
-     */
-    public function rejectAction(Item $item, Item $rejected): Response
-    {
-        if ($item->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        foreach ($itemsToMatch as $itemToMatch) {
+            $mainImage = $this->container->get('assets.packages')->getUrl('images/default.jpg');
+
+            if ($itemToMatch->getMainImage()) {
+                $mainImage = $helper->asset($itemToMatch->getMainImage(), 'file');
+            }
+
+            $items[] = [
+                'id' => $itemToMatch->getId(),
+                'title' => $itemToMatch->getTitle(),
+                'description' => $itemToMatch->getDescription(),
+                'category' => $itemToMatch->getCategory()->getTitle(),
+                'value' => $itemToMatch->getValue(),
+                'image' => $mainImage,
+            ];
         }
 
-        $em = $this->getDoctrine()->getManager();
-
-        $match = new Match();
-        $match->setItemOwner($item);
-        $match->setItemRespondent($rejected);
-        $match->setStatus(Match::STATUS_REJECTED);
-
-        $em->persist($match);
-        $em->flush();
-
-        return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
-    }
-
-    /**
-     * Adds item to match wishlist
-     *
-     * @Route("/{id}/accept/{accepted}", name="item_accept")
-     *
-     * @Method("GET")
-     *
-     * @return Response
-     */
-    public function acceptAction(Item $item, Item $accepted): Response
-    {
-        if ($item->getUser() !== $this->getUser()) {
-            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
-        }
-
-        $em = $this->getDoctrine()->getManager();
-
-        $match = new Match();
-        $match->setItemOwner($item);
-        $match->setItemRespondent($accepted);
-        $match->setStatus(Match::STATUS_ACCEPTED);
-
-        $em->persist($match);
-        $em->flush();
-
-        return $this->redirectToRoute('item_show', ['id' => $item->getId()]);
+        return new JsonResponse($items);
     }
 
     /**
