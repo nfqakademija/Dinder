@@ -11,11 +11,15 @@ $(function() {
 
         $('#exchangeModal').modal('show');
 
+        return false;
+    });
+
+    $('#exchangeModal').on('show.bs.modal', function (e) {
         ReactDOM.render(
             <Swinger />,
             document.getElementById('swing')
         );
-
-        return false;
+    }).on('hide.bs.modal', function() {
+        ReactDOM.unmountComponentAtNode(document.getElementById('swing'));
     });
 });

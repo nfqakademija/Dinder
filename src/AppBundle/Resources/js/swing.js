@@ -10,7 +10,8 @@ export default class Swinger extends React.Component {
 
     state = {
         stack: null,
-        cards: []
+        cards: [],
+        more: true
     };
 
     componentWillMount() {
@@ -21,55 +22,82 @@ export default class Swinger extends React.Component {
             .then((json) => this.setState({cards: json}))
     }
 
-    throwCard = () => {
-        // Swing Card Directions
-        console.log('Swing.DIRECTION', Swing.DIRECTION);
-
-        // Swing Component Childrens refs
-        const target = this.refs.stack.refs.card2;
-
-        // get Target Dom Element
+    acceptCard = () => {
+        const cards = this.refs.stack.refs;
+        const target = cards[Object.keys(cards)[Object.keys(cards).length - 1]];
         const el = ReactDOM.findDOMNode(target);
-
-        // stack.getCard
         const card = this.state.stack.getCard(el);
 
-        // throwOut method call
-        card.throwOut(100, 200, Swing.DIRECTION.RIGHT);
+        card.throwOut(300, 0);
     };
+
+    rejectCard = () => {
+        const cards = this.refs.stack.refs;
+        const target = cards[Object.keys(cards)[Object.keys(cards).length - 1]];
+        const el = ReactDOM.findDOMNode(target);
+        const card = this.state.stack.getCard(el);
+
+        card.throwOut(-300, 0);
+    }
 
     throwOut = (e) => {
         const el = ReactDOM.findDOMNode(e.target);
         const card = this.state.stack.getCard(el);
         const newSet = this.state.cards;
 
-        newSet.unshift();
+        // throwOut is triggered twice and second time we don't have card element
+        if(card) {
+            newSet.pop();
 
-        this.setState({cards: newSet});
+            this.setState({cards: newSet});
 
-        card.destroy();
-        el.parentNode.removeChild(el);
+            card.destroy();
 
-        $.ajax({
-            url: matchUrl,
-            data: {
+            const params = {
                 'item': itemId,
                 'respondent': e.target.dataset.id,
                 'status': Swing.DIRECTION.RIGHT === e.throwDirection ? 1 : 0
-            },
-            success: function (data) {
-                console.log(data);
-            }
-        });
+            };
 
-        this.setState({stack: stack.destroyCard(card)});
+            const urlParams = new URLSearchParams(Object.entries(params));
 
-        if (this.state.cards.length <= 3) {
-            fetch(fetchUrl, {
+            fetch(matchUrl + '?' + urlParams, {
                 credentials: 'same-origin'
-            })
-                .then(res => res.json())
-                .then(json => this.setState({cards: [...this.state.cards, ...json]}))
+            }).then(() => {
+                if (this.state.more && this.state.cards.length <= 3) {
+                    fetch(fetchUrl, {
+                        credentials: 'same-origin'
+                    })
+                        .then(res => res.json())
+                        .then(json => {
+                            let more = false;
+
+                            for(let i = 0; i < json.length; i++) {
+                                let exist = false;
+
+                                for(let j = 0; j < newSet.length; j++) {
+                                    if(newSet[j].id === json[i].id) {
+                                        exist = true;
+                                    }
+                                }
+
+                                if(!exist) {
+                                    newSet.unshift(json[i]);
+                                    more = true;
+                                }
+                            }
+
+                            this.setState({cards: newSet, more: more});
+                        })
+                    // .then(json => this.setState({cards: [...json, ...this.state.cards]}))
+                }
+            });
+
+            // stack is undefined and destroyCard is event not method
+            // don't know what this was supposed to do
+            // this.setState({stack: stack.destroyCard(card)});
+
+            // console.log(this.state.cards.length);
         }
     }
 
@@ -86,12 +114,13 @@ export default class Swinger extends React.Component {
                         throwout={(e) => this.throwOut(e)}
                     >
                         {this.state.cards.map((c, i) => {
-                            return <MyCard index={i} onThrow={(e) => console.log(e)} card={c}/>
+                            return <MyCard key={i} index={i} onThrow={(e) => console.log(e)} card={c}/>
                         })}
                     </Swing>
                 </div>
                 <div className="control">
-                    <button type="button" onClick={this.throwCard}>throw Card</button>
+                    <button type="button" onClick={this.rejectCard}>Reject item</button>
+                    <button type="button" onClick={this.acceptCard}>Offer match</button>
                 </div>
             </div>
         )

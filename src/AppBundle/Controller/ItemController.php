@@ -107,7 +107,10 @@ class ItemController extends Controller
         $itemRespondentId = $request->get('respondent', null);
         $status = $request->get('status', null);
 
-        if (!$itemOwnerId || !$itemRespondentId || !$status || !in_array($status, [Match::STATUS_ACCEPTED, Match::STATUS_REJECTED])) {
+        if (!$itemOwnerId ||
+            !$itemRespondentId ||
+            $status === null ||
+            !in_array($status, [Match::STATUS_ACCEPTED, Match::STATUS_REJECTED])) {
             throw new InvalidArgumentException('Missing parameter');
         }
 
@@ -160,14 +163,20 @@ class ItemController extends Controller
 
         $items = [];
 
-        foreach($itemsToMatch as $itemToMatch) {
+        foreach ($itemsToMatch as $itemToMatch) {
+            if($itemToMatch->getMainImage()) {
+                $mainImage = $helper->asset($itemToMatch->getMainImage(), 'file');
+            } else {
+                $mainImage = $this->container->get('assets.packages')->getUrl('images/default.jpg');
+            }
+
             $items[] = [
                 'id' => $itemToMatch->getId(),
                 'title' => $itemToMatch->getTitle(),
                 'description' => $itemToMatch->getDescription(),
                 'category' => $itemToMatch->getCategory()->getTitle(),
                 'value' => $itemToMatch->getValue(),
-                'image' => $itemToMatch->getMainImage() ? $helper->asset($itemToMatch->getMainImage(), 'file') : $this->container->get('assets.packages')->getUrl('images/default.jpg'),
+                'image' => $mainImage,
             ];
         }
 
