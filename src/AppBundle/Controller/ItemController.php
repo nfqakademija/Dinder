@@ -39,11 +39,21 @@ class ItemController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $items = $em->getRepository(Item::class)->findBy(['user' => $user], null, 30);
+
+        $activeItems = $em->getRepository(Item::class)->findBy([
+            'user' => $user,
+            'status' => Item::STATUS_ACTIVE,
+        ]);
+        $tradedItems = $em->getRepository(Item::class)->findBy([
+            'user' => $user,
+            'status' => Item::STATUS_TRADED,
+        ]);
+      
         $categories = $em->getRepository(Category::class)->findAll();
 
         return $this->render('item/index.html.twig', array(
-            'items' => $items,
+            'items' => $activeItems,
+            'traded_items' => $tradedItems,
             'categories' => $categories
         ));
     }
