@@ -164,10 +164,10 @@ class ItemController extends Controller
         $items = [];
 
         foreach ($itemsToMatch as $itemToMatch) {
+            $mainImage = $this->container->get('assets.packages')->getUrl('images/default.jpg');
+
             if ($itemToMatch->getMainImage()) {
                 $mainImage = $helper->asset($itemToMatch->getMainImage(), 'file');
-            } else {
-                $mainImage = $this->container->get('assets.packages')->getUrl('images/default.jpg');
             }
 
             $items[] = [

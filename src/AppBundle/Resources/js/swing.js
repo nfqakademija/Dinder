@@ -22,20 +22,23 @@ export default class Swinger extends React.Component {
             .then((json) => this.setState({cards: json}))
     }
 
-    acceptCard = () => {
+    getLastCard = () => {
         const cards = this.refs.stack.refs;
         const target = cards[Object.keys(cards)[Object.keys(cards).length - 1]];
         const el = ReactDOM.findDOMNode(target);
         const card = this.state.stack.getCard(el);
+
+        return card;
+    }
+
+    acceptCard = () => {
+        const card = this.getLastCard();
 
         card.throwOut(300, 0);
     };
 
     rejectCard = () => {
-        const cards = this.refs.stack.refs;
-        const target = cards[Object.keys(cards)[Object.keys(cards).length - 1]];
-        const el = ReactDOM.findDOMNode(target);
-        const card = this.state.stack.getCard(el);
+        const card = this.getLastCard();
 
         card.throwOut(-300, 0);
     }
@@ -45,6 +48,7 @@ export default class Swinger extends React.Component {
         const card = this.state.stack.getCard(el);
         const newSet = this.state.cards;
 
+        // Question: Why is it triggered twice?
         // throwOut is triggered twice and second time we don't have card element
         if(card) {
             newSet.pop();
@@ -89,14 +93,16 @@ export default class Swinger extends React.Component {
 
                             this.setState({cards: newSet, more: more});
                         })
+
+                    // Question: my logic doesn't allow duplicate entities to be added to array.
+                    // But after fetch when there are no new items, the next swipe is triggered multiple times with the same data and no new cards are rendered, even though the newStack contains more items
                     // .then(json => this.setState({cards: [...json, ...this.state.cards]}))
                 }
             });
 
             // stack is undefined and destroyCard is event not method
-            // don't know what this was supposed to do
+            // Question: don't know what this was supposed to do
             // this.setState({stack: stack.destroyCard(card)});
-
             // console.log(this.state.cards.length);
         }
     }

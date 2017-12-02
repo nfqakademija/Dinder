@@ -20,6 +20,7 @@ export default class Card extends React.Component {
     }
 }
 
+// Question: Why it was not working with commented logic. I had to make Card as a React.Component
 /*
 const Card = ({index, onThrow, card}) => (
     <div className="card" data-id={index} ref={`card${index}`} throwout={onThrow}>
