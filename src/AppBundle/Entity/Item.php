@@ -5,15 +5,24 @@ namespace AppBundle\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
 /**
  * Item
  *
  * @ORM\Table(name="item")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ItemRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Item
 {
+    /**
+     * Hook SoftDeleteable behavior
+     * updates deletedAt field
+     */
+    use SoftDeleteableEntity;
+
     public const STATUS_ACTIVE = 1;
     public const STATUS_INACTIVE = 2;
     public const STATUS_TRADED = 3;
