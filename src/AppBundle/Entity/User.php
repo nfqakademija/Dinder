@@ -63,6 +63,13 @@ class User extends BaseUser
     /**
      * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="History", mappedBy="user")
+     */
+    private $histories;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\ManyToMany(targetEntity="Location", inversedBy="usersToMatch")
      * @ORM\JoinTable(name="users_locations")
      */
@@ -73,6 +80,7 @@ class User extends BaseUser
         parent::__construct();
         $this->items = new ArrayCollection();
         $this->locationsToMatch = new ArrayCollection();
+        $this->histories = new ArrayCollection();
     }
 
     /**
@@ -200,5 +208,39 @@ class User extends BaseUser
     public function getLocationsToMatch(): Collection
     {
         return $this->locationsToMatch;
+    }
+
+    /**
+     * Add history
+     *
+     * @param History $history
+     *
+     * @return User
+     */
+    public function addHistory(History $history): User
+    {
+        $this->histories[] = $history;
+
+        return $this;
+    }
+
+    /**
+     * Remove history
+     *
+     * @param History $history
+     */
+    public function removeHistory(History $history): void
+    {
+        $this->histories->removeElement($history);
+    }
+
+    /**
+     * Get histories
+     *
+     * @return Collection
+     */
+    public function getHistories(): Collection
+    {
+        return $this->histories;
     }
 }

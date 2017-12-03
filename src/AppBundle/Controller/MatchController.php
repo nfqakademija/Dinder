@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
+use AppBundle\Entity\History;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,6 +58,18 @@ class MatchController extends Controller
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
+        $em = $this->getDoctrine()->getManager();
+
+        $historyOwner = new History();
+        $historyOwner->setItem($ownedItem);
+        $historyOwner->setUser($ownedItem->getUser());
+        $em->persist($historyOwner);
+
+        $historyRespondent = new History();
+        $historyRespondent->setItem($offeredItem);
+        $historyRespondent->setUser($offeredItem->getUser());
+        $em->persist($historyRespondent);
+
         $ownedItem
             ->setStatus(Item::STATUS_TRADED)
             ->setUser($offeredItem->getUser());
@@ -65,7 +78,6 @@ class MatchController extends Controller
             ->setStatus(Item::STATUS_TRADED)
             ->setUser($this->getUser());
 
-        $em = $this->getDoctrine()->getManager();
         $em->remove($match);
 
         $em->flush();
