@@ -67,6 +67,15 @@ doctrine:
         dql:
             numeric_functions:
                 Rand: AppBundle\DQL\RandFunction
+        filters:
+            softdeleteable:
+                class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                enabled: true
+
+stof_doctrine_extensions:
+    orm:
+        default:
+            softdeleteable: true
 
 # Swiftmailer Configuration
 swiftmailer:

@@ -3,15 +3,24 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
 /**
  * Category
  *
  * @ORM\Table(name="item_match")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\MatchRepository")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Match
 {
+    /**
+     * Hook SoftDeleteable behavior
+     * updates deletedAt field
+     */
+    use SoftDeleteableEntity;
+
     public const STATUS_REJECTED = 0;
     public const STATUS_ACCEPTED = 1;
     public const STATUS_DECLINED = 2;
