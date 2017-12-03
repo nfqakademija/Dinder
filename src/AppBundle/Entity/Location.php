@@ -5,15 +5,24 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
 /**
  * Location
  *
  * @ORM\Table(name="location")
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Location
 {
+    /**
+     * Hook SoftDeleteable behavior
+     * updates deletedAt field
+     */
+    use SoftDeleteableEntity;
+
     /**
      * @var int
      *

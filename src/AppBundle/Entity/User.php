@@ -6,13 +6,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use FOS\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="fos_user")
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class User extends BaseUser
 {
+    /**
+     * Hook SoftDeleteable behavior
+     * updates deletedAt field
+     */
+    use SoftDeleteableEntity;
+
     /**
      * @var int
      *
