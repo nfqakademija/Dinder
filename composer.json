@@ -27,7 +27,8 @@
         "friendsofsymfony/user-bundle": "~2.0",
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "vich/uploader-bundle": "^1.6",
-        "javiereguiluz/easyadmin-bundle": "^1.17"
+        "javiereguiluz/easyadmin-bundle": "^1.17",
+        "stof/doctrine-extensions-bundle": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "*",
