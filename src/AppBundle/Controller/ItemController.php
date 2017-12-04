@@ -103,6 +103,29 @@ class ItemController extends Controller
     }
 
     /**
+     * Make item active for matches.
+     *
+     * @Route("/{id}/activate", name="item_activate")
+     *
+     * @Method("GET")
+     *
+     * @param Item $item
+     *
+     * @return Response
+     */
+    public function activateAction(Item $item): Response
+    {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $item->setStatus(Item::STATUS_ACTIVE);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('item_index');
+     }
+
+    /**
      * Adds/removes item to/from match wishlist
      *
      * @Route("/match", name="item_match")

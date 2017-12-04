@@ -47,6 +47,13 @@ class History
     private $created;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="seen", type="datetime", nullable=true)
+     */
+    private $seen;
+
+    /**
      * Get id
      *
      * @return int
@@ -131,5 +138,29 @@ class History
     public function getCreated(): ?\DateTime
     {
         return $this->created;
+    }
+
+    /**
+     * Set seen
+     *
+     * @param \DateTime $seen
+     *
+     * @return History
+     */
+    public function setSeen($seen): History
+    {
+        $this->seen = $seen;
+
+        return $this;
+    }
+
+    /**
+     * Get seen
+     *
+     * @return \DateTime
+     */
+    public function getSeen(): ?\DateTime
+    {
+        return $this->seen;
     }
 }

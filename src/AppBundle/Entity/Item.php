@@ -147,6 +147,7 @@ class Item
      * @var ArrayCollection
      *
      * @ORM\OneToMany(targetEntity="History", mappedBy="item")
+     * @ORM\OrderBy({"created" = "DESC"})
      */
     private $histories;
 
@@ -616,5 +617,19 @@ class Item
     public function getHistories(): Collection
     {
         return $this->histories;
+    }
+
+    /**
+     * Get last history entity
+     *
+     * @return History
+     */
+    public function getLastHistory(): ?History
+    {
+        if ($this->histories) {
+            return $this->histories->first();
+        } else {
+            return null;
+        }
     }
 }
