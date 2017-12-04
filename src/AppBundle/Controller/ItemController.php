@@ -123,7 +123,7 @@ class ItemController extends Controller
         $this->getDoctrine()->getManager()->flush();
 
         return $this->redirectToRoute('item_index');
-     }
+    }
 
     /**
      * Adds/removes item to/from match wishlist
