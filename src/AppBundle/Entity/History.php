@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * History
  *
  * @ORM\Table(name="history")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\HistoryRepository")
  */
 class History
 {
@@ -22,7 +22,7 @@ class History
     private $id;
 
     /**
-     * Previous item user is stored
+     * User assigned to item
      *
      * @var User
      *

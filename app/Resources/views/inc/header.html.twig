@@ -14,15 +14,15 @@
                         </ul>
                         <!-- menu links -->
                         <ul class="menu-links">
-                            <li><a href="{{ path('item_index') }}">Items</a></li>
                             <li>
-                                <a href="{{ path('match_index') }}">
-                                    Matches
+                                <a href="{{ path('item_index') }}">
+                                    Items
                                     {% if app.user %}
                                         {{ unseen_count.countUnseed(app.user) }}
                                     {% endif %}
                                 </a>
                             </li>
+                            <li><a href="{{ path('match_index') }}">Matches</a></li>
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
                                 <li><a href="{{ path('user_show') }}">User Profile</a></li>

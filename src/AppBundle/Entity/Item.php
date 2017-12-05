@@ -626,7 +626,7 @@ class Item
      */
     public function getLastHistory(): ?History
     {
-        if ($this->histories) {
+        if ($this->histories->count()) {
             return $this->histories->first();
         } else {
             return null;

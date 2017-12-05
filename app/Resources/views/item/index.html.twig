@@ -29,11 +29,14 @@
                                         </div>
                                         <!-- Ad Img End -->
                                         <div class="short-description">
-                                            <p{% if not item.lastHistory.seen %} style="font-weight: 700"{% endif %}>
-                                                You have to trade this item with {{ item.lastHistory.user.name }}.<br>
-                                                Phone number: {{ item.lastHistory.user.phone }}<br>
-                                                Email: {{ item.lastHistory.user.email }}
-                                            </p>
+                                            {% if item.lastHistory %}
+                                                <p{% if not item.lastHistory.seen %} style="font-weight: 700"{% endif %}>
+                                                    You have to trade this item with {{ item.lastHistory.user.name }}.<br>
+                                                    Phone number: {{ item.lastHistory.user.phone }}<br>
+                                                    Email: {{ item.lastHistory.user.email }}
+                                                </p>
+                                            {% endif %}
+
                                             <!-- Ad Category -->
                                             <div class="category-title"> <span>{{ item.category.title }}</span> </div>
                                             <!-- Ad Title -->

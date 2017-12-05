@@ -60,6 +60,14 @@ class MatchController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $ownedItem
+            ->setStatus(Item::STATUS_TRADED)
+            ->setUser($offeredItem->getUser());
+
+        $offeredItem
+            ->setStatus(Item::STATUS_TRADED)
+            ->setUser($this->getUser());
+
         $historyOwner = new History();
         $historyOwner->setItem($ownedItem);
         $historyOwner->setUser($ownedItem->getUser());
@@ -69,14 +77,6 @@ class MatchController extends Controller
         $historyRespondent->setItem($offeredItem);
         $historyRespondent->setUser($offeredItem->getUser());
         $em->persist($historyRespondent);
-
-        $ownedItem
-            ->setStatus(Item::STATUS_TRADED)
-            ->setUser($offeredItem->getUser());
-
-        $offeredItem
-            ->setStatus(Item::STATUS_TRADED)
-            ->setUser($this->getUser());
 
         $em->remove($match);
 
