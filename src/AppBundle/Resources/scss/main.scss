@@ -1,5 +1,6 @@
-//bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+@import '~font-awesome/css/font-awesome.css';
 
 @import 'parts/flaticon';
 @import "parts/style";

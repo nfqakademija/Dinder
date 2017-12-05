@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Swing, {Stack, Card, Direction} from 'react-swing';
-import MyCard from './card';
+import ItemCard from './ItemCard';
 
 export default class Swinger extends React.Component {
     config = {
@@ -120,7 +120,7 @@ export default class Swinger extends React.Component {
                         throwout={(e) => this.throwOut(e)}
                     >
                         {this.state.cards.map((c, i) => {
-                            return <MyCard key={i} index={i} onThrow={(e) => console.log(e)} card={c}/>
+                            return <ItemCard key={i} index={i} onThrow={(e) => console.log(e)} card={c} />
                         })}
                     </Swing>
                 </div>
