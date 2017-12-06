@@ -6,76 +6,10 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
-                    {% if declines %}
-                        <div class="heading-panel">
-                            <h3 class="main-title">Declined Matches</h3>
-                        </div>
-                        <div class="row">
-                            {% for decline in declines %}
-                            <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                <div class="row">
-                                    <hr>
-                                    <div class="col-xs-5">
-                                        <!-- Ad Box -->
-                                        <div class="category-grid-box">
-                                            <!-- Ad Img -->
-                                            <div class="category-grid-img">
-                                                {% if decline.itemRespondent.mainImage %}
-                                                    <img src="{{ vich_uploader_asset(decline.itemRespondent.mainImage, 'file')}}" alt="{{ decline.itemRespondent.title }}" />
-                                                {% else %}
-                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                {% endif %}
-                                                <p class="item-description">
-                                                    {{ decline.itemRespondent.description }}
-                                                </p>
-                                            </div>
-                                            <!-- Ad Img End -->
-                                            <div class="short-description">
-                                                <!-- Ad Title -->
-                                                <h3>{{ decline.itemRespondent.id }} - {{ decline.itemRespondent.title }}</h3>
-                                            </div>
-                                        </div>
-                                        <!-- Ad Box End -->
-                                    </div>
-                                    <div class="col-xs-2">
-                                        <p class="heading-color text-center"><i class="fa fa-exchange" aria-hidden="true"></i> </p>
-                                    </div>
-                                    <div class="col-xs-5">
-                                        <!-- Ad Box -->
-                                        <div class="category-grid-box">
-                                            <!-- Ad Img -->
-                                            <div class="category-grid-img">
-                                                {% if decline.itemOwner.mainImage %}
-                                                    <img src="{{ vich_uploader_asset(decline.itemOwner.mainImage, 'file')}}" alt="{{ decline.itemOwner.title }}" />
-                                                {% else %}
-                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                {% endif %}
-                                                <p class="item-description">
-                                                    {{ decline.itemOwner.description }}
-                                                </p>
-                                            </div>
-                                            <!-- Ad Img End -->
-                                            <div class="short-description">
-                                                <!-- Ad Title -->
-                                                <h3>{{ decline.itemOwner.id }} - {{ decline.itemOwner.title }}</h3>
-                                            </div>
-                                        </div>
-                                        <!-- Ad Box End -->
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                        <a class="btn btn-theme btn-block" href="{{ path('decline_remove', {id: decline.id}) }}">Remove</a>
-                                    </div>
-                                </div>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
 
-                    {% if matches %}
+                    {% if received_offers %}
                         <div class="heading-panel">
-                            <h3 class="main-title">Offered Matches</h3>
+                            <h3 class="main-title">Received Offers</h3>
                         </div>
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 col-xs-12">
@@ -90,7 +24,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            {% for match in matches %}
+                            {% for match in received_offers %}
                                 <div class="col-md-6 col-md-offset-3 col-xs-12">
                                     <div class="row">
                                         <hr>
@@ -110,17 +44,8 @@
                                                 </div>
                                                 <!-- Ad Img End -->
                                                 <div class="short-description">
-                                                    <!-- Ad Category -->
-                                                    <div class="category-title"><span>{{ match.itemRespondent.category.id }} - {{ match.itemRespondent.category.title }}</span> </div>
                                                     <!-- Ad Title -->
                                                     <h3>{{ match.itemRespondent.id }} - {{ match.itemRespondent.title }}</h3>
-                                                    <p>
-                                                    {% for categoryToMatch in match.itemRespondent.categoriesToMatch %}
-                                                        <span class="badge">
-                                                            {{ categoryToMatch.id }} - {{ categoryToMatch.title }}
-                                                        </span>
-                                                    {% endfor %}
-                                                    </p>
                                                 </div>
                                             </div>
                                             <!-- Ad Box End -->
@@ -144,17 +69,8 @@
                                                 </div>
                                                 <!-- Ad Img End -->
                                                 <div class="short-description">
-                                                    <!-- Ad Category -->
-                                                    <div class="category-title"><span>{{ match.itemOwner.category.id }} - {{ match.itemOwner.category.title }}</span> </div>
                                                     <!-- Ad Title -->
                                                     <h3>{{ match.itemOwner.id }} - {{ match.itemOwner.title }}</h3>
-                                                    <p>
-                                                        {% for categoryToMatch in match.itemRespondent.categoriesToMatch %}
-                                                            <span class="badge">
-                                                            {{ categoryToMatch.id }} - {{ categoryToMatch.title }}
-                                                        </span>
-                                                        {% endfor %}
-                                                    </p>
                                                 </div>
                                             </div>
                                             <!-- Ad Box End -->
@@ -173,14 +89,173 @@
                         </div>
                     {% else %}
                         <div class="heading-panel">
-                            <h3 class="main-title">Offered Matches</h3>
+                            <h3 class="main-title">Received Offers</h3>
                         </div>
                         <div class="row">
                             <div class="col-md-4 col-xs-12 col-sm-6">
-                                <p>Sorry, you have no offered item matches yet.</p>
+                                <p>Sorry, you have no offers yet.</p>
                             </div>
                         </div>
                     {% endif %}
+
+                    {% if declined_offers %}
+                        <div class="heading-panel">
+                            <h3 class="main-title">Declined Offers</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <h4 class="text-center">My item</h4>
+                                    </div>
+                                    <div class="col-xs-offset-2 col-xs-5">
+                                        <h4 class="text-center">Wanted item</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for match in declined_offers %}
+                                <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                    <div class="row">
+                                        <hr>
+                                        <div class="col-xs-5">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    {% if match.itemOwner.mainImage %}
+                                                        <img src="{{ vich_uploader_asset(match.itemOwner.mainImage, 'file')}}" alt="{{ match.itemOwner.title }}" />
+                                                    {% else %}
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                    {% endif %}
+                                                    <p class="item-description">
+                                                        {{ match.itemOwner.description }}
+                                                    </p>
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Title -->
+                                                    <h3>{{ match.itemOwner.id }} - {{ match.itemOwner.title }}</h3>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <p class="heading-color text-center"><i class="fa fa-exchange" aria-hidden="true"></i> </p>
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    {% if match.itemRespondent.mainImage %}
+                                                        <img src="{{ vich_uploader_asset(match.itemRespondent.mainImage, 'file')}}" alt="{{ match.itemRespondent.title }}" />
+                                                    {% else %}
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                    {% endif %}
+                                                    <p class="item-description">
+                                                        {{ match.itemRespondent.description }}
+                                                    </p>
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Title -->
+                                                    <h3>{{ match.itemRespondent.id }} - {{ match.itemRespondent.title }}</h3>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                            <a class="btn btn-theme btn-block" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    {% if sent_offers %}
+                        <div class="heading-panel">
+                            <h3 class="main-title">Sent Offers</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                <div class="row">
+                                    <div class="col-xs-5">
+                                        <h4 class="text-center">My item</h4>
+                                    </div>
+                                    <div class="col-xs-offset-2 col-xs-5">
+                                        <h4 class="text-center">Wanted item</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            {% for match in sent_offers %}
+                                <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                    <div class="row">
+                                        <hr>
+                                        <div class="col-xs-5">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    {% if match.itemOwner.mainImage %}
+                                                        <img src="{{ vich_uploader_asset(match.itemOwner.mainImage, 'file')}}" alt="{{ match.itemOwner.title }}" />
+                                                    {% else %}
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                    {% endif %}
+                                                    <p class="item-description">
+                                                        {{ match.itemOwner.description }}
+                                                    </p>
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Title -->
+                                                    <h3>{{ match.itemOwner.id }} - {{ match.itemOwner.title }}</h3>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+                                        <div class="col-xs-2">
+                                            <p class="heading-color text-center"><i class="fa fa-exchange" aria-hidden="true"></i> </p>
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <!-- Ad Box -->
+                                            <div class="category-grid-box">
+                                                <!-- Ad Img -->
+                                                <div class="category-grid-img">
+                                                    {% if match.itemRespondent.mainImage %}
+                                                        <img src="{{ vich_uploader_asset(match.itemRespondent.mainImage, 'file')}}" alt="{{ match.itemRespondent.title }}" />
+                                                    {% else %}
+                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
+                                                    {% endif %}
+                                                    <p class="item-description">
+                                                        {{ match.itemRespondent.description }}
+                                                    </p>
+                                                </div>
+                                                <!-- Ad Img End -->
+                                                <div class="short-description">
+                                                    <!-- Ad Title -->
+                                                    <h3>{{ match.itemRespondent.id }} - {{ match.itemRespondent.title }}</h3>
+                                                </div>
+                                            </div>
+                                            <!-- Ad Box End -->
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 col-md-offset-3 col-xs-12">
+                                            <a class="btn btn-theme btn-block" href="{{ path('match_remove', {id: match.id}) }}">Cancel</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
                 </div>
             </div>
         </div>
