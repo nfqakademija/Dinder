@@ -16,14 +16,14 @@
                             </h3>
                         </div>
                         {{ form_start(form, {'attr': {'class': 'submit-form'}}) }}
-                        <div class="ImageCollection">
-                            <h4 class="ImageCollection-title">Images</h4>
-                            <div class="ImageCollection-list" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">
-                                {% for image in form.images %}
-                                    {{ form_row(image) }}
-                                {% endfor %}
-                            </div>
-                        </div>
+                        {#<div class="ImageCollection">#}
+                            {#<h4 class="ImageCollection-title">Images</h4>#}
+                            {#<div class="ImageCollection-list" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">#}
+                                {#{% for image in form.images %}#}
+                                    {#{{ form_row(image) }}#}
+                                {#{% endfor %}#}
+                            {#</div>#}
+                        {#</div>#}
                         {{ form_rest(form) }}
                         <button class="btn btn-theme">Submit</button>
                         {{ form_end(form) }}

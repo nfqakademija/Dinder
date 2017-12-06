@@ -1,29 +1,28 @@
 const webpack = require('webpack');
 const path = require('path');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
-
-const extractSass = new ExtractTextPlugin({
-    filename: "css/style.css"
-});
 
 module.exports = {
     entry: {
         app: [
             path.resolve(__dirname, './src/AppBundle/Resources/scss/main.scss'),
-            // path.resolve(__dirname, './src/AppBundle/Resources/js/index.js'),
-            path.resolve(__dirname, './src/AppBundle/Resources/js/swing.js'),
-            path.resolve(__dirname, './src/AppBundle/Resources/js/card.js'),
-            path.resolve(__dirname, './src/AppBundle/Resources/js/modal.js'),
-            path.resolve(__dirname, './src/AppBundle/Resources/js/main.js'),
+            path.resolve(__dirname, './src/AppBundle/Resources/js/index.js'),
+            path.resolve(__dirname, './src/AppBundle/Resources/js/Swing.js'),
+            path.resolve(__dirname, './src/AppBundle/Resources/js/ItemCard.js'),
+            // path.resolve(__dirname, './src/AppBundle/Resources/js/main.js'),
         ],
         vendor: [
             'react',
             'react-dom',
+            'jquery',
+            'select2',
+            'bootstrap-sass',
             path.resolve(__dirname, './src/AppBundle/Resources/js/custom.js')
         ]
     },
     output: {
-        path: path.resolve('./web/build'),
+        path: path.resolve(__dirname, './web/build'),
         filename: 'js/bundle.js'
     },
     module: {
@@ -33,42 +32,72 @@ module.exports = {
                 loader: 'babel-loader',
                 exclude: /node_modules/,
                 options: {
-                    presets: ["es2015", "stage-0", "react"]
+                    presets: ["env", "stage-0", "react"]
                 }
             },
             {
                 test: /\.scss$/,
-                use: extractSass.extract({
-                    use: [{
-                        loader: 'css-loader', options: { url: false }
-                    }, {
-                        loader: "sass-loader"
-                    }],
-                    // use style-loader in development
-                    fallback: "style-loader"
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [
+                        'css-loader',
+                        'resolve-url-loader',
+                        'sass-loader'
+                    ]
                 })
             },
             {
                 test: /\.css$/,
-                use: extractSass.extract({
-                    use: [{
-                        loader: "css-loader"
-                    }],
-                    fallback: "style-loader"
+                use: ExtractTextPlugin.extract({
+                    fallback: "style-loader",
+                    use: [
+                        "css-loader"
+                    ]
                 })
             },
             {
-                test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-                loader: 'url-loader?limit=100000'
+                test: /\.(png|jpg|jpeg|gif|ico|svg)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: './assets/[name].[ext]'
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(woff|woff2|eot|ttf|otf)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: './assets/[name].[ext]'
+                        }
+                    }
+                ]
             }
         ]
     },
     plugins: [
+        new webpack.ProvidePlugin({
+            jQuery: 'jquery',
+            $: 'jquery'
+        }),
         new webpack.optimize.CommonsChunkPlugin({
-            name: "vendor",
-            filename: "js/vendor.js",
+            name: 'vendor',
+            filename: 'js/vendor.js',
             minChunks: Infinity
         }),
-        extractSass,
+        new CopyWebpackPlugin([
+            {
+                from: path.resolve(__dirname, './src/AppBundle/Resources/images/'),
+                to: 'images'
+            }
+        ]),
+        new ExtractTextPlugin({
+            filename: './css/style.css',
+            allChunks: true
+        })
     ]
 };

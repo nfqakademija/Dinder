@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default class Card extends React.Component {
+export default class ItemCard extends React.Component {
     render() {
         return (
             <div className="card" data-id={this.props.card.id} ref={`card${this.props.index}`}>

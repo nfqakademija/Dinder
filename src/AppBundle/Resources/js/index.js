@@ -1,12 +1,25 @@
-/*
+"use strict";
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Swinger from "./swing";
+import Swinger from "./Swing";
 
-var swinger = ReactDOM.render(
-    <Swinger />,
-    document.getElementById('swing')
-);
+$(function() {
+    $('.link-exchange').click(function() {
+        itemId = $(this).data('id');
+        fetchUrl = $(this).attr('href');
 
-export default swinger;
-*/
+        $('#exchangeModal').modal('show');
+
+        return false;
+    });
+
+    $('#exchangeModal').on('show.bs.modal', function (e) {
+        ReactDOM.render(
+            <Swinger />,
+            document.getElementById('swing')
+        );
+    }).on('hide.bs.modal', function() {
+        ReactDOM.unmountComponentAtNode(document.getElementById('swing'));
+    });
+});

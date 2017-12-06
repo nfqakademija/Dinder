@@ -3,6 +3,7 @@ AppBundle\Entity\Item:
         user: '@user_*'
         status: 1
         title: <word()>
+        imageName: <image('web/images/items', 640, 480, 'technics', 0)>
         description: <sentence()>
         value: <randomDigitNotNull()>
         category: '@category_*'

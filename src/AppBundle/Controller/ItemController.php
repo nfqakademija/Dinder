@@ -79,9 +79,9 @@ class ItemController extends Controller
         $item = new Item();
 
         // Adding one image to be main
-        $imageMain = new Image();
-        $imageMain->setMain(true);
-        $item->addImage($imageMain);
+//        $imageMain = new Image();
+//        $imageMain->setMain(true);
+//        $item->addImage($imageMain);
 
         $form = $this->createForm('AppBundle\Form\ItemType', $item);
         $form->handleRequest($request);
@@ -211,19 +211,13 @@ class ItemController extends Controller
         $items = [];
 
         foreach ($itemsToMatch as $itemToMatch) {
-            $mainImage = $this->container->get('assets.packages')->getUrl('images/default.jpg');
-
-            if ($itemToMatch->getMainImage()) {
-                $mainImage = $helper->asset($itemToMatch->getMainImage(), 'file');
-            }
-
             $items[] = [
                 'id' => $itemToMatch->getId(),
                 'title' => $itemToMatch->getTitle(),
                 'description' => $itemToMatch->getDescription(),
                 'category' => $itemToMatch->getCategory()->getTitle(),
                 'value' => $itemToMatch->getValue(),
-                'image' => $mainImage,
+                'image' => $helper->asset($itemToMatch, 'file'),
             ];
         }
 
