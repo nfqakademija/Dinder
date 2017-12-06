@@ -394,5 +394,4 @@ class ItemController extends Controller
 
         $em->flush();
     }
-
 }
