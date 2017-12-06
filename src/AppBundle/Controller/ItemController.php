@@ -50,19 +50,17 @@ class ItemController extends Controller
             'status' => Item::STATUS_TRADED,
         ]);
 
-        $unseenCounter = $this->get('unseen_count')->countUnseed($user);
-
-        if ($unseenCounter) {
-            $em->getRepository(History::class)->markSeen($user);
-        }
-
         $categories = $em->getRepository(Category::class)->findAll();
 
-        return $this->render('item/index.html.twig', array(
+        $response = $this->render('item/index.html.twig', array(
             'items' => $activeItems,
             'traded_items' => $tradedItems,
             'categories' => $categories
         ));
+
+        $this->markItemsAsSeen($tradedItems);
+
+        return $response;
     }
 
     /**
@@ -371,4 +369,30 @@ class ItemController extends Controller
             ->getForm()
         ;
     }
+
+    /**
+     * Mark all unseen items as seen
+     *
+     * @param array $items
+     *
+     * @return void
+     */
+    private function markItemsAsSeen(array $items): void
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $now = new \DateTime();
+
+        foreach ($items as $item) {
+            $history = $item->getLastHistory();
+            if ($history && !$history->getSeen()) {
+                $history->setSeen($now);
+
+                $em->persist($history);
+            }
+        }
+
+        $em->flush();
+    }
+
 }
