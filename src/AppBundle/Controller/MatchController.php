@@ -29,7 +29,7 @@ class MatchController extends Controller
     public function indexAction(): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $user = $this->getUser();
         $receivedOffers = $em->getRepository(Match::class)->findMatchesByRespondent($user);
         $sentOffers = $em->getRepository(Match::class)->findMatchesByOwner($user);
         $declinedOffers = $em->getRepository(Match::class)->findMatchesByOwner($user, Match::STATUS_DECLINED);
@@ -78,9 +78,7 @@ class MatchController extends Controller
         $historyRespondent->setItem($offeredItem);
         $historyRespondent->setUser($offeredItem->getUser());
         $em->persist($historyRespondent);
-
-        $em->remove($match);
-
+        $em->getRepository(Match::class)->deleteRelatedMathes($match);
         $em->flush();
 
         return $this->redirectToRoute('match_index');
