@@ -21,4 +21,3 @@ services:
     unseen_count:
         class: AppBundle\Utils\HistoryUnseenCount
         arguments: ["@doctrine.orm.entity_manager"]
-        public: true
