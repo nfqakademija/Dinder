@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ItemType extends AbstractType
 {
@@ -29,14 +30,18 @@ class ItemType extends AbstractType
                 'choice_label' => 'title',
                 'multiple' => true,
             ))
-            ->add('images', CollectionType::class, array(
-                'entry_type' => ImageType::class,
-                'allow_add' => true,
-                'by_reference' => false,
-                'entry_options' => array(
-                    'label' => false,
-                ),
-            ))
+            ->add('file', VichImageType::class, array(
+                'download_uri' => false,
+                'image_uri' => true,
+            ));
+//            ->add('images', CollectionType::class, array(
+//                'entry_type' => ImageType::class,
+//                'allow_add' => true,
+//                'by_reference' => false,
+//                'entry_options' => array(
+//                    'label' => false,
+//                ),
+//            ))
         ;
     }
     

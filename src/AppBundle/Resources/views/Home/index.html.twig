@@ -18,11 +18,7 @@
                                 <div class="category-grid-box">
                                     <!-- Ad Img -->
                                     <div class="category-grid-img">
-                                        {% if item.mainImage %}
-                                            <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
-                                        {% else %}
-                                            <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                        {% endif %}
+                                        <img src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
                                         <p class="item-description">
                                             {{ item.description }}
                                         </p>

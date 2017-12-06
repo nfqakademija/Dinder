@@ -20,11 +20,7 @@
                                         <div class="category-grid-box">
                                             <!-- Ad Img -->
                                             <div class="category-grid-img">
-                                                {% if decline.itemRespondent.mainImage %}
-                                                    <img src="{{ vich_uploader_asset(decline.itemRespondent.mainImage, 'file')}}" alt="{{ decline.itemRespondent.title }}" />
-                                                {% else %}
-                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                {% endif %}
+                                                <img src="{{ vich_uploader_asset(decline.itemRespondent, 'file')}}" alt="{{ decline.itemRespondent.title }}" />
                                                 <p class="item-description">
                                                     {{ decline.itemRespondent.description }}
                                                 </p>
@@ -45,11 +41,7 @@
                                         <div class="category-grid-box">
                                             <!-- Ad Img -->
                                             <div class="category-grid-img">
-                                                {% if decline.itemOwner.mainImage %}
-                                                    <img src="{{ vich_uploader_asset(decline.itemOwner.mainImage, 'file')}}" alt="{{ decline.itemOwner.title }}" />
-                                                {% else %}
-                                                    <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                {% endif %}
+                                                <img src="{{ vich_uploader_asset(decline.itemOwner, 'file')}}" alt="{{ decline.itemOwner.title }}" />
                                                 <p class="item-description">
                                                     {{ decline.itemOwner.description }}
                                                 </p>
@@ -99,11 +91,7 @@
                                             <div class="category-grid-box">
                                                 <!-- Ad Img -->
                                                 <div class="category-grid-img">
-                                                    {% if match.itemRespondent.mainImage %}
-                                                        <img src="{{ vich_uploader_asset(match.itemRespondent.mainImage, 'file')}}" alt="{{ match.itemRespondent.title }}" />
-                                                    {% else %}
-                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                    {% endif %}
+                                                    <img src="{{ vich_uploader_asset(match.itemRespondent, 'file')}}" alt="{{ match.itemRespondent.title }}" />
                                                     <p class="item-description">
                                                         {{ match.itemRespondent.description }}
                                                     </p>
@@ -133,11 +121,7 @@
                                             <div class="category-grid-box">
                                                 <!-- Ad Img -->
                                                 <div class="category-grid-img">
-                                                    {% if match.itemOwner.mainImage %}
-                                                        <img src="{{ vich_uploader_asset(match.itemOwner.mainImage, 'file')}}" alt="{{ match.itemOwner.title }}" />
-                                                    {% else %}
-                                                        <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                                    {% endif %}
+                                                    <img src="{{ vich_uploader_asset(match.itemOwner, 'file')}}" alt="{{ match.itemOwner.title }}" />
                                                     <p class="item-description">
                                                         {{ match.itemOwner.description }}
                                                     </p>
