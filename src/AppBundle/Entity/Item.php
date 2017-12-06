@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Item
@@ -14,6 +16,7 @@ use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
  * @ORM\Table(name="item")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ItemRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt", timeAware=false)
+ * @Vich\Uploadable
  */
 class Item
 {
@@ -114,6 +117,20 @@ class Item
      * @ORM\Column(name="expires", type="datetime")
      */
     private $expires;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="imageName", type="string", length=255)
+     */
+    private $imageName;
+
+    /**
+     * @var File
+     *
+     * @Vich\UploadableField(mapping="item_image", fileNameProperty="imageName")
+     */
+    private $file;
 
     /**
      * Collection that holds the list of categories from which user prefers to find a match
@@ -631,5 +648,57 @@ class Item
         } else {
             return null;
         }
+    }
+
+    /**
+     * Set file
+     *
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     *
+     * @return Image
+     */
+    public function setFile(File $file = null): Item
+    {
+        $this->file = $file;
+
+        if ($file) {
+            $this->created = new \DateTimeImmutable();
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get file
+     *
+     * @return File|null
+     */
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+    /**
+     * Set imageName
+     *
+     * @param string $imageName
+     *
+     * @return Item
+     */
+    public function setImageName($imageName): Item
+    {
+        $this->imageName = $imageName;
+
+        return $this;
+    }
+
+    /**
+     * Get imageName
+     *
+     * @return string
+     */
+    public function getImageName(): ?string
+    {
+        return $this->imageName;
     }
 }

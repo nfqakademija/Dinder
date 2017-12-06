@@ -17,11 +17,7 @@
                                     <div class="category-grid-box">
                                         <!-- Ad Img -->
                                         <div class="category-grid-img">
-                                            {% if item.mainImage %}
-                                                <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
-                                            {% else %}
-                                                <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                            {% endif %}
+                                            <img src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
                                             <a class="btn btn-light" href="{{ path('item_activate', {id: item.id}) }}">
                                                 <i class="fa fa-refresh" aria-hidden="true"></i> Activate
                                             </a>
@@ -108,11 +104,7 @@
                                 <div class="category-grid-box">
                                     <!-- Ad Img -->
                                     <div class="category-grid-img">
-                                        {% if item.mainImage %}
-                                            <img src="{{ vich_uploader_asset(item.mainImage, 'file')}}" alt="{{ item.title }}" />
-                                        {% else %}
-                                            <img src="{{ asset('images/default.jpg') }}" alt="no image" />
-                                        {% endif %}
+                                        <img src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
                                         <a class="btn btn-light link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
                                             <i class="fa fa-exchange" aria-hidden="true"></i> Exchange
                                         </a>
