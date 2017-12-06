@@ -144,6 +144,14 @@ class Item
     private $matchesResponseItem;
 
     /**
+     * @var ArrayCollection
+     *
+     * @ORM\OneToMany(targetEntity="History", mappedBy="item")
+     * @ORM\OrderBy({"created" = "DESC"})
+     */
+    private $histories;
+
+    /**
      * Category constructor.
      */
     public function __construct()
@@ -152,6 +160,7 @@ class Item
         $this->categoriesToMatch = new ArrayCollection();
         $this->matchesOwnItem = new ArrayCollection();
         $this->matchesResponseItem = new ArrayCollection();
+        $this->histories = new ArrayCollection();
     }
 
     /**
@@ -574,5 +583,53 @@ class Item
     public function getDescription(): ?string
     {
         return $this->description;
+    }
+
+    /**
+     * Add history
+     *
+     * @param History $history
+     *
+     * @return Item
+     */
+    public function addHistory(History $history): Item
+    {
+        $this->histories[] = $history;
+
+        return $this;
+    }
+
+    /**
+     * Remove history
+     *
+     * @param History $history
+     */
+    public function removeHistory(History $history): void
+    {
+        $this->histories->removeElement($history);
+    }
+
+    /**
+     * Get histories
+     *
+     * @return Collection
+     */
+    public function getHistories(): Collection
+    {
+        return $this->histories;
+    }
+
+    /**
+     * Get last history entity
+     *
+     * @return History
+     */
+    public function getLastHistory(): ?History
+    {
+        if ($this->histories->count()) {
+            return $this->histories->first();
+        } else {
+            return null;
+        }
     }
 }

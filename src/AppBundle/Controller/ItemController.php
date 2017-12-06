@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\History;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
 use AppBundle\Entity\Image;
@@ -48,7 +49,13 @@ class ItemController extends Controller
             'user' => $user,
             'status' => Item::STATUS_TRADED,
         ]);
-      
+
+        $unseenCounter = $this->get('unseen_count')->countUnseed($user);
+
+        if ($unseenCounter) {
+            $em->getRepository(History::class)->markSeen($user);
+        }
+
         $categories = $em->getRepository(Category::class)->findAll();
 
         return $this->render('item/index.html.twig', array(
@@ -82,24 +89,56 @@ class ItemController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+
+            $user = $this->get('security.token_storage')->getToken()->getUser();
+
             $item->setApprovals(0);
             $item->setRejections(0);
             $item->setStatus(Item::STATUS_ACTIVE);
             $item->setCreated(new \DateTime('now'));
             $item->setExpires(new \DateTime('+'.$this->getParameter('item_valid_days').' days'));
-            $user = $this->get('security.token_storage')->getToken()->getUser();
             $item->setUser($user);
-            $em = $this->getDoctrine()->getManager();
+
+            $history = new History();
+            $history->setItem($item);
+            $history->setUser($item->getUser());
+            $history->setSeen(new \DateTime());
+            $em->persist($history);
+
             $em->persist($item);
             $em->flush();
 
-            return $this->redirectToRoute('item_show', array('id' => $item->getId()));
+            return $this->redirectToRoute('item_index');
         }
 
         return $this->render('item/new.html.twig', array(
             'item' => $item,
             'form' => $form->createView(),
         ));
+    }
+
+    /**
+     * Make item active for matches.
+     *
+     * @Route("/{id}/activate", name="item_activate")
+     *
+     * @Method("GET")
+     *
+     * @param Item $item
+     *
+     * @return Response
+     */
+    public function activateAction(Item $item): Response
+    {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $item->setStatus(Item::STATUS_ACTIVE);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->redirectToRoute('item_index');
     }
 
     /**

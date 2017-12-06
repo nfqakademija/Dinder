@@ -17,3 +17,8 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: vich_uploader.post_remove, method: onPostRemove }
+
+    unseen_count:
+        class: AppBundle\Utils\HistoryUnseenCount
+        arguments: ["@doctrine.orm.entity_manager"]
+        public: true

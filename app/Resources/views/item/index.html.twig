@@ -22,13 +22,21 @@
                                             {% else %}
                                                 <img src="{{ asset('images/default.jpg') }}" alt="no image" />
                                             {% endif %}
-                                            <a class="btn btn-light link-exchange" href="{{ path('item_activate', {id: item.id}) }}">
+                                            <a class="btn btn-light" href="{{ path('item_activate', {id: item.id}) }}">
                                                 <i class="fa fa-refresh" aria-hidden="true"></i> Activate
                                             </a>
                                             <a class="ad-status" href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a>
                                         </div>
                                         <!-- Ad Img End -->
                                         <div class="short-description">
+                                            {% if item.lastHistory %}
+                                                <p{% if not item.lastHistory.seen %} style="font-weight: 700"{% endif %}>
+                                                    You have to trade this item with {{ item.lastHistory.user.name }}.<br>
+                                                    Phone number: {{ item.lastHistory.user.phone }}<br>
+                                                    Email: {{ item.lastHistory.user.email }}
+                                                </p>
+                                            {% endif %}
+
                                             <!-- Ad Category -->
                                             <div class="category-title"> <span>{{ item.category.title }}</span> </div>
                                             <!-- Ad Title -->
