@@ -5,6 +5,8 @@ namespace AppBundle\Repository;
 use AppBundle\Entity\Match;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
+use Gedmo\SoftDeleteable\Query\TreeWalker\SoftDeleteableWalker;
 
 /**
  * MatchRepository
@@ -60,5 +62,32 @@ class MatchRepository extends EntityRepository
             ->getResult();
 
         return $matches;
+    }
+
+    /**
+     * Return array of all related matches for given match
+     *
+     * @param Match $match
+     *
+     * @return array
+     */
+    public function deleteRelatedMathes(Match $match)
+    {
+        $result = $this->createQueryBuilder('m')
+            ->delete()
+            ->where('m.itemOwner IN (:itemOwner, :itemRespondent)')
+            ->orWhere('m.itemRespondent IN (:itemOwner, :itemRespondent)')
+            ->setParameters([
+                'itemOwner' => $match->getItemOwner(),
+                'itemRespondent' => $match->getItemRespondent(),
+            ])
+            ->getQuery()
+            ->setHint(
+                Query::HINT_CUSTOM_OUTPUT_WALKER,
+                SoftDeleteableWalker::class
+            )
+            ->getResult();
+
+        return $result;
     }
 }
