@@ -108,7 +108,7 @@ class MatchController extends Controller
     /**
      * @Route("/{id}/remove", name="match_remove")
      *
-     * @Method("GET")
+     * @Method("DELETE")
      *
      * @param Match $match
      *

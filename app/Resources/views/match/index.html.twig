@@ -153,7 +153,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                            <a class="btn btn-theme btn-block" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
+                                            <a class="btn btn-theme btn-block" data-method="DELETE" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
                                         </div>
                                     </div>
                                 </div>
@@ -224,7 +224,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                            <a class="btn btn-theme btn-block" href="{{ path('match_remove', {id: match.id}) }}">Cancel</a>
+                                            <a class="btn btn-theme btn-block" data-method="DELETE" href="{{ path('match_remove', {id: match.id}) }}">Cancel</a>
                                         </div>
                                     </div>
                                 </div>
