@@ -151,6 +151,8 @@ class ItemController extends Controller
      *
      * @Method("GET")
      *
+     * @param Request $request
+     *
      * @return Response
      */
     public function matchAction(Request $request): Response
@@ -184,6 +186,14 @@ class ItemController extends Controller
         $match->setItemOwner($itemOwner);
         $match->setItemRespondent($itemRespondent);
         $match->setStatus($status);
+
+        if ($status == Match::STATUS_ACCEPTED) {
+            $itemRespondent->setApprovals($itemRespondent->getApprovals() + 1);
+        }
+        if ($status == Match::STATUS_REJECTED) {
+            $itemRespondent->setRejections($itemRespondent->getRejections() + 1);
+        }
+        $em->persist($itemRespondent);
 
         $em->persist($match);
         $em->flush();
@@ -236,6 +246,8 @@ class ItemController extends Controller
      *
      * @Method("POST")
      *
+     * @param Request $request
+     *
      * @return Response
      */
     public function categoryAddAction(Request $request): Response
@@ -280,6 +292,10 @@ class ItemController extends Controller
      * @Route("/{id}/category-remove/{category}", name="item_category_remove")
      *
      * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Item $item
+     * @param Category $category
      *
      * @return Response
      */
