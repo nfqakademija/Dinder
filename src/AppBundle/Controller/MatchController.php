@@ -44,7 +44,7 @@ class MatchController extends Controller
     /**
      * @Route("/{id}/trade", name="match_trade")
      *
-     * @Method("GET")
+     * @Method("PUT")
      *
      * @param Match $match
      *
@@ -87,7 +87,7 @@ class MatchController extends Controller
     /**
      * @Route("/{id}/decline", name="match_decline")
      *
-     * @Method("GET")
+     * @Method("PUT")
      *
      * @param Match $match
      *
