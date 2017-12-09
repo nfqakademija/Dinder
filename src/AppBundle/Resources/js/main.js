@@ -1,7 +1,7 @@
 /**
  * Sample usage:
  *
- * <a href="/blog/48/delete" data-method="DELETE">delete this post</a>
+ * <a href="/blog/48/delete" data-method="DELETE" data-token="...">delete this post</a>
  */
 $(document).ready(function () {
 
@@ -12,6 +12,7 @@ $(document).ready(function () {
         var target = $(event.currentTarget);
         var action = target.attr('href');
         var _method = target.attr('data-method');
+        var _token = target.attr('data-token');
 
         // Create a form on click
         var form = $('<form/>', {
@@ -20,7 +21,17 @@ $(document).ready(function () {
             method: 'POST'
         });
 
-        form.append('<input type="hidden" name="_method" value="'+ _method +'">');
+        form.append($('<input/>', {
+            type:'hidden',
+            name:'_method',
+            value: _method
+        }));
+
+        form.append($('<input/>', {
+            type:'hidden',
+            name:'_token',
+            value: _token
+        }));
 
         form.appendTo(target);
 

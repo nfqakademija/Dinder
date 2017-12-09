@@ -8,6 +8,7 @@ use AppBundle\Entity\History;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -46,12 +47,17 @@ class MatchController extends Controller
      *
      * @Method("PUT")
      *
+     * @param Request $request
      * @param Match $match
      *
      * @return Response
      */
-    public function tradeAction(Match $match): Response
+    public function tradeAction(Request $request, Match $match): Response
     {
+        if (!$this->isCsrfTokenValid($match->getId(), $request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token is invalid');
+        }
+
         $ownedItem = $match->getItemRespondent();
         $offeredItem = $match->getItemOwner();
 
@@ -89,12 +95,17 @@ class MatchController extends Controller
      *
      * @Method("PUT")
      *
+     * @param Request $request
      * @param Match $match
      *
      * @return Response
      */
-    public function declineAction(Match $match): Response
+    public function declineAction(Request $request, Match $match): Response
     {
+        if (!$this->isCsrfTokenValid($match->getId(), $request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token is invalid');
+        }
+
         if ($this->getUser() !== $match->getItemRespondent()->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
@@ -110,12 +121,17 @@ class MatchController extends Controller
      *
      * @Method("DELETE")
      *
+     * @param Request $request
      * @param Match $match
      *
      * @return Response
      */
-    public function removeAction(Match $match): Response
+    public function removeAction(Request $request, Match $match): Response
     {
+        if (!$this->isCsrfTokenValid($match->getId(), $request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token is invalid');
+        }
+
         if ($this->getUser() !== $match->getItemOwner()->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
