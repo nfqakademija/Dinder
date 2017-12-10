@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Swinger from "./Swing";
+import AppContainer from './AppContainer';
 
 $(function() {
     $('.link-exchange').click(function() {
@@ -14,9 +14,9 @@ $(function() {
         return false;
     });
 
-    $('#exchangeModal').on('show.bs.modal', function (e) {
+    $('#exchangeModal').on('show.bs.modal', function () {
         ReactDOM.render(
-            <Swinger />,
+            <AppContainer />,
             document.getElementById('swing')
         );
     }).on('hide.bs.modal', function() {
