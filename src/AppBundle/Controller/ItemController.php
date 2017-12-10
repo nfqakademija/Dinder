@@ -121,14 +121,19 @@ class ItemController extends Controller
      *
      * @Route("/{id}/activate", name="item_activate")
      *
-     * @Method("GET")
+     * @Method("PUT")
      *
+     * @param Request $request
      * @param Item $item
      *
      * @return Response
      */
-    public function activateAction(Item $item): Response
+    public function activateAction(Request $request, Item $item): Response
     {
+        if (!$this->isCsrfTokenValid($item->getId(), $request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token is invalid');
+        }
+
         if ($this->getUser() !== $item->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
@@ -145,6 +150,8 @@ class ItemController extends Controller
      * @Route("/match", name="item_match")
      *
      * @Method("GET")
+     *
+     * @param Request $request
      *
      * @return Response
      */
@@ -179,6 +186,14 @@ class ItemController extends Controller
         $match->setItemOwner($itemOwner);
         $match->setItemRespondent($itemRespondent);
         $match->setStatus($status);
+
+        if ($status == Match::STATUS_ACCEPTED) {
+            $itemRespondent->setApprovals($itemRespondent->getApprovals() + 1);
+        }
+        if ($status == Match::STATUS_REJECTED) {
+            $itemRespondent->setRejections($itemRespondent->getRejections() + 1);
+        }
+        $em->persist($itemRespondent);
 
         $em->persist($match);
         $em->flush();
@@ -231,6 +246,8 @@ class ItemController extends Controller
      *
      * @Method("POST")
      *
+     * @param Request $request
+     *
      * @return Response
      */
     public function categoryAddAction(Request $request): Response
@@ -274,12 +291,20 @@ class ItemController extends Controller
      *
      * @Route("/{id}/category-remove/{category}", name="item_category_remove")
      *
-     * @Method("GET")
+     * @Method("DELETE")
+     *
+     * @param Request $request
+     * @param Item $item
+     * @param Category $category
      *
      * @return Response
      */
-    public function categoryRemoveAction(Item $item, Category $category): Response
+    public function categoryRemoveAction(Request $request, Item $item, Category $category): Response
     {
+        if (!$this->isCsrfTokenValid($item->getId(), $request->get('_token'))) {
+            throw $this->createAccessDeniedException('CSRF token is invalid');
+        }
+
         if ($item->getUser() !== $this->getUser()) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }

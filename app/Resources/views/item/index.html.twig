@@ -18,11 +18,11 @@
                                         <!-- Ad Img -->
                                         <div class="category-grid-img">
                                             <img src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
-                                            <a class="btn btn-light" href="{{ path('item_activate', {id: item.id}) }}">
-                                                <i class="fa fa-refresh" aria-hidden="true"></i> Activate
-                                            </a>
                                             <a class="ad-status" href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a>
                                         </div>
+                                        <a class="btn btn-light" data-method="PUT" data-token="{{ csrf_token(item.id) }}" href="{{ path('item_activate', {id: item.id}) }}">
+                                            <i class="fa fa-refresh" aria-hidden="true"></i> Activate
+                                        </a>
                                         <!-- Ad Img End -->
                                         <div class="short-description">
                                             {% if item.lastHistory %}
@@ -48,7 +48,7 @@
                                                     {% for categoryToMatch in item.categoriesToMatch %}
                                                         <li>
                                                             {{ categoryToMatch.title }}
-                                                            <a href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+                                                            <a data-method="DELETE" data-token="{{ csrf_token(item.id) }}" href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
                                                                 <i class="fa fa-trash" aria-hidden="true"></i>
                                                             </a>
                                                         </li>
@@ -127,7 +127,7 @@
                                                 {% for categoryToMatch in item.categoriesToMatch %}
                                                     <li>
                                                         {{ categoryToMatch.title }}
-                                                        <a href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+                                                        <a data-method="DELETE" data-token="{{ csrf_token(item.id) }}" href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </a>
                                                     </li>
