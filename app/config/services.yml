@@ -17,7 +17,11 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: kernel.event_listener, event: vich_uploader.post_remove, method: onPostRemove }
-
+    app_bundle.listener.softdelete_listener:
+        class: AppBundle\EventListener\SoftDeleteListener
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
     unseen_count:
         class: AppBundle\Utils\HistoryUnseenCount
         arguments: ["@doctrine.orm.entity_manager"]

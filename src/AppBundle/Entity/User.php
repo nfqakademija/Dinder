@@ -88,7 +88,7 @@ class User extends BaseUser
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -112,7 +112,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getName(): string
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -136,7 +136,7 @@ class User extends BaseUser
      *
      * @return string
      */
-    public function getPhone(): string
+    public function getPhone(): ?string
     {
         return $this->phone;
     }
@@ -160,7 +160,7 @@ class User extends BaseUser
      *
      * @return Location
      */
-    public function getLocation(): Location
+    public function getLocation(): ?Location
     {
         return $this->location;
     }

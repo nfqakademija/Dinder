@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
@@ -66,7 +67,7 @@ class Category
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -90,7 +91,7 @@ class Category
      *
      * @return string
      */
-    public function getTitle(): string
+    public function getTitle(): ?string
     {
         return $this->title;
     }
@@ -98,9 +99,9 @@ class Category
     /**
      * Get items
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getItems(): ArrayCollection
+    public function getItems(): Collection
     {
         return $this->items;
     }
@@ -132,10 +133,19 @@ class Category
     /**
      * Get itemsToMatch
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getItemsToMatch(): ArrayCollection
+    public function getItemsToMatch(): Collection
     {
         return $this->itemsToMatch;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 }
