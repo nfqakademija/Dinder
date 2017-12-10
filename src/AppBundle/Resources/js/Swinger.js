@@ -21,12 +21,15 @@ export default class Swinger extends React.Component {
         .then(res => res.json())
         .then((json) => {
             this.props.updateCards(json);
-            this.setState({loading: false})
+            this.setState({loading: false});
         })
     }
 
     componentWillReceiveProps(nextProps) {
-        if (this.state.more && nextProps.cards.length <= 3) {
+        if (!this.state.loading && this.state.more && nextProps.cards.length <= 3) {
+
+            this.setState({loading: true});
+
             fetch(fetchUrl, {
                 credentials: 'same-origin'
             })
@@ -37,7 +40,7 @@ export default class Swinger extends React.Component {
                 if(json.length) {
                     this.props.updateCards(_.union(json, nextProps.cards));
                 } else {
-                    this.setState({more: false});
+                    this.setState({more: false, loading: false});
                 }
             })
         }
