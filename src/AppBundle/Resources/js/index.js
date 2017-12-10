@@ -16,7 +16,7 @@ $(function() {
 
     $('#exchangeModal').on('show.bs.modal', function () {
         ReactDOM.render(
-            <AppContainer/>,
+            <AppContainer />,
             document.getElementById('swing')
         );
     }).on('hide.bs.modal', function() {
