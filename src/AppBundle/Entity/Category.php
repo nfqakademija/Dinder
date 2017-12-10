@@ -139,4 +139,13 @@ class Category
     {
         return $this->itemsToMatch;
     }
+
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

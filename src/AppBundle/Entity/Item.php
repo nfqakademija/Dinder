@@ -518,9 +518,9 @@ class Item
     /**
      * Get matchesOwnItem
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getMatchesOwnItem(): ArrayCollection
+    public function getMatchesOwnItem(): Collection
     {
         return $this->matchesOwnItem;
     }
@@ -552,9 +552,9 @@ class Item
     /**
      * Get matchesResponseItem
      *
-     * @return ArrayCollection
+     * @return Collection
      */
-    public function getMatchesResponseItem(): ArrayCollection
+    public function getMatchesResponseItem(): Collection
     {
         return $this->matchesResponseItem;
     }
@@ -700,5 +700,14 @@ class Item
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    /**
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->title;
     }
 }

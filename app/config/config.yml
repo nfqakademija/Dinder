@@ -131,6 +131,7 @@ easy_admin:
             class: AppBundle\Entity\User
             list:
                 title: 'Users'
+                actions: ['show']
                 fields:
                     - id
                     - username
@@ -155,6 +156,17 @@ easy_admin:
             new:
                 fields:
                     - { property: 'plainPassword', label: 'Password', type: 'password', type_options: { required: true} }
+            show:
+                fields:
+                    - id
+                    - username
+                    - name
+                    - phone
+                    - location
+                    - lastLogin
+                    - deletedAt
+                    - enabled
+                    - items
         Location:
             class: AppBundle\Entity\Location
             list:
@@ -167,10 +179,20 @@ easy_admin:
                 fields:
                     - title
                     - deletedAt
+            show:
+                fields:
+                    - id
+                    - title
+                    - deletedAt
         Category:
             class: AppBundle\Entity\Category
             list:
                 title: 'Categories'
+                fields:
+                    - id
+                    - title
+                    - deletedAt
+            show:
                 fields:
                     - id
                     - title
@@ -181,5 +203,47 @@ easy_admin:
                     - deletedAt
         Item:
             class: AppBundle\Entity\Item
+            list:
+                title: 'Items'
+                actions: ['show']
+                fields:
+                    - id
+                    - title
+                    - user
+                    - category
+                    - { property: 'value', format: '%.2f €'}
+                    - status
+                    - created
+                    - deletedAt
+            form:
+                fields:
+                    - title
+                    - description
+                    - { property: 'user', type_options: { required: true } }
+                    - { property: 'category', type_options: { required: true } }
+                    - { property: 'categoriesToMatch', type_options: { required: true } }
+                    - { property: 'value', type: 'money' }
+                    - status
+                    - created
+                    - expires
+                    - deletedAt
+            show:
+                fields:
+                    - id
+                    - { property: 'imageName', label: 'Image', type: 'image', base_path: '/images/items' }
+                    - title
+                    - description
+                    - user
+                    - category
+                    - categoriesToMatch
+                    - { property: 'value', format: '%.2f €'}
+                    - status
+                    - approvals
+                    - rejections
+                    - created
+                    - expires
+                    - deletedAt
         Match:
             class: AppBundle\Entity\Match
+            list:
+                title: 'Matches'
