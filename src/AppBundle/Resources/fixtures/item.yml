@@ -1,4 +1,4 @@
-AppBundle\Entity\Item:=
+AppBundle\Entity\Item:
     item_{1..300}:
         user: '@user_*'
         status: 1
