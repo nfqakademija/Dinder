@@ -1,0 +1,5 @@
+AppBundle\Entity\Match:
+    match_{1..300}:
+        itemOwner: '@item_*'
+        itemRespondent: '@item_*'
+        status: <numberBetween(0, 2)>
