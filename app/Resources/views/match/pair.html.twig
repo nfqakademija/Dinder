@@ -1,0 +1,38 @@
+<div class="col-md-6 col-md-offset-3 col-xs-12">
+    <div class="row">
+        <div class="col-xs-5">
+            {% if switch is defined %}
+                {% include 'match/pair-item.html.twig' with {'item': match.itemOwner} %}
+            {% else %}
+                {% include 'match/pair-item.html.twig' with {'item': match.itemRespondent} %}
+            {% endif %}
+        </div>
+        <div class="col-xs-2">
+            <p class="heading-color text-center"><i class="fa fa-exchange" aria-hidden="true"></i> </p>
+        </div>
+        <div class="col-xs-5">
+            {% if switch is defined %}
+                {% include 'match/pair-item.html.twig' with {'item': match.itemRespondent} %}
+            {% else %}
+                {% include 'match/pair-item.html.twig' with {'item': match.itemOwner} %}
+            {% endif %}
+        </div>
+    </div>
+    {% if trade is defined %}
+        <div class="row">
+            <div class="col-md-3 col-md-offset-3 col-xs-6">
+                <a class="btn btn-primary btn-block" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_decline', {id: match.id}) }}">Decline</a>
+            </div>
+            <div class="col-md-3 col-xs-6">
+                <a class="btn btn-default btn-block" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_trade', {id: match.id}) }}">Trade</a>
+            </div>
+        </div>
+    {% endif %}
+    {% if delete is defined %}
+        <div class="row">
+            <div class="col-md-6 col-md-offset-3 col-xs-12">
+                <a class="btn btn-default btn-block" data-method="DELETE" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
+            </div>
+        </div>
+    {% endif %}
+</div>

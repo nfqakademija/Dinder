@@ -1,56 +1,47 @@
-<div class="transparent-header">
-    <!-- Navigation Menu -->
-    <nav id="menu-1" class="mega-menu">
-        <!-- menu list items container -->
-        <section class="menu-list-items">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12 col-md-12">
-                        <!-- menu logo -->
-                        <ul class="menu-logo">
-                            <li>
-                                <a href="{{ path('homepage') }}"><img src="{{ asset('images/logo.png') }}" alt="Dinder"> </a>
-                            </li>
-                        </ul>
-                        <!-- menu links -->
-                        <ul class="menu-links">
-                            <li>
-                                <a href="{{ path('item_index') }}">
-                                    Items
-                                    {% if app.user %}
-                                        {{ unseen_count.countUnseed(app.user) }}
-                                    {% endif %}
-                                </a>
-                            </li>
-                            <li><a href="{{ path('match_index') }}">Matches</a></li>
-                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                                <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
-                                <li><a href="{{ path('user_show') }}">User Profile</a></li>
-                            {% else %}
-                                <li><a href="{{ path('fos_user_security_login') }}">Log in</a></li>
-                                <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
-                            {% endif %}
-                        </ul>
-                        {% if app.user %}
-                            <ul class="menu-search-bar">
-                                <li>
-                                    <a href="{{ path('item_new') }}" class="btn btn-light"><i class="fa fa-plus" aria-hidden="true"></i> Add New Item</a>
-                                </li>
-                            </ul>
-                        {% endif %}
-                    </div>
-                </div>
+<header>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#navbar-collapse-2">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a href="{{ path('homepage') }}" class="navbar-brand">
+                    <img src="{{ asset('build/images/logo.png') }}" alt="Dinder">
+                </a>
             </div>
-        </section>
+
+            <div class="collapse navbar-collapse" id="navbar-collapse-2">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="{{ path('item_index') }}">
+                            Items
+                            {% if app.user %}
+                                <span class="badge">
+                                    {{ unseen_count.countUnseed(app.user) }}
+                                </span>
+                            {% endif %}
+                        </a>
+                    </li>
+                    <li><a href="{{ path('match_index') }}">Matches</a></li>
+                    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        <li><a href="{{ path('user_show') }}">User Profile</a></li>
+                        <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
+                        <li>
+                            <a href="{{ path('item_new') }}" class="btn btn-circle">
+                                <i class="fa fa-plus" aria-hidden="true"></i> Add New Item
+                            </a>
+                        </li>
+                    {% else %}
+                        <li><a href="{{ path('fos_user_registration_register') }}">Register</a></li>
+                        <li><a class="btn btn-circle" href="{{ path('fos_user_security_login') }}">Sign in</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
     </nav>
-</div>
-<!-- Navigation Menu End -->
-<!-- =-=-=-=-=-=-= Transparent Header End =-=-=-=-=-=-= -->
-<!-- Home Banner 1 -->
-<section id="hero" class="hero bg-img">
-    <div class="content">
-        <p>Rejoice in <b>Exchange</b></p>
-    </div>
-    <!-- .content -->
-</section>
-<!-- Home Banner 1 End -->
+</header>
+
