@@ -27,8 +27,6 @@ services:
     networks:
       - frontend
       - backend
-    environment:
-      XDEBUG_CONFIG: remote_host=172.27.0.1
   npm:
     image: ongr/nodejs:6.4.0
     user: "$LOCAL_USER_ID:$LOCAL_GROUP_ID"
