@@ -43,6 +43,7 @@
 
     img {
       width: 100%;
+      pointer-events: none;
     }
 
     .item-description {
@@ -70,6 +71,7 @@
 
     .item-value {
       font-weight: 600;
+      text-align: left;
     }
 
     .item-category {

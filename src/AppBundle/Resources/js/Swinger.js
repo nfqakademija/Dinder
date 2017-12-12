@@ -40,7 +40,7 @@ export default class Swinger extends React.Component {
                 if(json.length) {
                     this.props.updateCards(_.union(json, nextProps.cards));
                 } else {
-                    this.setState({more: false, loading: false});
+                    this.setState({more: false});
                 }
             })
         }
@@ -114,9 +114,17 @@ export default class Swinger extends React.Component {
                         </Swing>
                     }
                 </div>
-                <div className="control">
-                    <button type="button" onClick={this.rejectCard}>Reject item</button>
-                    <button type="button" onClick={this.acceptCard}>Offer match</button>
+                <div className="row">
+                    <div className="col-xs-6">
+                        <button type="button" className="btn btn-primary btn-block" onClick={this.rejectCard}>
+                            <i className="fa fa-thumbs-o-down" aria-hidden="true"></i> Reject item
+                        </button>
+                    </div>
+                    <div className="col-xs-6">
+                        <button type="button" className="btn btn-default btn-block" onClick={this.acceptCard}>
+                            <i className="fa fa-thumbs-o-up" aria-hidden="true"></i> Offer match
+                        </button>
+                    </div>
                 </div>
             </div>
         )
