@@ -218,12 +218,15 @@ easy_admin:
             form:
                 fields:
                     - title
+                    - { property: 'file', label: 'Image', type: 'vich_image', type_options: { required: true } }
                     - description
                     - { property: 'user', type_options: { required: true } }
                     - { property: 'category', type_options: { required: true } }
                     - { property: 'categoriesToMatch', type_options: { required: true } }
                     - { property: 'value', type: 'money' }
                     - status
+                    - approvals
+                    - rejections
                     - created
                     - expires
                     - deletedAt

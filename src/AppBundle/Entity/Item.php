@@ -185,7 +185,7 @@ class Item
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -361,9 +361,9 @@ class Item
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
     }
@@ -486,7 +486,7 @@ class Item
      *
      * @return integer
      */
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
