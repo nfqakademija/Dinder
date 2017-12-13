@@ -1,63 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
-    <section class="section-padding gray">
-        <!-- Main Container -->
-        <div class="container">
-            <div class="row">
-                <!-- Middle Content Area -->
-                <div class="col-md-12 col-xs-12 col-sm-12">
-                    <!-- Row -->
-                    <div class="profile-section margin-bottom-20">
-                        <div class="profile-tabs">
-                            <ul class="nav nav-justified nav-tabs">
-                                <li class="active"><a>View Profile</a></li>
-                                <li><a href="{{ path('user_edit') }}">Edit Profile</a></li>
-                            </ul>
-                            <div class="tab-content">
-                                <div class="profile-edit tab-pane fade in active" id="profile">
-                                    <h2 class="heading-md">Your profile information</h2>
-                                    <dl class="dl-horizontal">
-                                        <dt><strong>Your name </strong></dt>
-                                        <dd>
-                                            {{ user.name }}
-                                        </dd>
-                                        <dt><strong>Username</strong></dt>
-                                        <dd>
-                                            {{ user.username }}
-                                        </dd>
-                                        <dt><strong>Email Address </strong></dt>
-                                        <dd>
-                                            {{ user.email }}
-                                        </dd>
-                                        <dt><strong>Phone Number </strong></dt>
-                                        <dd>
-                                            {{ user.phone }}
-                                        </dd>
-                                        <dt><strong>Location </strong></dt>
-                                        <dd>
-                                            {{ user.location.title }}
-                                        </dd>
-                                        <dt><strong>Preferred locations</strong></dt>
-                                        <dd>
-                                            <ul>
-                                                {% for locationToMatch in user.locationsToMatch %}
-                                                    <li>{{ locationToMatch.title }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Row End -->
-                </div>
-                <!-- Middle Content Area  End -->
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <h1 class="title">Your profile information</h1>
+            <dl class="dl-horizontal">
+                <dt><strong>Your name </strong></dt>
+                <dd>
+                    {{ user.name }}
+                </dd>
+                <dt><strong>Username</strong></dt>
+                <dd>
+                    {{ user.username }}
+                </dd>
+                <dt><strong>Email Address </strong></dt>
+                <dd>
+                    {{ user.email }}
+                </dd>
+                <dt><strong>Phone Number </strong></dt>
+                <dd>
+                    {{ user.phone }}
+                </dd>
+                <dt><strong>Location </strong></dt>
+                <dd>
+                    {{ user.location.title }}
+                </dd>
+                <dt><strong>Preferred locations</strong></dt>
+                <dd>
+                    <ul>
+                        {% for locationToMatch in user.locationsToMatch %}
+                            <li>{{ locationToMatch.title }}</li>
+                        {% endfor %}
+                    </ul>
+                </dd>
+            </dl>
+
+            <a class="btn btn-default" href="{{ path('user_edit') }}">Edit Profile</a>
         </div>
-        <!-- Main Container End -->
-    </section>
-    <!-- =-=-=-=-=-=-= Ads Archives End =-=-=-=-=-=-= -->
+    </div>
+</div>
 {% endblock %}

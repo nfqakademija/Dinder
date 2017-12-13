@@ -1,23 +1,17 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
-<!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
-<section class="section-padding error-page pattern-bg ">
-    <!-- Main Container -->
-    <div class="container">
-        <!-- Row -->
-        <div class="row">
-            <!-- Middle Content Area -->
-            <div class="col-md-6 col-md-offset-3 col-xs-12">
-                <!--  Form -->
-                {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
-                {{ form_widget(form) }}
-                <button class="btn btn-theme btn-lg btn-block">{{ 'registration.submit'|trans }}</button>
-                {{ form_end(form) }}
-                <!-- Form -->
-            </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-md-offset-3 col-xs-12">
+
+            <h1 class="title">Register</h1>
+
+            {{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'class': 'fos_user_registration_register'}}) }}
+            {{ form_widget(form) }}
+            <button class="btn btn-default btn-block">{{ 'registration.submit'|trans }}</button>
+            {{ form_end(form) }}
+
+            <div class="spacer"></div>
         </div>
-        <!-- Row End -->
     </div>
-    <!-- Main Container End -->
-</section>
-<!-- =-=-=-=-=-=-= Ads Archives End =-=-=-=-=-=-= -->
+</div>

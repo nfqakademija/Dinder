@@ -24,7 +24,7 @@ class HomeController extends Controller
 
         $featuredItems = $this->getDoctrine()->getRepository(Item::class)->findFeatured($limit);
 
-        return $this->render('AppBundle:Home:index.html.twig', [
+        return $this->render('home/index.html.twig', [
             'featured_items' => $featuredItems
         ]);
     }

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Swinger from "./Swinger";
+import { modalResize } from './helper';
 
 export default class AppContainer extends React.Component {
     constructor(props) {
@@ -15,9 +16,11 @@ export default class AppContainer extends React.Component {
     }
 
     updateCards(cards) {
+        modalResize();
         this.setState({
             cards: cards
         });
+
     }
 
     render() {

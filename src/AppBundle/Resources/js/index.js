@@ -3,6 +3,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import AppContainer from './AppContainer';
+import { modalResize } from './helper';
 
 $(function() {
     $('.link-exchange').click(function() {
@@ -21,5 +22,13 @@ $(function() {
         );
     }).on('hide.bs.modal', function() {
         ReactDOM.unmountComponentAtNode(document.getElementById('swing'));
+    });
+
+    $(window).resize(function() {
+        clearTimeout(window.resizedFinished);
+
+        window.resizedFinished = setTimeout(function(){
+            modalResize();
+        }, 250);
     });
 });

@@ -1,0 +1,26 @@
+<div class="item-card">
+    <div class="item-header">
+        <img class="img-responsive" src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
+
+        <div class="item-description">
+            {{ item.description }}
+        </div>
+    </div>
+    <div class="item-content">
+        <div class="item-content-header">
+            <h3 class="item-title">{{ item.title }}</h3>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-4">
+                <div class="item-value">
+                    <span>{{ item.value }}€</span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-8">
+                <div class="item-category">
+                    <span>{{ item.category.title }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

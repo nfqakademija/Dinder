@@ -1,0 +1,81 @@
+<div class="col-xs-12 col-ms-6 col-sm-6 col-md-4 col-lg-3">
+    <div class="item-card">
+        <div class="item-header">
+            {% if edit is defined %}
+                <a class="btn btn-default item-edit" href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a>
+            {% endif %}
+
+            <img class="img-responsive" src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
+
+            <div class="item-description">
+                {{ item.description }}
+            </div>
+        </div>
+        <div class="item-content">
+            <div class="item-content-header">
+                <h3 class="item-title">{{ item.title }}</h3>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-4">
+                    <div class="item-value">
+                        <span>{{ item.value }}€</span>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-8">
+                    <div class="item-category">
+                        <span>{{ item.category.title }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="item-info">
+                <div class="info-section">
+                    <label>Approvals</label>
+                    <span>{{ item.approvals }}</span>
+                </div>
+                <div class="info-section">
+                    <label>Rejections</label>
+                    <span>{{ item.rejections }}</span>
+                </div>
+            </div>
+        </div>
+        {% if edit is defined %}
+            <div class="item-categories">
+                <h5>Categories to match:</h5>
+                <ul class="list-group">
+                    {% for categoryToMatch in item.categoriesToMatch %}
+                        <li class="list-group-item">
+                            {{ categoryToMatch.title }}
+                            <a data-method="DELETE" data-token="{{ csrf_token(item.id) }}" href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% if item.categoriesToMatch|length < 3 %}
+                    <form action="{{ path('item_category_add') }}" method="POST">
+                        <input type="hidden" name="item" value="{{ item.id }}"/>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <select class="select2" name="category">
+                                    {% for category in categories %}
+                                        {% if category.id not in item.getCategoriesToMatchArray %}
+                                            <option value="{{ category.id }}">{{ category.title }}</option>
+                                        {% endif %}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-xs-12">
+                                <button class="item-category-add btn btn-default btn-block">Add</button>
+                            </div>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        {% endif %}
+        {% if exchange is defined %}
+            <a class="btn btn-default btn-block link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
+                <i class="fa fa-exchange" aria-hidden="true"></i> Exchange
+            </a>
+        {% endif %}
+    </div>
+</div>

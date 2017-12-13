@@ -1,0 +1,150 @@
+.item-card {
+  background: $c-white;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  margin: 1em 0;
+  border: 1px solid $c1;
+  border-radius: 10px;
+  display: inline-block;
+  overflow: hidden;
+
+  @include transition(all 300ms);
+
+  &:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+
+    .item-header {
+      .item-description {
+        bottom: 0;
+      }
+    }
+  }
+
+  .item-header {
+    position: relative;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    display: block;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+
+    .item-edit {
+      position: absolute;
+      top: 0;
+      right: 0;
+      border-radius: 0;
+      border-top: 0;
+      border-right: 0;
+      border-bottom-left-radius: 10px;
+    }
+
+    img {
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .item-description {
+      position: absolute;
+      left: 0;
+      bottom: -100%;
+      width: 100%;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 80%, transparent);
+      color: $c-white;
+      padding: 30px 15px 15px;
+
+      @include transition(all 300ms);
+    }
+  }
+
+  .item-content {
+    padding: 10px 15px 15px;
+    margin: 0;
+
+    .item-title {
+      font-size: 24px;
+      margin: 0 0 15px;
+      color: $c1;
+    }
+
+    .item-value {
+      font-weight: 600;
+      text-align: left;
+    }
+
+    .item-category {
+      text-align: right;
+    }
+
+    .item-info {
+      display: table;
+      width: 100%;
+      margin-top: 1em;
+
+      .info-section {
+        display: table-cell;
+        text-transform: uppercase;
+        text-align: center;
+        &:first-of-type {
+          text-align: left;
+        }
+        &:last-of-type {
+          text-align: right;
+        }
+        label {
+          display: block;
+          color: rgba(0, 0, 0, 0.5);
+          margin-bottom: .5em;
+          font-size: 9px;
+        }
+        span {
+          font-weight: 700;
+          font-size: 11px;
+        }
+      }
+    }
+  }
+
+  .item-categories {
+    margin-bottom: 15px;
+
+    a {
+      color: $c1;
+    }
+
+    h5 {
+      padding: 0 15px;
+    }
+
+    .item-category-add {
+      border-left: 0;
+      border-right: 0;
+    }
+  }
+
+  .link-exchange {
+    border-radius: 0;
+    border: 0;
+    border-top: 1px solid $c1;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .item-card {
+    .item-content {
+      .item-category {
+        text-align: left;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .item-card {
+    width: 100%;
+    max-width: 100%;
+    margin: 0.5em 0;
+    display: block;
+  }
+}
