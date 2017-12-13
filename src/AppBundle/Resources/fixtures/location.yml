@@ -1,3 +1,5 @@
 AppBundle\Entity\Location:
+    london:
+        title: London
     location_{1..5}:
         title (unique): <lt_LT:city()>
