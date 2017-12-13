@@ -78,11 +78,6 @@ class ItemController extends Controller
     {
         $item = new Item();
 
-        // Adding one image to be main
-//        $imageMain = new Image();
-//        $imageMain->setMain(true);
-//        $item->addImage($imageMain);
-
         $form = $this->createForm('AppBundle\Form\ItemType', $item);
         $form->handleRequest($request);
 
@@ -95,7 +90,6 @@ class ItemController extends Controller
             $item->setRejections(0);
             $item->setStatus(Item::STATUS_ACTIVE);
             $item->setCreated(new \DateTime('now'));
-            $item->setExpires(new \DateTime('+'.$this->getParameter('item_valid_days').' days'));
             $item->setUser($user);
 
             $history = new History();
