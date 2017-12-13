@@ -8,7 +8,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -562,7 +561,7 @@ class Item
     /**
      * Set file
      *
-     * @param File|UploadedFile $file
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
      *
      * @return Item
      */

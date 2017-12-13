@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\History;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
-use AppBundle\Entity\Image;
 use AppBundle\Entity\Category;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\NoResultException;
