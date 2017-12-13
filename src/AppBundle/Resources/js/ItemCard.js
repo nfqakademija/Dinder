@@ -1,27 +1,13 @@
 import React from 'react';
-import ReactDOM from "react-dom";
 
 export default class ItemCard extends React.Component {
-
-    imageLoaded({target:img}) {
-        const viewport = document.getElementById('viewport');
-        let height = 120;
-
-        setTimeout(function () {
-            if(img.closest('.card').offsetHeight > height) {
-                height = img.closest('.card').offsetHeight;
-            }
-
-            viewport.style.height = (height + 20) + 'px';
-        }, 100);
-    }
 
     render() {
         return (
             <div className="card" data-id={this.props.card.id} ref={`card${this.props.index}`}>
                 <div className="item-card">
                     <div className="item-header">
-                        <img className="img-responsive" onLoad={this.imageLoaded} src={this.props.card.image} alt={this.props.card.title} />
+                        <img className="img-responsive" src={this.props.card.image} alt={this.props.card.title} />
 
                         <div className="item-description">
                             {this.props.card.description}

@@ -77,6 +77,12 @@
   &.navbar-default .nav-collapse.in, &.navbar-inverse .nav-collapse.in {
     transform: translate(0px, 0px);
   }
+  li {
+    a {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  }
 }
 
 @media screen and (max-width: 767px) {

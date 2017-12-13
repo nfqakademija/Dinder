@@ -9,10 +9,12 @@
   .card {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 50%;
     width: 100%;
+    max-width: 300px;
     list-style: none;
     text-align: center;
     cursor: default;
+    transform: translate(-50%);
   }
 }

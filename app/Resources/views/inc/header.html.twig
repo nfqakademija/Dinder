@@ -28,7 +28,7 @@
                     </li>
                     <li><a href="{{ path('match_index') }}">Matches</a></li>
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        <li><a href="{{ path('user_show') }}">User Profile</a></li>
+                        <li><a href="{{ path('user_show') }}">Profile</a></li>
                         <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
                         <li>
                             <a href="{{ path('item_new') }}" class="btn btn-circle">
