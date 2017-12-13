@@ -106,13 +106,6 @@ class Item
     private $created;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expires", type="datetime")
-     */
-    private $expires;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="imageName", type="string", length=255)
@@ -349,30 +342,6 @@ class Item
     public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
-    }
-
-    /**
-     * Set expires
-     *
-     * @param \DateTime $expires
-     *
-     * @return Item
-     */
-    public function setExpires(\DateTime $expires): Item
-    {
-        $this->expires = $expires;
-
-        return $this;
-    }
-
-    /**
-     * Get expires
-     *
-     * @return \DateTime
-     */
-    public function getExpires(): ?\DateTime
-    {
-        return $this->expires;
     }
 
     /**
