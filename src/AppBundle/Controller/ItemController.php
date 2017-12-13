@@ -334,12 +334,6 @@ class ItemController extends Controller
 
             $em->flush();
 
-            return $this->render('item/edit.html.twig', array(
-                'item' => $item,
-                'edit_form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            ));
-
             return $this->redirectToRoute('item_edit', array('id' => $item->getId()));
         }
 
