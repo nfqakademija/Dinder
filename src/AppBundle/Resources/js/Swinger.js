@@ -96,36 +96,41 @@ export default class Swinger extends React.Component {
     render() {
         return (
             <div>
-                <div id="viewport">
-                    { this.state.loading ?
-                        <h4>Loading...</h4>
-                        :
-                        <Swing
-                            config={this.config}
-                            className="stack"
-                            tagName="div"
-                            setStack={(stack) => this.setState({stack: stack})}
-                            ref="stack"
-                            throwout={(e) => this.throwOut(e)}
-                        >
-                            {this.props.cards.map((c, i) => {
-                                return <ItemCard key={i} index={i} onThrow={(e) => console.log(e)} card={c} />
-                            })}
-                        </Swing>
-                    }
-                </div>
-                <div className="row">
-                    <div className="col-xs-6">
-                        <button type="button" className="btn btn-primary btn-block" onClick={this.rejectCard}>
-                            <i className="fa fa-thumbs-o-down" aria-hidden="true"></i> Reject item
-                        </button>
+                { this.props.cards.length ?
+                    <div>
+                        <div id="viewport">
+                            <Swing
+                                config={this.config}
+                                className="stack"
+                                tagName="div"
+                                setStack={(stack) => this.setState({stack: stack})}
+                                ref="stack"
+                                throwout={(e) => this.throwOut(e)}
+                            >
+                                {this.props.cards.map((c, i) => {
+                                    return <ItemCard key={i} index={i} onThrow={(e) => console.log(e)} card={c} />
+                                })}
+                            </Swing>
+                        </div>
+                        <div className="row">
+                            <div className="col-xs-6">
+                                <button type="button" className="btn btn-primary btn-block" onClick={this.rejectCard}>
+                                    <i className="fa fa-thumbs-o-down" aria-hidden="true"></i> Reject item
+                                </button>
+                            </div>
+                            <div className="col-xs-6">
+                                <button type="button" className="btn btn-default btn-block" onClick={this.acceptCard}>
+                                    <i className="fa fa-thumbs-o-up" aria-hidden="true"></i> Offer match
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col-xs-6">
-                        <button type="button" className="btn btn-default btn-block" onClick={this.acceptCard}>
-                            <i className="fa fa-thumbs-o-up" aria-hidden="true"></i> Offer match
-                        </button>
+                    :
+                    <div className="alert alert-info">
+                        <strong>Sorry, there are no items to show.</strong><br/>
+                        You may tray changing the categories or search later?
                     </div>
-                </div>
+                }
             </div>
         )
     }
