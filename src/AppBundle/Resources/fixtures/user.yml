@@ -7,7 +7,7 @@ AppBundle\Entity\User:
         enabled: true
     user_1:
         username: user1
-        plainPassword: user1
+        plainPassword: slapukas
         email: user1@dinder.com
         roles: [ROLE_USER]
         enabled: true
@@ -16,14 +16,14 @@ AppBundle\Entity\User:
         location: '@london'
     user_2:
         username: user2
-        plainPassword: user2
+        plainPassword: slapukas
         email: user2@dinder.com
         roles: [ROLE_USER]
         enabled: true
         name: 'User2 User2'
         phone: <phoneNumber()>
         location: '@london'
-    user_{3..10}:
+    somebody_{3..10}:
         email (unique): <safeEmail()>
         username: 'user<current()>'
         plainPassword: 'user<current()>'
