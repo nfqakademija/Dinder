@@ -7,7 +7,6 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    item_valid_days: 30
     item_match_margin: 3
     item_match_limit: 5
     item_featured_limit: 4
@@ -218,15 +217,20 @@ easy_admin:
             form:
                 fields:
                     - title
+                    - { property: 'file', label: 'Image', type: 'vich_image' }
                     - description
                     - { property: 'user', type_options: { required: true } }
                     - { property: 'category', type_options: { required: true } }
                     - { property: 'categoriesToMatch', type_options: { required: true } }
                     - { property: 'value', type: 'money' }
                     - status
+                    - approvals
+                    - rejections
                     - created
-                    - expires
                     - deletedAt
+            new:
+                fields:
+                    - { property: 'file', label: 'Image', type: 'vich_image', type_options: { required: true } }
             show:
                 fields:
                     - id
@@ -241,7 +245,6 @@ easy_admin:
                     - approvals
                     - rejections
                     - created
-                    - expires
                     - deletedAt
         Match:
             class: AppBundle\Entity\Match

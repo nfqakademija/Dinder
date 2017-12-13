@@ -11,7 +11,6 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
-        expires: <dateTimeBetween('-1 month')>
     user2item_{1..15}:
         user: '@user_2'
         status: 1
@@ -24,7 +23,6 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
-        expires: <dateTimeBetween('-1 month')>
     someitem_{1..100}:
         user: '@somebody_*'
         status: 1
@@ -37,4 +35,3 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
-        expires: <dateTimeBetween('-1 month')>
