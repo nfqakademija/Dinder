@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Validator\Constraints\Count;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ItemType extends AbstractType
@@ -29,6 +30,7 @@ class ItemType extends AbstractType
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
                 'multiple' => true,
+                'constraints' => [new Count(['max' => 3])],
             ))
             ->add('file', VichImageType::class, array(
                 'download_uri' => false,
