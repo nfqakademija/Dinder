@@ -330,15 +330,15 @@ class ItemController extends Controller
         if ($editForm->isSubmitted() && $editForm->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
-            foreach ($item->getMatchesOwnItem() as $match) {
-                $em->remove($match);
-            }
-
-            foreach ($item->getMatchesResponseItem() as $match) {
-                $em->remove($match);
-            }
+            $em->getRepository(Match::class)->deleteItemMatches($item);
 
             $em->flush();
+
+            return $this->render('item/edit.html.twig', array(
+                'item' => $item,
+                'edit_form' => $editForm->createView(),
+                'delete_form' => $deleteForm->createView(),
+            ));
 
             return $this->redirectToRoute('item_edit', array('id' => $item->getId()));
         }
