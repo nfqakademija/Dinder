@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\SoftDeleteable\Traits\SoftDeleteableEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -75,13 +76,6 @@ class Item
      * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
-
-    /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $images;
 
     /**
      * @var int
@@ -173,7 +167,6 @@ class Item
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
         $this->categoriesToMatch = new ArrayCollection();
         $this->matchesOwnItem = new ArrayCollection();
         $this->matchesResponseItem = new ArrayCollection();
@@ -287,16 +280,6 @@ class Item
     }
 
     /**
-     * Get images
-     *
-     * @return Collection
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    /**
      * Set approvals
      *
      * @param int $approvals
@@ -390,30 +373,6 @@ class Item
     public function getExpires(): ?\DateTime
     {
         return $this->expires;
-    }
-
-    /**
-     * Add image
-     *
-     * @param Image $image
-     */
-    public function addImage(Image $image): void
-    {
-        $image->setItem($this);
-
-        $this->images->add($image);
-    }
-
-    /**
-     * Remove image
-     *
-     * @param Image $image
-     */
-    public function removeImage(Image $image): void
-    {
-        $this->images->removeElement($image);
-
-        $image->setItem(null);
     }
 
     /**
@@ -560,25 +519,6 @@ class Item
     }
 
     /**
-     * Get main image
-     *
-     * @return Image
-     */
-    public function getMainImage(): ?Image
-    {
-        foreach ($this->images->getIterator() as $image) {
-            if ($image->getMain() === true) {
-                return $image;
-            }
-        }
-        if ($this->images->count()) {
-            return $this->images->first();
-        }
-
-        return null;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -653,9 +593,9 @@ class Item
     /**
      * Set file
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
+     * @param File|UploadedFile $file
      *
-     * @return Image
+     * @return Item
      */
     public function setFile(File $file = null): Item
     {

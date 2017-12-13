@@ -34,14 +34,6 @@ class ItemType extends AbstractType
                 'download_uri' => false,
                 'image_uri' => true,
             ));
-//            ->add('images', CollectionType::class, array(
-//                'entry_type' => ImageType::class,
-//                'allow_add' => true,
-//                'by_reference' => false,
-//                'entry_options' => array(
-//                    'label' => false,
-//                ),
-//            ))
         ;
     }
     
