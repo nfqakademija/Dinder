@@ -561,7 +561,7 @@ class Item
     /**
      * Set file
      *
-     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $image
+     * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
      * @return Item
      */
