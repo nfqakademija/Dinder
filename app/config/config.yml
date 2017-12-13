@@ -217,7 +217,7 @@ easy_admin:
             form:
                 fields:
                     - title
-                    - { property: 'file', label: 'Image', type: 'vich_image', type_options: { required: true } }
+                    - { property: 'file', label: 'Image', type: 'vich_image' }
                     - description
                     - { property: 'user', type_options: { required: true } }
                     - { property: 'category', type_options: { required: true } }
@@ -228,6 +228,9 @@ easy_admin:
                     - rejections
                     - created
                     - deletedAt
+            new:
+                fields:
+                    - { property: 'file', label: 'Image', type: 'vich_image', type_options: { required: true } }
             show:
                 fields:
                     - id
