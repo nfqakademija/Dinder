@@ -32,10 +32,12 @@
                     <label>Approvals</label>
                     <span>{{ item.approvals }}</span>
                 </div>
-                <div class="info-section">
-                    <label>Rejections</label>
-                    <span>{{ item.rejections }}</span>
-                </div>
+                {% if app.user and app.user == item.user %}
+                    <div class="info-section">
+                        <label>Rejections</label>
+                        <span>{{ item.rejections }}</span>
+                    </div>
+                {% endif %}
             </div>
         </div>
         {% if edit is defined %}
