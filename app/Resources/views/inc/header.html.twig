@@ -16,17 +16,21 @@
 
             <div class="collapse navbar-collapse" id="navbar-collapse-2">
                 <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="{{ path('item_index') }}">
-                            Items
-                            {% if app.user %}
-                                <span class="badge">
-                                    {{ unseen_count.countUnseed(app.user) }}
-                                </span>
-                            {% endif %}
-                        </a>
-                    </li>
-                    <li><a href="{{ path('match_index') }}">Matches</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li><a href="{{ path('easyadmin') }}">Admin</a></li>
+                    {% else %}
+                        <li>
+                            <a href="{{ path('item_index') }}">
+                                Items
+                                {% if app.user %}
+                                    <span class="badge">
+                                        {{ unseen_count.countUnseed(app.user) }}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
+                        <li><a href="{{ path('match_index') }}">Matches</a></li>
+                    {% endif %}
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li><a href="{{ path('user_show') }}">Profile</a></li>
                         <li><a href="{{ path('fos_user_security_logout') }}">Log out</a></li>
