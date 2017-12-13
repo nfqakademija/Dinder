@@ -1,6 +1,32 @@
 AppBundle\Entity\Item:
-    item_{1..300}:
-        user: '@user_*'
+    user1item_{1..15}:
+        user: '@user_1'
+        status: 1
+        title: <word()>
+        imageName: <image('web/images/items', 640, 480, 'technics', 0)>
+        description: <sentence()>
+        value: <randomDigitNotNull()>
+        category: '@category_1'
+        categoriesToMatch: ['@category_1', '@category_2', '@category_3']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+        expires: <dateTimeBetween('-1 month')>
+    user2item_{1..15}:
+        user: '@user_2'
+        status: 1
+        title: <word()>
+        imageName: <image('web/images/items', 640, 480, 'technics', 0)>
+        description: <sentence()>
+        value: <randomDigitNotNull()>
+        category: '@category_2'
+        categoriesToMatch: ['@category_1', '@category_2', '@category_3']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+        expires: <dateTimeBetween('-1 month')>
+    someitem_{1..100}:
+        user: '@somebody_*'
         status: 1
         title: <word()>
         imageName: <image('web/images/items', 640, 480, 'technics', 0)>

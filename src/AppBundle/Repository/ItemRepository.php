@@ -92,7 +92,7 @@ class ItemRepository extends EntityRepository
     {
         return $this
             ->createQueryBuilder('i')
-            ->orderBy('i.approvals')
+            ->orderBy('i.approvals', 'DESC')
             ->setMaxResults($limit)
             ->getQuery()
             ->getResult();
