@@ -10,6 +10,8 @@
     width: 100%;
     max-width: 300px;
     transform: translate(-50%);
+    perspective: 100vw;
+    perspective-origin: 0 150px;
   }
   .card {
     position: absolute;

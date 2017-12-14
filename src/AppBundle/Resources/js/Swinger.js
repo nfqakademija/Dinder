@@ -14,7 +14,7 @@ export default class Swinger extends React.Component {
             return Math.max(xConfidence, yConfidence);
         },
         transform: (element, coordinateX) => {
-            element.style[vendorPrefix('transform')] = 'translate3d(0, 0, 0) translate(' + coordinateX + 'px, 0px) rotate(0deg)';
+            element.style[vendorPrefix('transform')] = 'translate3d(0, 0, 0) translate(' + coordinateX + 'px, 0px) rotateY(' + (coordinateX * -0.2) + 'deg)';
         }
     };
 
