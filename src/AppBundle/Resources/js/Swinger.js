@@ -127,8 +127,8 @@ export default class Swinger extends React.Component {
                     </div>
                     :
                     <div className="alert alert-info">
-                        <strong>Sorry, there are no items to show.</strong><br/>
-                        You may tray changing the categories or search later?
+                        <strong>Sorry, there are no more items to show.</strong><br/>
+                        You may try changing the categories or search later?
                     </div>
                 }
             </div>
