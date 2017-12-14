@@ -77,7 +77,7 @@ class ItemController extends Controller
     {
         $item = new Item();
 
-        $form = $this->createForm('AppBundle\Form\ItemType', $item);
+        $form = $this->createForm('AppBundle\Form\ItemType', $item, ['action_type' => 'create']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -324,11 +324,15 @@ class ItemController extends Controller
     public function editAction(Request $request, Item $item): Response
     {
         $deleteForm = $this->createDeleteForm($item);
-        $editForm = $this->createForm('AppBundle\Form\ItemType', $item);
+        $editForm = $this->createForm('AppBundle\Form\ItemType', $item, ['action_type' => 'edit']);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+
+            $em->getRepository(Match::class)->deleteItemMatches($item);
+
+            $em->flush();
 
             return $this->redirectToRoute('item_edit', array('id' => $item->getId()));
         }
