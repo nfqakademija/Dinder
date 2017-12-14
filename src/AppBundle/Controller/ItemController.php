@@ -5,7 +5,6 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\History;
 use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
-use AppBundle\Entity\Image;
 use AppBundle\Entity\Category;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\NoResultException;
@@ -78,12 +77,7 @@ class ItemController extends Controller
     {
         $item = new Item();
 
-        // Adding one image to be main
-//        $imageMain = new Image();
-//        $imageMain->setMain(true);
-//        $item->addImage($imageMain);
-
-        $form = $this->createForm('AppBundle\Form\ItemType', $item);
+        $form = $this->createForm('AppBundle\Form\ItemType', $item, ['action_type' => 'create']);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -95,7 +89,6 @@ class ItemController extends Controller
             $item->setRejections(0);
             $item->setStatus(Item::STATUS_ACTIVE);
             $item->setCreated(new \DateTime('now'));
-            $item->setExpires(new \DateTime('+'.$this->getParameter('item_valid_days').' days'));
             $item->setUser($user);
 
             $history = new History();
@@ -331,11 +324,15 @@ class ItemController extends Controller
     public function editAction(Request $request, Item $item): Response
     {
         $deleteForm = $this->createDeleteForm($item);
-        $editForm = $this->createForm('AppBundle\Form\ItemType', $item);
+        $editForm = $this->createForm('AppBundle\Form\ItemType', $item, ['action_type' => 'edit']);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $em = $this->getDoctrine()->getManager();
+
+            $em->getRepository(Match::class)->deleteItemMatches($item);
+
+            $em->flush();
 
             return $this->redirectToRoute('item_edit', array('id' => $item->getId()));
         }

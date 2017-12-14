@@ -1,3 +1,9 @@
 body {
   background: $c2l;
 }
+
+.vich-image {
+  img {
+    max-width: 100%;
+  }
+}

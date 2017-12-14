@@ -77,13 +77,6 @@ class Item
     private $category;
 
     /**
-     * @var ArrayCollection
-     *
-     * @ORM\OneToMany(targetEntity="Image", mappedBy="item", cascade={"persist", "remove"}, orphanRemoval=true)
-     */
-    private $images;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="approvals", type="integer")
@@ -110,13 +103,6 @@ class Item
      * @ORM\Column(name="created", type="datetime")
      */
     private $created;
-
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="expires", type="datetime")
-     */
-    private $expires;
 
     /**
      * @var string
@@ -173,7 +159,6 @@ class Item
      */
     public function __construct()
     {
-        $this->images = new ArrayCollection();
         $this->categoriesToMatch = new ArrayCollection();
         $this->matchesOwnItem = new ArrayCollection();
         $this->matchesResponseItem = new ArrayCollection();
@@ -185,7 +170,7 @@ class Item
      *
      * @return int
      */
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -287,16 +272,6 @@ class Item
     }
 
     /**
-     * Get images
-     *
-     * @return Collection
-     */
-    public function getImages(): Collection
-    {
-        return $this->images;
-    }
-
-    /**
      * Set approvals
      *
      * @param int $approvals
@@ -361,59 +336,11 @@ class Item
     /**
      * Get created
      *
-     * @return \DateTime
+     * @return \DateTimeInterface
      */
-    public function getCreated(): ?\DateTime
+    public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
-    }
-
-    /**
-     * Set expires
-     *
-     * @param \DateTime $expires
-     *
-     * @return Item
-     */
-    public function setExpires(\DateTime $expires): Item
-    {
-        $this->expires = $expires;
-
-        return $this;
-    }
-
-    /**
-     * Get expires
-     *
-     * @return \DateTime
-     */
-    public function getExpires(): ?\DateTime
-    {
-        return $this->expires;
-    }
-
-    /**
-     * Add image
-     *
-     * @param Image $image
-     */
-    public function addImage(Image $image): void
-    {
-        $image->setItem($this);
-
-        $this->images->add($image);
-    }
-
-    /**
-     * Remove image
-     *
-     * @param Image $image
-     */
-    public function removeImage(Image $image): void
-    {
-        $this->images->removeElement($image);
-
-        $image->setItem(null);
     }
 
     /**
@@ -486,7 +413,7 @@ class Item
      *
      * @return integer
      */
-    public function getStatus(): int
+    public function getStatus(): ?int
     {
         return $this->status;
     }
@@ -557,25 +484,6 @@ class Item
     public function getMatchesResponseItem(): Collection
     {
         return $this->matchesResponseItem;
-    }
-
-    /**
-     * Get main image
-     *
-     * @return Image
-     */
-    public function getMainImage(): ?Image
-    {
-        foreach ($this->images->getIterator() as $image) {
-            if ($image->getMain() === true) {
-                return $image;
-            }
-        }
-        if ($this->images->count()) {
-            return $this->images->first();
-        }
-
-        return null;
     }
 
     /**
@@ -655,7 +563,7 @@ class Item
      *
      * @param File|\Symfony\Component\HttpFoundation\File\UploadedFile $file
      *
-     * @return Image
+     * @return Item
      */
     public function setFile(File $file = null): Item
     {

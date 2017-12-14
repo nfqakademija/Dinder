@@ -1,1 +1,1 @@
-server 'deploy.nfqakademija.lt', user: 'kickstart', roles: %w{web}
+server 'deploy.nfqakademija.lt', user: 'dinder', roles: %w{web}

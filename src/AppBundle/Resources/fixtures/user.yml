@@ -5,24 +5,30 @@ AppBundle\Entity\User:
         email: admin@dinder.com
         roles: [ROLE_SUPER_ADMIN]
         enabled: true
-        name: <name()>
-        phone: <phoneNumber()>
-        location: '@location_*'
     user_1:
-        username: user
-        plainPassword: user
-        email: user@dinder.com
+        username: user1
+        plainPassword: slapukas
+        email: user1@dinder.com
         roles: [ROLE_USER]
         enabled: true
-        name: <name()>
+        name: 'User1 User1'
         phone: <phoneNumber()>
-        location: '@location_*'
-    user_{2..100}:
-        username (unique): <safeEmail()>
-        plainPassword: user
+        location: '@london'
+    user_2:
+        username: user2
+        plainPassword: slapukas
+        email: user2@dinder.com
+        roles: [ROLE_USER]
+        enabled: true
+        name: 'User2 User2'
+        phone: <phoneNumber()>
+        location: '@london'
+    somebody_{3..10}:
         email (unique): <safeEmail()>
+        username: 'user<current()>'
+        plainPassword: 'user<current()>'
         roles: [ROLE_USER]
         enabled: true
-        name: <name()>
-        phone: <phoneNumber()>
+        name: '<firstName()> <lastName()>'
+        phone: <lt_LT:phoneNumber()>
         location: '@location_*'
