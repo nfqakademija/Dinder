@@ -7,6 +7,9 @@ export default class ItemCard extends React.Component {
             <div className="card" data-id={this.props.card.id} ref={`card${this.props.index}`}>
                 <div className="item-card">
                     <div className="item-header">
+                        <div className="overlay-match"></div>
+                        <div className="overlay-reject"></div>
+
                         <img className="img-responsive" src={this.props.card.image} alt={this.props.card.title} />
 
                         <div className="item-description">
