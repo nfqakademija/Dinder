@@ -6,7 +6,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ItemType extends AbstractType
@@ -33,6 +32,8 @@ class ItemType extends AbstractType
             ->add('file', VichImageType::class, array(
                 'download_uri' => false,
                 'image_uri' => true,
+                'allow_delete' => false,
+                'required' => $options['action_type'] === 'create',
             ));
         ;
     }
@@ -43,7 +44,8 @@ class ItemType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Entity\Item'
+            'data_class' => 'AppBundle\Entity\Item',
+            'action_type' => 'create'
         ));
     }
 

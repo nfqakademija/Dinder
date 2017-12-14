@@ -1,39 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <!-- =-=-=-=-=-=-= Latest Ads =-=-=-=-=-=-= -->
-    <section class="section-padding gray ">
-        <!-- Main Container -->
-        <div class="container">
-            <!-- Row -->
-            <div class="row">
-                <div class="col-md-12">
-                    <!-- end post-padding -->
-                    <div class="post-ad-form extra-padding postdetails">
-                        <div class="heading-panel">
-                            <h3 class="main-title text-left">
-                                Post New Item
-                            </h3>
-                        </div>
-                        {{ form_start(form, {'attr': {'class': 'submit-form'}}) }}
-                        {#<div class="ImageCollection">#}
-                            {#<h4 class="ImageCollection-title">Images</h4>#}
-                            {#<div class="ImageCollection-list" data-prototype="{{ form_widget(form.images.vars.prototype)|e('html_attr') }}">#}
-                                {#{% for image in form.images %}#}
-                                    {#{{ form_row(image) }}#}
-                                {#{% endfor %}#}
-                            {#</div>#}
-                        {#</div>#}
-                        {{ form_rest(form) }}
-                        <button class="btn btn-theme">Submit</button>
-                        {{ form_end(form) }}
-                    </div>
-                    <!-- end post-ad-form-->
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-md-offset-3">
+                <h2 class="title">Post New Item</h2>
+
+                <div class="alert alert-info">
+                    Please make sure that entered data is correct.<br>
+                    If you edit item - all sent and received offers will be deleted.
                 </div>
-                <!-- end col -->
+
+                {{ form_start(form, {'attr': {'class': 'submit-form'}}) }}
+                {{ form_rest(form) }}
+                <button class="btn btn-default">Submit</button>
+                {{ form_end(form) }}
             </div>
-            <!-- end row -->
         </div>
-        <!-- Main Container End -->
-    </section>
+    </div>
 {% endblock %}
