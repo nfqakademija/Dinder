@@ -1,11 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Swing, {Stack, Card, Direction} from 'react-swing';
+import vendorPrefix from 'vendor-prefix';
 import ItemCard from './ItemCard';
 
 export default class Swinger extends React.Component {
     config = {
-        allowedDirections: [Swing.DIRECTION.LEFT, Swing.DIRECTION.RIGHT]
+        allowedDirections: [Swing.DIRECTION.LEFT, Swing.DIRECTION.RIGHT],
+        throwOutConfidence: (xOffset, yOffset, element) => {
+            const xConfidence = Math.min(Math.abs(xOffset) / element.offsetWidth * 2.5, 1);
+            const yConfidence = Math.min(Math.abs(yOffset) / element.offsetHeight * 2.5, 1);
+
+            return Math.max(xConfidence, yConfidence);
+        },
+        transform: (element, coordinateX) => {
+            element.style[vendorPrefix('transform')] = 'translate3d(0, 0, 0) translate(' + coordinateX + 'px, 0px) rotateY(' + (coordinateX * -0.2) + 'deg)';
+        }
     };
 
     state = {
@@ -106,6 +116,23 @@ export default class Swinger extends React.Component {
                                 setStack={(stack) => this.setState({stack: stack})}
                                 ref="stack"
                                 throwout={(e) => this.throwOut(e)}
+                                dragstart={(e) => e.target.classList.add('moving')}
+                                dragend={(e) => e.target.classList.remove('moving')}
+                                dragmove={(e) => {
+                                    if(e.throwDirection === Swing.DIRECTION.RIGHT) {
+                                        e.target.getElementsByClassName('overlay-reject')[0].style.opacity = 0;
+                                        e.target.getElementsByClassName('overlay-match')[0].style.opacity = e.throwOutConfidence;
+                                    } else {
+                                        e.target.getElementsByClassName('overlay-match')[0].style.opacity = 0;
+                                        e.target.getElementsByClassName('overlay-reject')[0].style.opacity = e.throwOutConfidence;
+                                    }
+
+                                    if(e.throwOutConfidence >= 1) {
+                                        e.target.classList.add('moving-edge');
+                                    } else {
+                                        e.target.classList.remove('moving-edge');
+                                    }
+                                }}
                             >
                                 {this.props.cards.map((c, i) => {
                                     return <ItemCard key={i} index={i} onThrow={(e) => console.log(e)} card={c} />

@@ -1,7 +1,8 @@
 #viewport {
   position: relative;
   width: 100%;
-  height: 70vh;
+  min-height: 300px;
+  z-index: 100;
   .stack {
     position: absolute;
     top: 0;
@@ -9,6 +10,8 @@
     width: 100%;
     max-width: 300px;
     transform: translate(-50%);
+    perspective: 100vw;
+    perspective-origin: 0 150px;
   }
   .card {
     position: absolute;
@@ -18,5 +21,32 @@
     list-style: none;
     text-align: center;
     cursor: default;
+    .overlay-match,
+    .overlay-reject {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.6);
+      background-image: url(../images/thumb-up.png);
+      background-position: center center;
+      background-repeat: no-repeat;
+      opacity: 0;
+      z-index: 150;
+    }
+    .overlay-reject {
+      background-image: url(../images/thumb-down.png);
+    }
+    &.moving {
+      .overlay-match,
+      .overlay-reject {
+        display: block;
+      }
+    }
+    &.moving-edge {
+      opacity: 0.5;
+    }
   }
 }
