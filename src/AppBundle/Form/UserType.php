@@ -19,7 +19,7 @@ class UserType extends AbstractType
             ->add('email', null, ['label' => 'user.label.email'])
             ->add('phone', null, ['label' => 'user.label.phone'])
             ->add('location', null, ['label' => 'user.label.location'])
-            ->add('locationsToMatch',null, ['label' => 'user.label.preferred'])
+            ->add('locationsToMatch', null, ['label' => 'user.label.preferred'])
         ;
     }
     
