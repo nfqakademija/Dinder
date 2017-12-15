@@ -18,7 +18,7 @@
                 <ul class="nav navbar-nav navbar-right">
                     {% if is_granted('ROLE_ADMIN') %}
                         <li><a href="{{ path('easyadmin') }}">Admin</a></li>
-                    {% else %}
+                    {% elseif app.user %}
                         <li>
                             <a href="{{ path('item_index') }}">
                                 Items

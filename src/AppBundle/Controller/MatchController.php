@@ -8,6 +8,7 @@ use AppBundle\Entity\History;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -87,6 +88,10 @@ class MatchController extends Controller
         $em->getRepository(Match::class)->deleteRelatedMathes($match);
         $em->flush();
 
+        if($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
+
         return $this->redirectToRoute('match_index');
     }
 
@@ -112,6 +117,10 @@ class MatchController extends Controller
 
         $match->setStatus(Match::STATUS_DECLINED);
         $this->getDoctrine()->getManager()->flush();
+
+        if($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
 
         return $this->redirectToRoute('match_index');
     }
@@ -139,6 +148,10 @@ class MatchController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->remove($match);
         $em->flush();
+
+        if($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
 
         return $this->redirectToRoute('match_index');
     }

@@ -5,80 +5,87 @@
     <section class="section-padding">
         <div class="container">
             <div class="row">
-                <div class="col-md-12">
-
-                    <div class="heading-panel">
-                        <h2 class="title">Received Offers</h2>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+                    <div class="text-center alert alert-info{% if received_offers or declined_offers or sent_offers %} hidden{% endif %}" id="no-items-left">
+                        <p>Sorry, you have no offers</p>
                     </div>
-                    {% if received_offers %}
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <h4 class="text-center">My item</h4>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <h4 class="text-center">Offered item</h4>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="offers-block">
+                        {% if received_offers %}
+                            <div class="heading-panel">
+                                <h2 class="title">Received Offers</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-ms-5 col-sm-5">
+                                            <h4 class="text-center">My item</h4>
+                                        </div>
+                                        <div class="col-xs-6 col-ms-5 col-sm-5 col-ms-offset-2 col-sm-offset-2">
+                                            <h4 class="text-center">Offered item</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            {% for match in received_offers %}
-                                {% include 'match/pair.html.twig' with {'match': match, 'trade': true} %}
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <div class="row">
-                            <div class="col-md-4 col-xs-12 col-sm-6">
-                                <p>Sorry, you have no offers yet.</p>
+                            <div class="row">
+                                {% for match in received_offers %}
+                                    {% include 'match/pair.html.twig' with {'match': match, 'trade': true} %}
+                                {% endfor %}
                             </div>
-                        </div>
-                    {% endif %}
+                        {% endif %}
+                    </div>
 
                     {% if declined_offers %}
-                        <div class="heading-panel">
-                            <h2 class="title">Declined Offers</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <h4 class="text-center">My item</h4>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <h4 class="text-center">Wanted item</h4>
+                        <div class="offers-block">
+                            <div class="heading-panel">
+                                <h2 class="title">Declined Offers</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-ms-5 col-sm-5">
+                                            <h4 class="text-center">My item</h4>
+                                        </div>
+                                        <div class="col-xs-6 col-ms-5 col-sm-5 col-ms-offset-2 col-sm-offset-2">
+                                            <h4 class="text-center">Wanted item</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            {% for match in declined_offers %}
-                                {% include 'match/pair.html.twig' with {'match': match, 'switch': true, 'delete': true} %}
-                            {% endfor %}
+                            <div class="row">
+                                {% for match in declined_offers %}
+                                    {% include 'match/pair.html.twig' with {'match': match, 'switch': true, 'delete': true} %}
+                                {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
 
                     {% if sent_offers %}
-                        <div class="heading-panel">
-                            <h2 class="title">Sent Offers</h2>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 col-md-offset-3 col-xs-12">
-                                <div class="row">
-                                    <div class="col-xs-6">
-                                        <h4 class="text-center">My item</h4>
-                                    </div>
-                                    <div class="col-xs-6">
-                                        <h4 class="text-center">Wanted item</h4>
+                        <div class="offers-block">
+                            <div class="heading-panel">
+                                <h2 class="title">Sent Offers</h2>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+                                    <div class="row">
+                                        <div class="col-xs-6 col-ms-5 col-sm-5">
+                                            <h4 class="text-center">My item</h4>
+                                        </div>
+                                        <div class="col-xs-6 col-ms-5 col-sm-5 col-ms-offset-2 col-sm-offset-2">
+                                            <h4 class="text-center">Wanted item</h4>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            {% for match in sent_offers %}
-                                {% include 'match/pair.html.twig' with {'match': match, 'switch': true, 'delete': true} %}
-                            {% endfor %}
+                            <div class="row">
+                                {% for match in sent_offers %}
+                                    {% include 'match/pair.html.twig' with {'match': match, 'switch': true, 'delete': true} %}
+                                {% endfor %}
+                            </div>
                         </div>
                     {% endif %}
 

@@ -9,33 +9,60 @@ $(document).ready(function () {
     $("a[data-method]").click(function (event) {
         event.preventDefault();
 
-        var target = $(event.currentTarget);
-        var action = target.attr('href');
-        var _method = target.attr('data-method');
-        var _token = target.attr('data-token');
+        const target = $(event.currentTarget);
+        const action = target.attr('href');
+        const _method = target.data('method');
+        const _token = target.data('token');
+        const _target = $('#' + target.data('target'));
 
-        // Create a form on click
-        var form = $('<form/>', {
-            style:  "display:none;",
-            action: action,
-            method: 'POST'
-        });
+        if (typeof _target !== 'undefined') {
 
-        form.append($('<input/>', {
-            type:'hidden',
-            name:'_method',
-            value: _method
-        }));
+            $.ajax({
+                'url': action,
+                'method': _method,
+                'data': {
+                    '_token': _token
+                },
+                success: function() {
+                    const _targetParent = _target.parent();
 
-        form.append($('<input/>', {
-            type:'hidden',
-            name:'_token',
-            value: _token
-        }));
+                    $(_target).slideUp(300).promise().done(function () {
+                        $(_target).remove();
+                        if(_targetParent.children().length === 0) {
+                            _targetParent.closest('.offers-block').remove();
 
-        form.appendTo(target);
+                            if($('.offers-block').length === 0) {
+                                $('#no-items-left').removeClass('hidden');
+                            }
+                        }
+                    });
+                }
+            });
+        } else {
 
-        // Submit the form
-        form.submit();
+            // Create a form on click
+            let form = $('<form/>', {
+                style:  "display:none;",
+                action: action,
+                method: 'POST'
+            });
+
+            form.append($('<input/>', {
+                type:'hidden',
+                name:'_method',
+                value: _method
+            }));
+
+            form.append($('<input/>', {
+                type:'hidden',
+                name:'_token',
+                value: _token
+            }));
+
+            form.appendTo(target);
+
+            // Submit the form
+            form.submit();
+        }
     });
 });
