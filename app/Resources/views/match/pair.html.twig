@@ -1,4 +1,4 @@
-<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+<div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2" id="match-pair-{{ match.id }}">
     <div class="row">
         <div class="col-xs-6 col-ms-5 col-sm-5">
             {% if switch is defined %}
@@ -21,17 +21,17 @@
     {% if trade is defined %}
         <div class="row">
             <div class="col-md-3 col-md-offset-3 col-xs-6">
-                <a class="btn btn-primary btn-block" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_decline', {id: match.id}) }}">Decline</a>
+                <a class="btn btn-primary btn-block" data-target="match-pair-{{ match.id }}" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_decline', {id: match.id}) }}">Decline</a>
             </div>
             <div class="col-md-3 col-xs-6">
-                <a class="btn btn-default btn-block" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_trade', {id: match.id}) }}">Trade</a>
+                <a class="btn btn-default btn-block" data-target="match-pair-{{ match.id }}" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_trade', {id: match.id}) }}">Trade</a>
             </div>
         </div>
     {% endif %}
     {% if delete is defined %}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-xs-12">
-                <a class="btn btn-default btn-block" data-method="DELETE" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
+                <a class="btn btn-default btn-block" data-target="match-pair-{{ match.id }}" data-method="DELETE" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
             </div>
         </div>
     {% endif %}
