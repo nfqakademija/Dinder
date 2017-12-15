@@ -24,12 +24,21 @@
                                 Items
                                 {% if app.user %}
                                     <span class="badge">
-                                        {{ unseen_count.countUnseed(app.user) }}
+                                        {{ unseen_count.countUnseenItems(app.user) }}
                                     </span>
                                 {% endif %}
                             </a>
                         </li>
-                        <li><a href="{{ path('match_index') }}">Matches</a></li>
+                        <li>
+                            <a href="{{ path('match_index') }}">
+                                Matches
+                                {% if app.user %}
+                                    <span class="badge">
+                                        {{ unseen_count.countUnseenMatches(app.user) }}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li><a href="{{ path('user_show') }}">Profile</a></li>
