@@ -1,42 +1,44 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Dinder - {{ 'user.show.title'|trans }}{% endblock %}
+
 {% block body %}
 <div class="container">
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
-            <h1 class="title">Your profile information</h1>
+            <h1 class="title">{{ 'user.show.title'|trans }}</h1>
             <dl class="dl-horizontal">
-                <dt><strong>Your name </strong></dt>
+                <dt><strong>{{ 'user.label.name'|trans }}</strong></dt>
                 <dd>
                     {{ user.name }}
                 </dd>
-                <dt><strong>Username</strong></dt>
+                <dt><strong>{{ 'user.label.username'|trans }}</strong></dt>
                 <dd>
                     {{ user.username }}
                 </dd>
-                <dt><strong>Email Address </strong></dt>
+                <dt><strong>{{ 'user.label.email'|trans }}</strong></dt>
                 <dd>
                     {{ user.email }}
                 </dd>
-                <dt><strong>Phone Number </strong></dt>
+                <dt><strong>{{ 'user.label.phone'|trans }}</strong></dt>
                 <dd>
                     {{ user.phone }}
                 </dd>
-                <dt><strong>Location </strong></dt>
+                <dt><strong>{{ 'user.label.location'|trans }}</strong></dt>
                 <dd>
-                    {{ user.location.title }}
+                    {{ user.location }}
                 </dd>
-                <dt><strong>Preferred locations</strong></dt>
+                <dt><strong>{{ 'user.label.preferred'|trans }}</strong></dt>
                 <dd>
                     <ul>
                         {% for locationToMatch in user.locationsToMatch %}
-                            <li>{{ locationToMatch.title }}</li>
+                            <li>{{ locationToMatch }}</li>
                         {% endfor %}
                     </ul>
                 </dd>
             </dl>
 
-            <a class="btn btn-default" href="{{ path('user_edit') }}">Edit Profile</a>
+            <a class="btn btn-default" href="{{ path('user_edit') }}">{{ 'user.button.edit'|trans }}</a>
         </div>
     </div>
 </div>

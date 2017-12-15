@@ -1,5 +1,7 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}Dinder - {{ 'item.index.title'|trans }}{% endblock %}
+
 {% block body %}
     <!-- =-=-=-=-=-=-= Home Tabs =-=-=-=-=-=-= -->
     <section class="section-padding">
@@ -8,7 +10,7 @@
                 <div class="col-md-12">
                     {% if traded_items %}
                         <div class="heading-panel">
-                            <h2 class="title">Traded Items</h2>
+                            <h2 class="title">{{ 'item.index.traded'|trans }}</h2>
                         </div>
                         <div class="row">
                             {% for item in traded_items  %}
@@ -27,7 +29,7 @@
                         </div>
                     {% endif %}
                     <div class="heading-panel">
-                        <h2 class="title">Active Items</h2>
+                        <h2 class="title">{{ 'item.index.active'|trans }}</h2>
                     </div>
                     <div class="row">
                         {% for item in items %}

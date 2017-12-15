@@ -2,7 +2,7 @@
     <div class="item-card">
         <div class="item-header">
             {% if edit is defined %}
-                <a class="btn btn-default item-edit" href="{{ path('item_edit', { 'id': item.id }) }}">Edit item</a>
+                <a class="btn btn-default item-edit" href="{{ path('item_edit', { 'id': item.id }) }}">{{ 'item.button.edit'|trans }}</a>
             {% endif %}
 
             <img class="img-responsive" src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
@@ -29,12 +29,12 @@
             </div>
             <div class="item-info">
                 <div class="info-section">
-                    <label>Approvals</label>
+                    <label>{{ 'item.label.approvals'|trans }}</label>
                     <span>{{ item.approvals }}</span>
                 </div>
                 {% if app.user and app.user == item.user %}
                     <div class="info-section">
-                        <label>Rejections</label>
+                        <label>{{ 'item.label.approvals'|trans }}</label>
                         <span>{{ item.rejections }}</span>
                     </div>
                 {% endif %}
@@ -42,7 +42,7 @@
         </div>
         {% if edit is defined %}
             <div class="item-categories">
-                <h5>Categories to match:</h5>
+                <h5>{{ 'item.label.categories'|trans }}</h5>
                 <ul class="list-group">
                     {% for categoryToMatch in item.categoriesToMatch %}
                         <li class="list-group-item">
@@ -67,7 +67,7 @@
                                 </select>
                             </div>
                             <div class="col-xs-12">
-                                <button class="item-category-add btn btn-default btn-block">Add</button>
+                                <button class="item-category-add btn btn-default btn-block">{{ 'item.button.category.add'|trans }}</button>
                             </div>
                         </div>
                     </form>
@@ -76,7 +76,7 @@
         {% endif %}
         {% if exchange is defined %}
             <a class="btn btn-default btn-block link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
-                <i class="fa fa-exchange" aria-hidden="true"></i> Exchange
+                <i class="fa fa-exchange" aria-hidden="true"></i> {{ 'item.button.exchange'|trans }}
             </a>
         {% endif %}
     </div>
