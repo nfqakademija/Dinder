@@ -211,6 +211,22 @@ class User extends BaseUser
     }
 
     /**
+     * Get locationsToMatchArray
+     *
+     * @return array
+     */
+    public function getLocationsToMatchArray(): array
+    {
+        $result = [ ];
+
+        foreach ($this->locationsToMatch as $location) {
+            $result[ ] = $location->getId();
+        }
+
+        return $result;
+    }
+
+    /**
      * Add history
      *
      * @param History $history
