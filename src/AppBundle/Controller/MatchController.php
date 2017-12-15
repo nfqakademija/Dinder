@@ -88,7 +88,7 @@ class MatchController extends Controller
         $em->getRepository(Match::class)->deleteRelatedMathes($match);
         $em->flush();
 
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             return new JsonResponse();
         }
 
@@ -118,7 +118,7 @@ class MatchController extends Controller
         $match->setStatus(Match::STATUS_DECLINED);
         $this->getDoctrine()->getManager()->flush();
 
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             return new JsonResponse();
         }
 
@@ -149,7 +149,7 @@ class MatchController extends Controller
         $em->remove($match);
         $em->flush();
 
-        if($request->isXmlHttpRequest()) {
+        if ($request->isXmlHttpRequest()) {
             return new JsonResponse();
         }
 
