@@ -74,7 +74,7 @@ class ItemRepository extends EntityRepository
             ->orderBy('RAND()')
             ->setMaxResults($limit);
 
-        if($user->getLocationsToMatchArray()) {
+        if ($user->getLocationsToMatchArray()) {
             $query
                 ->andWhere('iu.location IN (:locations)')
                 ->setParameter('locations', $user->getLocationsToMatchArray());
