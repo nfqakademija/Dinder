@@ -85,13 +85,6 @@
       .info-section {
         display: table-cell;
         text-transform: uppercase;
-        text-align: center;
-        &:first-of-type {
-          text-align: left;
-        }
-        &:last-of-type {
-          text-align: right;
-        }
         label {
           display: block;
           color: rgba(0, 0, 0, 0.5);

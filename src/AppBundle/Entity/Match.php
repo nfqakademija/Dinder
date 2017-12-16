@@ -42,6 +42,13 @@ class Match
     private $status;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="seen", type="datetime", nullable=true)
+     */
+    private $seen;
+
+    /**
      * @var Item
      *
      * @ORM\ManyToOne(targetEntity="Item", inversedBy="matchesOwnItem")
@@ -137,5 +144,29 @@ class Match
     public function getItemRespondent(): Item
     {
         return $this->itemRespondent;
+    }
+
+    /**
+     * Set seen
+     *
+     * @param \DateTime $seen
+     *
+     * @return Match
+     */
+    public function setSeen($seen): Match
+    {
+        $this->seen = $seen;
+
+        return $this;
+    }
+
+    /**
+     * Get seen
+     *
+     * @return \DateTime
+     */
+    public function getSeen(): ?\DateTimeInterface
+    {
+        return $this->seen;
     }
 }
