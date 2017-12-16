@@ -47,7 +47,7 @@ class UserController extends Controller
     public function editAction(Request $request): Response
     {
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $editForm = $this->createForm('AppBundle\Form\UserType', $user);
+        $editForm = $this->createForm('AppBundle\Form\UserType', $user, ['facebook' => $user->getFacebookId()]);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {

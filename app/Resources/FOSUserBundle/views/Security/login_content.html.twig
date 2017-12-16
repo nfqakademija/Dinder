@@ -1,5 +1,38 @@
 {% trans_default_domain 'FOSUserBundle' %}
 
+<div id="fb-root"></div>
+<script>
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '133158694026486',
+            status     : true,
+            xfbml      : true
+        });
+    };
+
+    (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "//connect.facebook.net/en_US/all.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+    function fb_login() {
+        FB.getLoginStatus(function(response) {
+            if (response.status === 'connected') {
+                document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+            } else {
+                FB.login(function(response) {
+                    if (response.authResponse) {
+                        document.location = "{{ url("hwi_oauth_service_redirect", {service: "facebook"}) }}";
+                    }
+                }, {scope: 'email'});
+            }
+        });
+    }
+</script>
+
 <div class="container">
     <div class="row">
         <div class="col-md-6 col-md-offset-3 col-xs-12">
@@ -31,6 +64,16 @@
                 </div>
                 <input class="btn btn-default btn-block" type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" />
             </form>
+
+            <div class="spacer"></div>
+
+            <div class="row">
+                <div class="col-xs-12 col-ms-6 col-sm-6 col-ms-offset-3 col-sm-offset-3">
+                    <a href="#" onclick="fb_login();">
+                        <img class="img-responsive" src="{{ asset('build/images/facebook.png') }}" alt="Continue with facebook"/>
+                    </a>
+                </div>
+            </div>
 
             <div class="spacer"></div>
         </div>

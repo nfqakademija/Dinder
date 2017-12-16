@@ -17,3 +17,7 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret:            SuperSecretDinderProjectHashKeyDoNotTellAnyone
+
+    facebook_app_id: 123456789012345
+    facebook_app_secret: 0123456789abcdefghijklmnopqrstuv
+
