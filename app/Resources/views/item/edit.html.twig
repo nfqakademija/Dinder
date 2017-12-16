@@ -9,9 +9,28 @@
                 <div class="alert alert-warning">All sent and received offers will be deleted after edit.</div>
 
                 {{ form_start(edit_form, {'attr': {'class': 'submit-form'}}) }}
-                {{ form_rest(edit_form) }}
-                <button class="btn btn-default">Submit</button>
-                <input class="btn btn-primary pull-right" form="delete-form" type="submit" value="Delete">
+
+                    {{ form_row(edit_form.title) }}
+
+                    <div class="form-group">
+                        {{ form_label(edit_form.value) }}
+
+                        <div class="input-group">
+                            {{ form_widget(edit_form.value, {'attr': {'data-margin': item_match_margin}}) }}
+                            <div class="input-group-addon">€</div>
+                        </div>
+
+                        {{ form_errors(edit_form.value) }}
+
+                        <p class="help-block">
+                            This item will be traded with other items in this value range:
+                            <span id="appbundle_item_value_margins"></span>
+                        </p>
+                    </div>
+
+                    {{ form_rest(edit_form) }}
+                    <button class="btn btn-default">Submit</button>
+                    <input class="btn btn-primary pull-right" form="delete-form" type="submit" value="Delete">
                 {{ form_end(edit_form) }}
 
                 {{ form_start(delete_form, {'attr': {'id': 'delete-form'}}) }}

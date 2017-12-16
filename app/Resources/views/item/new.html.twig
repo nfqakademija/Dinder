@@ -12,8 +12,26 @@
                 </div>
 
                 {{ form_start(form, {'attr': {'class': 'submit-form'}}) }}
-                {{ form_rest(form) }}
-                <button class="btn btn-default">Submit</button>
+                    {{ form_row(form.title) }}
+
+                    <div class="form-group">
+                        {{ form_label(form.value) }}
+
+                        <div class="input-group">
+                            {{ form_widget(form.value, {'attr': {'data-margin': item_match_margin}}) }}
+                            <div class="input-group-addon">€</div>
+                        </div>
+
+                        {{ form_errors(form.value) }}
+
+                        <p class="help-block">
+                            This item will be traded with other items in this value range:
+                            <span id="appbundle_item_value_margins"></span>
+                        </p>
+                    </div>
+
+                    {{ form_rest(form) }}
+                    <button class="btn btn-default">Submit</button>
                 {{ form_end(form) }}
             </div>
         </div>
