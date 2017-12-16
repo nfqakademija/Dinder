@@ -12,7 +12,7 @@
                         </div>
                         <div class="row">
                             {% for item in traded_items  %}
-                                {% include 'item/card.html.twig' with {'item': item, 'exchange': true} %}
+                                {% include 'item/card.html.twig' with {'item': item, 'activate': true} %}
 
                                 {% if loop.index0 % 4 == 3 %}
                                     <div class="clearfix visible-lg"></div>
