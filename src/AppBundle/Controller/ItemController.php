@@ -280,6 +280,14 @@ class ItemController extends Controller
             throw $this->createAccessDeniedException("This category is already in item's categories list");
         }
 
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'template' => $this->renderView('item/card-categories-to-match.html.twig', [
+                    'item' => $item
+                ])
+            ]);
+        }
+
         return $this->redirectToRoute('item_index');
     }
 
@@ -309,6 +317,10 @@ class ItemController extends Controller
         $item->removeCategoriesToMatch($category);
 
         $this->getDoctrine()->getManager()->flush();
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
 
         return $this->redirectToRoute('item_index');
     }
