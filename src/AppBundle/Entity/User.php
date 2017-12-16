@@ -46,6 +46,20 @@ class User extends BaseUser
     private $phone;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_id", type="string", length=255, nullable=true)
+     */
+    protected $facebook_id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true)
+     */
+    protected $facebook_access_token;
+
+    /**
      * @var Location
      *
      * @ORM\ManyToOne(targetEntity="Location", inversedBy="users")
@@ -242,5 +256,53 @@ class User extends BaseUser
     public function getHistories(): Collection
     {
         return $this->histories;
+    }
+
+    /**
+     * Set facebookId
+     *
+     * @param string $facebookId
+     *
+     * @return User
+     */
+    public function setFacebookId($facebookId): User
+    {
+        $this->facebook_id = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookId
+     *
+     * @return string
+     */
+    public function getFacebookId(): ?string
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * Set facebookAccessToken
+     *
+     * @param string $facebookAccessToken
+     *
+     * @return User
+     */
+    public function setFacebookAccessToken($facebookAccessToken): User
+    {
+        $this->facebook_access_token = $facebookAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get facebookAccessToken
+     *
+     * @return string
+     */
+    public function getFacebookAccessToken(): ?string
+    {
+        return $this->facebook_access_token;
     }
 }

@@ -10,21 +10,27 @@
                 <dd>
                     {{ user.name }}
                 </dd>
-                <dt><strong>Username</strong></dt>
-                <dd>
-                    {{ user.username }}
-                </dd>
-                <dt><strong>Email Address </strong></dt>
-                <dd>
-                    {{ user.email }}
-                </dd>
+
+                {% if not user.facebookId %}
+                    <dt><strong>Username</strong></dt>
+                    <dd>
+                        {{ user.username }}
+                    </dd>
+                    <dt><strong>Email Address </strong></dt>
+                    <dd>
+                        {{ user.email }}
+                    </dd>
+                {% endif %}
+
                 <dt><strong>Phone Number </strong></dt>
                 <dd>
                     {{ user.phone }}
                 </dd>
                 <dt><strong>Location </strong></dt>
                 <dd>
-                    {{ user.location.title }}
+                    {% if user.location %}
+                        {{ user.location.title }}
+                    {% endif %}
                 </dd>
                 <dt><strong>Preferred locations</strong></dt>
                 <dd>

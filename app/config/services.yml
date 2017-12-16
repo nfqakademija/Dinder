@@ -1,6 +1,7 @@
 # Learn more about services, parameters and containers at
 # http://symfony.com/doc/current/book/service_container.html
 parameters:
+    my_user_provider.class: AppBundle\Security\Core\User\FOSUBUserProvider
 
 services:
     _defaults:
@@ -20,3 +21,9 @@ services:
     unseen_count:
         class: AppBundle\Utils\HistoryUnseenCount
         arguments: ["@doctrine.orm.entity_manager"]
+
+    my_user_provider:
+        class: "%my_user_provider.class%"
+        arguments:
+            - '@fos_user.user_manager'
+            - {facebook: facebook_id}
