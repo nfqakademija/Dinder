@@ -36,11 +36,17 @@ class MatchController extends Controller
         $sentOffers = $em->getRepository(Match::class)->findMatchesByOwner($user);
         $declinedOffers = $em->getRepository(Match::class)->findMatchesByOwner($user, Match::STATUS_DECLINED);
 
-        return $this->render('match/index.html.twig', array(
+        $response = $this->render('match/index.html.twig', array(
             'received_offers' => $receivedOffers,
             'declined_offers' => $declinedOffers,
             'sent_offers' => $sentOffers,
         ));
+
+        if ($receivedOffers) {
+            $this->markMatchesAsSeen($receivedOffers);
+        }
+
+        return $response;
     }
 
     /**
@@ -154,5 +160,29 @@ class MatchController extends Controller
         }
 
         return $this->redirectToRoute('match_index');
+    }
+
+    /**
+     * Mark all unseen matches as seen
+     *
+     * @param array $matches
+     *
+     * @return void
+     */
+    private function markMatchesAsSeen(array $matches): void
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $now = new \DateTime();
+
+        foreach ($matches as $match) {
+            if (!$match->getSeen()) {
+                $match->setSeen($now);
+
+                $em->persist($match);
+            }
+        }
+
+        $em->flush();
     }
 }

@@ -363,6 +363,9 @@ class ItemController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+
+            $em->getRepository(Match::class)->deleteItemMatches($item);
+
             $em->remove($item);
             $em->flush();
         }

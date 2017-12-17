@@ -28,7 +28,10 @@
         "doctrine/doctrine-migrations-bundle": "^1.0",
         "vich/uploader-bundle": "^1.6",
         "javiereguiluz/easyadmin-bundle": "^1.17",
-        "stof/doctrine-extensions-bundle": "^1.2"
+        "stof/doctrine-extensions-bundle": "^1.2",
+        "hwi/oauth-bundle": "^0.6.0",
+        "php-http/guzzle6-adapter": "^1.1",
+        "php-http/httplug-bundle": "^1.8"
     },
     "require-dev": {
         "fzaninotto/faker": "*",

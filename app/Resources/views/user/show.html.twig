@@ -12,21 +12,26 @@
                 <dd>
                     {{ user.name }}
                 </dd>
-                <dt><strong>{{ 'user.label.username'|trans }}</strong></dt>
-                <dd>
-                    {{ user.username }}
-                </dd>
-                <dt><strong>{{ 'user.label.email'|trans }}</strong></dt>
-                <dd>
-                    {{ user.email }}
-                </dd>
+                {% if not user.facebookId %}
+                    <dt><strong>{{ 'user.label.username'|trans }}</strong></dt>
+                    <dd>
+                        {{ user.username }}
+                    </dd>
+                    <dt><strong>{{ 'user.label.email'|trans }}</strong></dt>
+                    <dd>
+                        {{ user.email }}
+                    </dd>
+                {% endif %}
+
                 <dt><strong>{{ 'user.label.phone'|trans }}</strong></dt>
                 <dd>
                     {{ user.phone }}
                 </dd>
                 <dt><strong>{{ 'user.label.location'|trans }}</strong></dt>
                 <dd>
-                    {{ user.location }}
+                    {% if user.location %}
+                        {{ user.location }}
+                    {% endif %}
                 </dd>
                 <dt><strong>{{ 'user.label.preferred'|trans }}</strong></dt>
                 <dd>

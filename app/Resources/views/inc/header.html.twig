@@ -24,12 +24,21 @@
                                 {{ 'nav.items'|trans }}
                                 {% if app.user %}
                                     <span class="badge">
-                                        {{ unseen_count.countUnseed(app.user) }}
+                                        {{ unseen_count.countUnseenItems(app.user) }}
                                     </span>
                                 {% endif %}
                             </a>
                         </li>
-                        <li><a href="{{ path('match_index') }}">{{ 'nav.matches'|trans }}</a></li>
+                        <li>
+                            <a href="{{ path('match_index') }}">
+                                {{ 'nav.matches'|trans }}
+                                {% if app.user %}
+                                    <span class="badge">
+                                        {{ unseen_count.countUnseenMatches(app.user) }}
+                                    </span>
+                                {% endif %}
+                            </a>
+                        </li>
                     {% endif %}
                     {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                         <li><a href="{{ path('user_show') }}">{{ 'nav.profile'|trans }}</a></li>
@@ -49,3 +58,15 @@
     </nav>
 </header>
 
+{% if app.user and not app.user.location %}
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-12 col-md-6 col-md-offset-3">
+                <div class="alert alert-warning">
+                    In order to show your items to other people we need you to fill in
+                    <a href="{{ path('user_edit') }}">profile data</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}

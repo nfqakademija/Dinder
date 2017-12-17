@@ -28,12 +28,12 @@
                 </div>
             </div>
             <div class="item-info">
-                <div class="info-section">
+                <div class="info-section text-left">
                     <label>{{ 'item.label.approvals'|trans }}</label>
                     <span>{{ item.approvals }}</span>
                 </div>
                 {% if app.user and app.user == item.user %}
-                    <div class="info-section">
+                    <div class="info-section text-right">
                         <label>{{ 'item.label.rejections'|trans }}</label>
                         <span>{{ item.rejections }}</span>
                     </div>
@@ -77,6 +77,11 @@
         {% if exchange is defined %}
             <a class="btn btn-default btn-block link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
                 <i class="fa fa-exchange" aria-hidden="true"></i> {{ 'item.button.exchange'|trans }}
+            </a>
+        {% endif %}
+        {% if activate is defined %}
+            <a class="btn btn-default btn-block" data-method="PUT" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
+                <i class="fa fa-exchange" aria-hidden="true"></i> Activate
             </a>
         {% endif %}
     </div>

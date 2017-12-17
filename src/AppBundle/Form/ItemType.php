@@ -28,6 +28,7 @@ class ItemType extends AbstractType
             ->add('categoriesToMatch', EntityType::class, array(
                 'class' => 'AppBundle\Entity\Category',
                 'choice_label' => 'title',
+                'attr' => ['data-max' => '3'],
                 'multiple' => true,
                 'constraints' => [new Count(['max' => 3])],
             ))

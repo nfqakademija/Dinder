@@ -17,7 +17,7 @@ class ItemRepository extends EntityRepository
 {
     /**
      * Returns array of items that matches these conditions:
-     * 1. Item owner is in same location as current user
+     * 1. Item owner is in current user prefered locations list
      * 2. Item is available for trade (status = active)
      * 3. Item owner is not current user
      * 4. Item is in tradable item's categories list
@@ -54,10 +54,9 @@ class ItemRepository extends EntityRepository
 
         $exclude[] = $item->getId();
 
-        $items = $this
+        $query = $this
             ->createQueryBuilder('i')
             ->leftJoin('i.user', 'iu')
-            ->where('iu.location = :location')
             ->andWhere('i.status = :status_active')
             ->andWhere('iu.id != :id')
             ->andWhere('i.category IN (:categories)')
@@ -65,7 +64,6 @@ class ItemRepository extends EntityRepository
             ->andWhere('i.value <= :max_value')
             ->andWhere('i.id NOT IN (:exclude)')
             ->setParameters([
-                'location' => $user->getLocation(),
                 'status_active' => Item::STATUS_ACTIVE,
                 'id' => $user->getId(),
                 'min_value' => $item->getValue() - $margin,
@@ -74,7 +72,15 @@ class ItemRepository extends EntityRepository
                 'exclude' => $exclude,
             ])
             ->orderBy('RAND()')
-            ->setMaxResults($limit)
+            ->setMaxResults($limit);
+
+        if ($user->getLocationsToMatchArray()) {
+            $query
+                ->andWhere('iu.location IN (:locations)')
+                ->setParameter('locations', $user->getLocationsToMatchArray());
+        }
+
+        $items = $query
             ->getQuery()
             ->getResult();
 
