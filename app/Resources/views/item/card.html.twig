@@ -74,7 +74,7 @@
         </a>
     {% endif %}
     {% if activate is defined %}
-        <a class="btn btn-default btn-block" data-method="PUT" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
+        <a class="btn btn-default btn-block link-activate" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
             <i class="fa fa-exchange" aria-hidden="true"></i> Activate
         </a>
     {% endif %}

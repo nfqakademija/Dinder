@@ -29,14 +29,6 @@ $(document).ready(function () {
                     _target.slideUp(300).promise().done(function () {
                         _target.remove();
 
-                        if(_targetParent.children().length === 0) {
-                            _targetParent.closest('.offers-block').remove();
-
-                            if($('.offers-block').length === 0) {
-                                $('#no-items-left').removeClass('hidden');
-                            }
-                        }
-
                         if(_targetParent.hasClass('list-group')) {
                             _targetParent.parent().find('form').removeClass('hidden');
                         }
@@ -89,6 +81,25 @@ $(document).ready(function () {
             },
             error: function() {
                 window.location.reload();
+            }
+        });
+    });
+
+    $('body').on('click', '.link-activate', function (event) {
+        event.preventDefault();
+        const $me = $(this);
+
+        $.ajax({
+            'url': $me.attr('href'),
+            'method': 'PUT',
+            'data': {
+                '_token': $me.data('token')
+            },
+            success: function() {
+                const badge = $me.closest('.tab-content').prev().find('.active .badge');
+                badge.text(parseInt(badge.text()) - 1);
+
+                $me.closest('.slick-slider').slick('slickRemove', $me.closest('.slick-slide').attr('data-slick-index')).slick('refresh');;
             }
         });
     });

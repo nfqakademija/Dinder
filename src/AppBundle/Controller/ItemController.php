@@ -134,6 +134,10 @@ class ItemController extends Controller
         $item->setStatus(Item::STATUS_ACTIVE);
         $this->getDoctrine()->getManager()->flush();
 
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
+
         return $this->redirectToRoute('item_index');
     }
 
