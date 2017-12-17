@@ -22,7 +22,7 @@
                         <li>
                             <a href="{{ path('item_index') }}">
                                 {{ 'nav.items'|trans }}
-                                {% if app.user %}
+                                {% if app.user and unseen_count.countUnseenItems(app.user) > 0 %}
                                     <span class="badge">
                                         {{ unseen_count.countUnseenItems(app.user) }}
                                     </span>
@@ -32,7 +32,7 @@
                         <li>
                             <a href="{{ path('match_index') }}">
                                 {{ 'nav.matches'|trans }}
-                                {% if app.user %}
+                                {% if app.user and unseen_count.countUnseenMatches(app.user) > 0 %}
                                     <span class="badge">
                                         {{ unseen_count.countUnseenMatches(app.user) }}
                                     </span>

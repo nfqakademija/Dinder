@@ -43,6 +43,7 @@ item:
         title: Items
         traded: Traded Items
         active: Active Items
+        no-items: No items to show
     edit:
         title: Edit item
         message: All sent and received offers will be deleted after edit.
@@ -53,6 +54,7 @@ item:
         approvals: Approvals
         rejections: Rejections
         categories: 'Categories to match:'
+        new: New
     button:
         exchange: Exchange
         edit: Edit item

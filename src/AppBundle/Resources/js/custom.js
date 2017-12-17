@@ -1,3 +1,5 @@
+import slick from 'slick-carousel';
+
 $(function() {
     $('select').each(function() {
         const max = $(this).data('max');
@@ -21,6 +23,30 @@ $(function() {
 
     $('#appbundle_item_value').keyup(function() {
         calculateItemValueMargins();
+    });
+
+
+    $('.items-slider').slick({
+        infinite: true,
+        slidesToShow: 4,
+        responsive: [{
+            breakpoint: 992,
+            settings: {
+                slidesToShow: 3,
+            }
+        }, {
+            breakpoint: 756,
+            settings: {
+                slidesToShow: 2,
+            }
+        }, {
+            breakpoint: 480,
+            settings: {
+                slidesToShow: 1,
+            }
+        }],
+        prevArrow: '<i class="slick-prev fa fa-chevron-left" aria-hidden="true"></i>',
+        nextArrow: '<i class="slick-next fa fa-chevron-right" aria-hidden="true"></i>'
     });
 });
 

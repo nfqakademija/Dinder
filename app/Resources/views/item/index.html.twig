@@ -3,54 +3,54 @@
 {% block title %}Dinder - {{ 'item.index.title'|trans }}{% endblock %}
 
 {% block body %}
-    <!-- =-=-=-=-=-=-= Home Tabs =-=-=-=-=-=-= -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    {% if traded_items %}
-                        <div class="heading-panel">
-                            <h2 class="title">{{ 'item.index.traded'|trans }}</h2>
-                        </div>
-                        <div class="row">
-                            {% for item in traded_items  %}
-                                {% include 'item/card.html.twig' with {'item': item, 'activate': true} %}
-
-                                {% if loop.index0 % 4 == 3 %}
-                                    <div class="clearfix visible-lg"></div>
-                                {% endif %}
-                                {% if loop.index0 % 3 == 2 %}
-                                    <div class="clearfix visible-md"></div>
-                                {% endif %}
-                                {% if loop.index0 % 2 == 1 %}
-                                    <div class="clearfix visible-sm visible-ms"></div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <div class="heading-panel">
-                        <h2 class="title">{{ 'item.index.active'|trans }}</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation"{% if traded_items %} class="active"{% endif %}>
+                        <a href="#items-traded" aria-controls="items-traded" role="tab" data-toggle="tab">
+                            {{ 'item.index.traded'|trans }}
+                            <span class="badge {% if app.user and unseen_count.countUnseenItems(app.user) > 0 %} badge-highlight{% endif %}">{{ traded_items|length }}</span>
+                        </a>
+                    </li>
+                    <li role="presentation"{% if not traded_items %} class="active"{% endif %}>
+                        <a href="#items-active" aria-controls="items-active" role="tab" data-toggle="tab">
+                            {{ 'item.index.active'|trans }}
+                            <span class="badge">{{ items|length }}</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade{% if traded_items %} in active{% endif %}" id="items-traded">
+                        {% if traded_items %}
+                            <div class="items-slider">
+                                {% for item in traded_items  %}
+                                    {% include 'item/card.html.twig' with {'item': item, 'activate': true} %}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                {{ 'item.index.no-items'|trans }}
+                            </div>
+                        {% endif %}
                     </div>
-                    <div class="row">
-                        {% for item in items %}
-                            {% include 'item/card.html.twig' with {'item': item, 'exchange': true, 'edit': true} %}
-
-                            {% if loop.index0 % 4 == 3 %}
-                                <div class="clearfix visible-lg"></div>
-                            {% endif %}
-                            {% if loop.index0 % 3 == 2 %}
-                                <div class="clearfix visible-md"></div>
-                            {% endif %}
-                            {% if loop.index0 % 2 == 1 %}
-                                <div class="clearfix visible-sm visible-ms"></div>
-                            {% endif %}
-                        {% endfor %}
+                    <div role="tabpanel" class="tab-pane fade{% if not traded_items %} in active{% endif %}" id="items-active">
+                        {% if items %}
+                            <div class="items-slider">
+                                {% for item in items %}
+                                    {% include 'item/card.html.twig' with {'item': item, 'exchange': true, 'edit': true} %}
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="alert alert-warning">
+                                {{ 'item.index.no-items'|trans }}
+                            </div>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- =-=-=-=-=-=-= Home Tabs End =-=-=-=-=-=-= -->
+    </div>
 
     <div class="modal fade" id="exchangeModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">
