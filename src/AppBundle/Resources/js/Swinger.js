@@ -21,7 +21,8 @@ export default class Swinger extends React.Component {
     state = {
         stack: null,
         more: true,
-        loading: true
+        loading: true,
+        initialized: false
     };
 
     componentWillMount() {
@@ -31,7 +32,7 @@ export default class Swinger extends React.Component {
         .then(res => res.json())
         .then((json) => {
             this.props.updateCards(json);
-            this.setState({loading: false});
+            this.setState({loading: false, initialized: true});
         })
     }
 
@@ -104,6 +105,9 @@ export default class Swinger extends React.Component {
     };
 
     render() {
+
+        if(!this.state.initialized) return <span />;
+
         return (
             <div>
                 { this.props.cards.length ?
