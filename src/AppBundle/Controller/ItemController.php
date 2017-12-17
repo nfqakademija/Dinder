@@ -207,6 +207,10 @@ class ItemController extends Controller
      */
     public function showAction(Item $item): Response
     {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
         $margin = $this->getParameter('item_match_margin');
         $limit = $this->getParameter('item_match_limit');
         $helper = $this->container->get('vich_uploader.templating.helper.uploader_helper');
@@ -276,6 +280,14 @@ class ItemController extends Controller
             throw $this->createAccessDeniedException("This category is already in item's categories list");
         }
 
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse([
+                'template' => $this->renderView('item/card-categories-to-match.html.twig', [
+                    'item' => $item
+                ])
+            ]);
+        }
+
         return $this->redirectToRoute('item_index');
     }
 
@@ -306,6 +318,10 @@ class ItemController extends Controller
 
         $this->getDoctrine()->getManager()->flush();
 
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
+
         return $this->redirectToRoute('item_index');
     }
 
@@ -323,6 +339,10 @@ class ItemController extends Controller
      */
     public function editAction(Request $request, Item $item): Response
     {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
         $deleteForm = $this->createDeleteForm($item);
         $editForm = $this->createForm('AppBundle\Form\ItemType', $item, ['action_type' => 'edit']);
         $editForm->handleRequest($request);
@@ -358,6 +378,10 @@ class ItemController extends Controller
      */
     public function deleteAction(Request $request, Item $item): RedirectResponse
     {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
         $form = $this->createDeleteForm($item);
         $form->handleRequest($request);
 

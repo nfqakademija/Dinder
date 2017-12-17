@@ -66,8 +66,8 @@ class ItemRepository extends EntityRepository
             ->setParameters([
                 'status_active' => Item::STATUS_ACTIVE,
                 'id' => $user->getId(),
-                'min_value' => $item->getValue() - $margin,
-                'max_value' => $item->getValue() + $margin,
+                'min_value' => $item->getValue() * (1 - $margin / 100),
+                'max_value' => $item->getValue() * (1 + $margin / 100),
                 'categories' => $item->getCategoriesToMatchArray(),
                 'exclude' => $exclude,
             ])
