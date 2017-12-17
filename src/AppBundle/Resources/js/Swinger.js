@@ -22,7 +22,8 @@ export default class Swinger extends React.Component {
         stack: null,
         more: true,
         loading: true,
-        initialized: false
+        initialized: false,
+        holding: false
     };
 
     componentWillMount() {
@@ -38,7 +39,6 @@ export default class Swinger extends React.Component {
 
     componentWillReceiveProps(nextProps) {
         if (!this.state.loading && this.state.more && nextProps.cards.length <= 3) {
-
             this.setState({loading: true});
 
             fetch(fetchUrl, {
@@ -48,10 +48,12 @@ export default class Swinger extends React.Component {
             .then(json => {
                 this.setState({loading: false});
 
-                if(json.length) {
-                    this.props.updateCards(_.union(json, nextProps.cards));
-                } else {
-                    this.setState({more: false});
+                if(!this.state.holding) {
+                    if(json.length) {
+                        this.props.updateCards(_.union(json, nextProps.cards));
+                    } else {
+                        this.setState({more: false});
+                    }
                 }
             })
         }
@@ -82,6 +84,8 @@ export default class Swinger extends React.Component {
         const el = ReactDOM.findDOMNode(e.target);
         const card = this.state.stack.getCard(el);
         const newSet = this.props.cards;
+
+        this.setState({holding: false});
 
         if(card) {
             newSet.pop();
@@ -120,8 +124,18 @@ export default class Swinger extends React.Component {
                                 setStack={(stack) => this.setState({stack: stack})}
                                 ref="stack"
                                 throwout={(e) => this.throwOut(e)}
-                                dragstart={(e) => e.target.classList.add('moving')}
-                                dragend={(e) => e.target.classList.remove('moving')}
+                                dragstart={(e) =>
+                                    {
+                                        this.setState({holding: true});
+                                        this.forceUpdate();
+                                        e.target.classList.add('moving');
+                                    }
+                                }
+                                dragend={(e) =>
+                                    {
+                                        e.target.classList.remove('moving');
+                                    }
+                                }
                                 dragmove={(e) => {
                                     if(e.throwDirection === Swing.DIRECTION.RIGHT) {
                                         e.target.getElementsByClassName('overlay-reject')[0].style.opacity = 0;
