@@ -99,6 +99,10 @@ module.exports = {
             {
                 from: path.resolve(__dirname, './src/AppBundle/Resources/images/'),
                 to: 'images'
+            },
+            {
+                from: path.resolve(__dirname, './src/AppBundle/Resources/demo/'),
+                to: '../images/items'
             }
         ]),
         new ExtractTextPlugin({

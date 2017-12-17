@@ -32,3 +32,19 @@ AppBundle\Entity\User:
         name: '<firstName()> <lastName()>'
         phone: <lt_LT:phoneNumber()>
         location: '@location_*'
+    marius:
+        username: marius
+        plainPassword: marius
+        email: marius@dinder.com
+        enabled: true
+        name: Marius
+        phone: <phoneNumber()>
+        location: '@locdemo'
+    elis:
+        username: elis
+        plainPassword: elis
+        email: elis@dinder.com
+        enabled: true
+        name: Eligijus
+        phone: <phoneNumber()>
+        location: '@locdemo'

@@ -35,3 +35,75 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
+    auto_1:
+        user: '@marius'
+        status: 1
+        title: Audi 100
+        imageName: auto1.jpg
+        description: Automobilis Audi 100, vokiška kokybė, yra defektų
+        value: 100
+        category: '@auto'
+        categoriesToMatch: ['@auto']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    auto_{2..4}:
+        user: '@elis'
+        status: 1
+        title: <word()>
+        imageName: auto<current()>.jpg
+        description: <sentence()>
+        value: 100
+        category: '@auto'
+        categoriesToMatch: ['@auto']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    clothes_1:
+        user: '@marius'
+        status: 1
+        title: Striukė
+        imageName: rubai1.jpg
+        description: Šilta madinga žieminė striukė
+        value: 10
+        category: '@clothes'
+        categoriesToMatch: ['@clothes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    clothes_{2..5}:
+        user: '@elis'
+        status: 1
+        title: <word()>
+        imageName: rubai<current()>.jpg
+        description: <sentence()>
+        value: 10
+        category: '@clothes'
+        categoriesToMatch: ['@clothes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    shoes_1:
+        user: '@marius'
+        status: 1
+        title: Vyriškos basutės
+        imageName: batai1.jpg
+        description: Odinės nedaug nešiotos vyriškos basutės
+        value: 20
+        category: '@shoes'
+        categoriesToMatch: ['@shoes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    shoes_{2..4}:
+        user: '@elis'
+        status: 1
+        title: <word()>
+        imageName: batai<current()>.jpg
+        description: <sentence()>
+        value: 20
+        category: '@shoes'
+        categoriesToMatch: ['@shoes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
