@@ -25,6 +25,10 @@
 
 .modal-content {
   background: $c2l;
+
+  .modal-body {
+    height: 420px;
+  }
 }
 
 .spacer {
