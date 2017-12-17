@@ -2,6 +2,7 @@
 
 namespace AppBundle\Utils;
 
+use AppBundle\Entity\Item;
 use AppBundle\Entity\Match;
 use AppBundle\Entity\User;
 use Doctrine\ORM\EntityManager;
@@ -28,7 +29,7 @@ class HistoryUnseenCount
      *
      * @return int
      */
-    public function countUnseenItems(User $user)
+    public function countUnseenItems(User $user): int
     {
         $result = 0;
 
@@ -48,10 +49,11 @@ class HistoryUnseenCount
      *
      * @return int
      */
-    public function countUnseenMatches(User $user)
+    public function countUnseenMatches(User $user): int
     {
         $result = 0;
 
+        /** @var Item $item */
         foreach ($user->getItems() as $item) {
             foreach ($item->getMatchesResponseItem() as $match) {
                 if (!$match->getSeen() && $match->getStatus() === Match::STATUS_ACCEPTED) {
