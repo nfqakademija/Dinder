@@ -21,17 +21,17 @@
     {% if trade is defined %}
         <div class="row">
             <div class="col-md-3 col-md-offset-3 col-xs-6">
-                <a class="btn btn-primary btn-block" data-target="match-pair-{{ match.id }}" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_decline', {id: match.id}) }}">Decline</a>
+                <a class="btn btn-primary btn-block" data-target="match-pair-{{ match.id }}" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_decline', {id: match.id}) }}">{{ 'match.button.decline'|trans }}</a>
             </div>
             <div class="col-md-3 col-xs-6">
-                <a class="btn btn-default btn-block" data-target="match-pair-{{ match.id }}" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_trade', {id: match.id}) }}">Trade</a>
+                <a class="btn btn-default btn-block" data-target="match-pair-{{ match.id }}" data-method="PUT" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_trade', {id: match.id}) }}">{{ 'match.button.trade'|trans }}</a>
             </div>
         </div>
     {% endif %}
     {% if delete is defined %}
         <div class="row">
             <div class="col-md-6 col-md-offset-3 col-xs-12">
-                <a class="btn btn-default btn-block" data-target="match-pair-{{ match.id }}" data-method="DELETE" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_remove', {id: match.id}) }}">Remove</a>
+                <a class="btn btn-default btn-block" data-target="match-pair-{{ match.id }}" data-method="DELETE" data-token="{{ csrf_token(match.id) }}" href="{{ path('match_remove', {id: match.id}) }}">{{ 'match.button.remove'|trans }}</a>
             </div>
         </div>
     {% endif %}

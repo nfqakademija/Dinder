@@ -1,0 +1,76 @@
+slogan: Rejoice in Exchange
+
+nav:
+    admin: Admin
+    items: Items
+    item.add: Add New Item
+    matches: Matches
+    profile: Profile
+    login: Sign in
+    logout: Log out
+    register: Register
+    toggle: Toggle navigation
+
+wanted.title: Most wanted
+
+story:
+    title: Success story
+    from:
+        title: Paperclip
+        description: Everything started with just one red paperclip
+        category: Chancellery
+    to:
+        title: Two-story farmhouse
+        description: In the end John Smith had a two story farmhouse
+        category: Real Estate
+
+user:
+    show.title: Profile information
+    edit.title: Edit profile information
+    label:
+        name: Name
+        username: Username
+        email: Email Address
+        phone: Phone Number
+        location: Location
+        preferred: Preferred locations
+    button:
+        edit: Edit Profile
+        submit: Update My Info
+
+item:
+    index:
+        title: Items
+        traded: Traded Items
+        active: Active Items
+    edit:
+        title: Edit item
+        message: All sent and received offers will be deleted after edit.
+    new:
+        title: Post New Item
+        message: Please make sure that entered data is correct.<br>If you edit item - all sent and received offers will be deleted.
+    label:
+        approvals: Approvals
+        rejections: Rejections
+        categories: 'Categories to match:'
+    button:
+        exchange: Exchange
+        edit: Edit item
+        category.add: Add
+        delete: Delete
+        submit: Submit
+match:
+    index:
+        title: Matches
+    offers:
+        no.message: Sorry, you have no offers
+        received: Received Offers
+        declined: Declined Offers
+        sent: Sent Offers
+        my_item: My item
+        offered_item: Offered item
+        wanted_item: Wanted item
+    button:
+        trade: Trade
+        decline: Decline
+        remove: Remove

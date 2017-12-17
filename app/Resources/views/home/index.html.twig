@@ -1,11 +1,9 @@
 {% extends "::base.html.twig" %}
 
-{% block title %}Dinder{% endblock %}
-
 {% block banner %}
     <div class="page-header">
         <div class="container text-center">
-            <h2>Rejoice in <strong>Exchange</strong></h2>
+            <h2>{{ 'slogan'|trans }}</h2>
         </div>
     </div>
 {% endblock %}
@@ -17,7 +15,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="heading-panel">
-                        <h2 class="title">Most wanted</h2>
+                        <h2 class="title">{{ 'wanted.title'|trans }}</h2>
                     </div>
                     <div class="row">
                         {% for item in featured_items %}
@@ -30,7 +28,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="heading-panel">
-                        <h2 class="title">Success story</h2>
+                        <h2 class="title">{{ 'story.title'|trans }}</h2>
                     </div>
                 </div>
             </div>
@@ -41,12 +39,12 @@
                             <img class="img-responsive" src="https://media.licdn.com/mpr/mpr/AAEAAQAAAAAAAAUxAAAAJGI4OTIwYzc1LWRhOWItNGY3Mi05MTBiLTljMjdiOWJlMjM2NA.jpg" alt="Paperclip" />
 
                             <div class="item-description">
-                                Everything started with just one red paperclip
+                                {{ 'story.from.description'|trans }}
                             </div>
                         </div>
                         <div class="item-content">
                             <div class="item-content-header">
-                                <h3 class="item-title">Paperclip</h3>
+                                <h3 class="item-title">{{ 'story.from.title'|trans }}</h3>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4">
@@ -56,7 +54,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-8">
                                     <div class="item-category">
-                                        <span>Chancellery</span>
+                                        <span>{{ 'story.from.category'|trans }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -70,12 +68,12 @@
                             <img class="img-responsive" src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Red-paperclip-news-1.jpg/220px-Red-paperclip-news-1.jpg" alt="Two-story farmhouse" />
 
                             <div class="item-description">
-                                In the end John Smith had a two story farmhouse
+                                {{ 'story.to.description'|trans }}
                             </div>
                         </div>
                         <div class="item-content">
                             <div class="item-content-header">
-                                <h3 class="item-title">Two-story farmhouse</h3>
+                                <h3 class="item-title">{{ 'story.to.title'|trans }}</h3>
                             </div>
                             <div class="row">
                                 <div class="col-xs-12 col-sm-4">
@@ -85,7 +83,7 @@
                                 </div>
                                 <div class="col-xs-12 col-sm-8">
                                     <div class="item-category">
-                                        <span>Real Estate</span>
+                                        <span>{{ 'story.to.category'|trans }}</span>
                                     </div>
                                 </div>
                             </div>
