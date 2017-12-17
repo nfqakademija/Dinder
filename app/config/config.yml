@@ -7,7 +7,7 @@ imports:
 # http://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
-    item_match_margin: 3
+    item_match_margin: 20
     item_match_limit: 5
     item_featured_limit: 4
 
@@ -43,6 +43,7 @@ twig:
         - 'bootstrap_3_layout.html.twig'
     globals:
         unseen_count: '@unseen_count'
+        item_match_margin: '%item_match_margin%'
 
 # Doctrine Configuration
 doctrine:

@@ -44,34 +44,25 @@
             <div class="item-categories">
                 <h5>{{ 'item.label.categories'|trans }}</h5>
                 <ul class="list-group">
-                    {% for categoryToMatch in item.categoriesToMatch %}
-                        <li class="list-group-item">
-                            {{ categoryToMatch.title }}
-                            <a data-method="DELETE" data-token="{{ csrf_token(item.id) }}" href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </a>
-                        </li>
-                    {% endfor %}
+                    {% include 'item/card-categories-to-match.html.twig' with {'item': item} %}
                 </ul>
-                {% if item.categoriesToMatch|length < 3 %}
-                    <form action="{{ path('item_category_add') }}" method="POST">
-                        <input type="hidden" name="item" value="{{ item.id }}"/>
-                        <div class="row">
-                            <div class="col-xs-12">
-                                <select class="select2" name="category">
-                                    {% for category in categories %}
-                                        {% if category.id not in item.getCategoriesToMatchArray %}
-                                            <option value="{{ category.id }}">{{ category.title }}</option>
-                                        {% endif %}
-                                    {% endfor %}
-                                </select>
-                            </div>
-                            <div class="col-xs-12">
-                                <button class="item-category-add btn btn-default btn-block">{{ 'item.button.category.add'|trans }}</button>
-                            </div>
+                <form class="item-categories-form{% if item.categoriesToMatch|length > 2 %} hidden{% endif %}" id="item-categories-form-{{ item.id }}" action="{{ path('item_category_add') }}" method="POST">
+                    <input type="hidden" name="item" value="{{ item.id }}"/>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <select class="select2" name="category">
+                                {% for category in categories %}
+                                    {% if category.id not in item.getCategoriesToMatchArray %}
+                                        <option value="{{ category.id }}">{{ category.title }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
                         </div>
-                    </form>
-                {% endif %}
+                        <div class="col-xs-12">
+                            <button class="item-category-add btn btn-default btn-block">{{ 'item.button.category.add'|trans }}</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         {% endif %}
         {% if exchange is defined %}

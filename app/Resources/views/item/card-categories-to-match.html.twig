@@ -1,0 +1,8 @@
+{% for categoryToMatch in item.categoriesToMatch %}
+    <li class="list-group-item" id="item-{{ item.id }}-categories-list-{{ categoryToMatch.id }}">
+        {{ categoryToMatch.title }}
+        <a data-target="item-{{ item.id }}-categories-list-{{ categoryToMatch.id }}" data-method="DELETE" data-token="{{ csrf_token(item.id) }}" href="{{ path('item_category_remove', {id: item.id, category: categoryToMatch.id}) }}">
+            <i class="fa fa-trash" aria-hidden="true"></i>
+        </a>
+    </li>
+{% endfor %}

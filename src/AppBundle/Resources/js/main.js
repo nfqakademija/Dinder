@@ -6,7 +6,7 @@
 $(document).ready(function () {
 
     // Every link with an attribute data-method
-    $("a[data-method]").click(function (event) {
+    $('body').on('click', 'a[data-method]', function(event) {
         event.preventDefault();
 
         const target = $(event.currentTarget);
@@ -26,14 +26,19 @@ $(document).ready(function () {
                 success: function() {
                     const _targetParent = _target.parent();
 
-                    $(_target).slideUp(300).promise().done(function () {
-                        $(_target).remove();
+                    _target.slideUp(300).promise().done(function () {
+                        _target.remove();
+
                         if(_targetParent.children().length === 0) {
                             _targetParent.closest('.offers-block').remove();
 
                             if($('.offers-block').length === 0) {
                                 $('#no-items-left').removeClass('hidden');
                             }
+                        }
+
+                        if(_targetParent.hasClass('list-group')) {
+                            _targetParent.parent().find('form').removeClass('hidden');
                         }
                     });
                 }
@@ -64,5 +69,27 @@ $(document).ready(function () {
             // Submit the form
             form.submit();
         }
+    });
+
+    $('.item-categories-form').submit(function(event) {
+        event.preventDefault();
+        const $me = $(this);
+
+        $.ajax({
+            'url': $me.attr('action'),
+            'method': $me.attr('method'),
+            'data': $me.serialize(),
+            success: function(data) {
+                $me.parent().find('.list-group').html(data.template);
+                $me.find('select option:selected').remove();
+
+                if($me.parent().find('.list-group .list-group-item').length > 2) {
+                    $me.addClass('hidden');
+                }
+            },
+            error: function() {
+                window.location.reload();
+            }
+        });
     });
 });
