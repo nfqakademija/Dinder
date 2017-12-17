@@ -29,7 +29,7 @@ class UserType extends AbstractType
         $builder
             ->add('phone', TelType::class, ['label' => 'user.label.phone'])
             ->add('location', null, ['label' => 'user.label.location'])
-            ->add('locationsToMatch', null, ['label' => 'user.label.preferred'])
+            ->add('locationsToMatch', null, ['label' => 'user.label.preferred']);
     }
     
     /**
