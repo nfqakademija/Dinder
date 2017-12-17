@@ -402,6 +402,54 @@ class ItemController extends Controller
     }
 
     /**
+     * @Route("/{id}/respondents", name="item_respondents")
+     *
+     * @param Request $request
+     * @param Item $item
+     *
+     * @return Response
+     */
+    public function respondentAction(Request $request, Item $item): Response
+    {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $items = $this->getDoctrine()->getRepository(Item::class)->findItemMatchRespondents($item);
+
+        return new JsonResponse([
+            'template' => $this->renderView('item/cards-matched.html.twig', [
+                'items' => $items,
+                'deleteMatch' => true,
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/owners", name="item_owners")
+     *
+     * @param Request $request
+     * @param Item $item
+     *
+     * @return Response
+     */
+    public function ownerAction(Request $request, Item $item): Response
+    {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $items = $this->getDoctrine()->getRepository(Item::class)->findItemMatchOwners($item);
+
+        return new JsonResponse([
+            'template' => $this->renderView('item/cards-matched.html.twig', [
+                'items' => $items,
+                'respondMatch' => true,
+            ])
+        ]);
+    }
+
+    /**
      * Creates a form to delete a item entity.
      *
      * @param Item $item

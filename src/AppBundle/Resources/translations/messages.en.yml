@@ -64,6 +64,7 @@ item:
 match:
     index:
         title: Matches
+        no-items: No items to show
     offers:
         no.message: Sorry, you have no offers
         received: Received Offers

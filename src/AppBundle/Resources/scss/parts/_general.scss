@@ -8,6 +8,13 @@ body {
   }
 }
 
+#matches-container {
+  display: none;
+  margin-top: 15px;
+  border-top: 1px solid $c1;
+  padding-top: 15px;
+}
+
 .items-slider {
   .slick-slide {
     padding-left: 15px;
@@ -33,3 +40,16 @@ body {
     }
   }
 }
+
+.spacer {
+  height: 30px;
+}
+
+.content {
+  margin-top: 30px;
+}
+
+.title {
+  margin-bottom: 30px;
+}
+

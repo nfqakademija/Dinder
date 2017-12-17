@@ -6,7 +6,8 @@ import AppContainer from './AppContainer';
 import { modalResize } from './helper';
 
 $(function() {
-    $('.link-exchange').click(function() {
+    $('body').on('click', '.link-exchange', function() {
+
         itemId = $(this).data('id');
         fetchUrl = $(this).attr('href');
 

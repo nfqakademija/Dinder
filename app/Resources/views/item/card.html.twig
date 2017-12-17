@@ -78,4 +78,14 @@
             <i class="fa fa-exchange" aria-hidden="true"></i> Activate
         </a>
     {% endif %}
+    {% if matchOwner is defined %}
+        <a class="btn btn-default btn-block item-owner" data-id="{{ item.id }}" href="{{ path('item_respondents', {id: item.id}) }}">
+            <i class="fa fa-exchange" aria-hidden="true"></i> Show
+        </a>
+    {% endif %}
+    {% if matchResponent is defined %}
+        <a class="btn btn-default btn-block item-respondent" data-id="{{ item.id }}" href="{{ path('item_owners', {id: item.id}) }}">
+            <i class="fa fa-exchange" aria-hidden="true"></i> Show
+        </a>
+    {% endif %}
 </div>

@@ -99,7 +99,109 @@ $(document).ready(function () {
                 const badge = $me.closest('.tab-content').prev().find('.active .badge');
                 badge.text(parseInt(badge.text()) - 1);
 
-                $me.closest('.slick-slider').slick('slickRemove', $me.closest('.slick-slide').attr('data-slick-index')).slick('refresh');;
+                $me.closest('.slick-slider').slick('slickRemove', $me.closest('.slick-slide').attr('data-slick-index')).slick('refresh');
+            }
+        });
+    });
+
+    var itemOwner = false;
+    var itemOwnerId = false;
+    var itemRespondent = false;
+    var itemRespondentId = false;
+
+    $('body').on('click', '.item-owner', function(event) {
+        event.preventDefault();
+
+        const $me = $(this);
+        itemOwner = $me.closest('.slick-slide');
+        itemOwnerId = $me.data('id');
+
+        $.ajax({
+            'url': $me.attr('href'),
+            'method': 'GET',
+            success: function(data) {
+                $('#matches-container').html(data.template).show();
+            }
+        });
+    });
+
+    $('body').on('click', '.item-respondent', function(event) {
+        event.preventDefault();
+
+        const $me = $(this);
+        itemRespondent = $me.closest('.slick-slide');
+        itemRespondentId = $me.data('id');
+
+        $.ajax({
+            'url': $me.attr('href'),
+            'method': 'GET',
+            success: function(data) {
+                $('#matches-container').html(data.template).show();
+            }
+        });
+    });
+
+    $('body').on('click', '.item-match-delete', function(event) {
+        event.preventDefault();
+
+        const $me = $(this);
+
+        $.ajax({
+            'url': $me.attr('href'),
+            'method': 'DELETE',
+            'data': {
+                'owner': itemOwnerId,
+                '_token': $me.data('token')
+            },
+            success: function(data) {
+                const badge = itemOwner.closest('.tab-content').prev().find('.active .badge');
+                badge.text(parseInt(badge.text()) - 1);
+
+                $('#matches-container').html(data.template).show();
+            }
+        });
+    });
+
+    $('body').on('click', '.item-match-decline', function(event) {
+        event.preventDefault();
+
+        const $me = $(this);
+
+        $.ajax({
+            'url': $me.attr('href'),
+            'method': 'PUT',
+            'data': {
+                'respondent': itemRespondentId,
+                '_token': $me.data('token')
+            },
+            success: function(data) {
+                const badge = itemRespondent.closest('.tab-content').prev().find('.active .badge');
+                badge.text(parseInt(badge.text()) - 1);
+
+                $('#matches-container').html(data.template).show();
+                itemRespondent.closest('.slick-slider').slick('slickRemove', itemRespondent.closest('.slick-slide').attr('data-slick-index')).slick('refresh');
+            }
+        });
+    });
+
+    $('body').on('click', '.item-match-trade', function(event) {
+        event.preventDefault();
+
+        const $me = $(this);
+
+        $.ajax({
+            'url': $me.attr('href'),
+            'method': 'PUT',
+            'data': {
+                'respondent': itemRespondentId,
+                '_token': $me.data('token')
+            },
+            success: function() {
+                const badge = itemRespondent.closest('.tab-content').prev().find('.active .badge');
+                badge.text(parseInt(badge.text()) - 1);
+
+                $('#matches-container').empty().hide();
+                itemRespondent.closest('.slick-slider').slick('slickRemove', itemRespondent.closest('.slick-slide').attr('data-slick-index')).slick('refresh');
             }
         });
     });
