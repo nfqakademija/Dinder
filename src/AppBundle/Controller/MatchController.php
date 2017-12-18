@@ -90,10 +90,12 @@ class MatchController extends Controller
 
         $ownedItem
             ->setStatus(Item::STATUS_TRADED)
+            ->setPrevious($ownedItem->getUser())
             ->setUser($offeredItem->getUser());
 
         $offeredItem
             ->setStatus(Item::STATUS_TRADED)
+            ->setPrevious($offeredItem->getUser())
             ->setUser($this->getUser());
 
         $historyOwner = new History();

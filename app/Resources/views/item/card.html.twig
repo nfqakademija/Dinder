@@ -19,6 +19,15 @@
             <h3 class="item-title">{{ item.title }}</h3>
         </div>
         <div class="row">
+            {% if contacts is defined and item.previous %}
+                <div class="col-xs-12">
+                    <p>
+                        {{ 'item.owner.title'|trans }}<br>
+                        {{ 'item.owner.email'|trans }}: {{ item.previous.email }}<br>
+                        {{ 'item.owner.phone'|trans }}: {{ item.previous.phone }}
+                    </p>
+                </div>
+            {% endif %}
             <div class="col-xs-12 col-sm-4">
                 <div class="item-value">
                     <span>{{ item.value }}€</span>

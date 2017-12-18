@@ -25,7 +25,7 @@
                         {% if traded_items %}
                             <div class="items-slider">
                                 {% for item in traded_items  %}
-                                    {% include 'item/card.html.twig' with {'item': item, 'activate': true} %}
+                                    {% include 'item/card.html.twig' with {'item': item, 'activate': true, 'edit': true, 'contacts': true} %}
                                 {% endfor %}
                             </div>
                         {% else %}

@@ -61,6 +61,10 @@ item:
         category.add: Add
         delete: Delete
         submit: Submit
+    owner:
+        title: 'Item owner contacts:'
+        email: Email
+        phone: Phone
 match:
     index:
         title: Matches

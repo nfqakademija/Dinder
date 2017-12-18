@@ -77,6 +77,13 @@ class User extends BaseUser
     /**
      * @var ArrayCollection
      *
+     * @ORM\OneToMany(targetEntity="Item", mappedBy="previous")
+     */
+    private $previous_items;
+
+    /**
+     * @var ArrayCollection
+     *
      * @ORM\OneToMany(targetEntity="History", mappedBy="user")
      */
     private $histories;
@@ -93,6 +100,7 @@ class User extends BaseUser
     {
         parent::__construct();
         $this->items = new ArrayCollection();
+        $this->previous_items = new ArrayCollection();
         $this->locationsToMatch = new ArrayCollection();
         $this->histories = new ArrayCollection();
     }
@@ -320,5 +328,39 @@ class User extends BaseUser
     public function getFacebookAccessToken(): ?string
     {
         return $this->facebook_access_token;
+    }
+
+    /**
+     * Add previousItem
+     *
+     * @param Item $previousItem
+     *
+     * @return User
+     */
+    public function addPreviousItem(Item $previousItem): User
+    {
+        $this->previous_items[] = $previousItem;
+
+        return $this;
+    }
+
+    /**
+     * Remove previousItem
+     *
+     * @param Item $previousItem
+     */
+    public function removePreviousItem(Item $previousItem): void
+    {
+        $this->previous_items->removeElement($previousItem);
+    }
+
+    /**
+     * Get previousItems
+     *
+     * @return Collection
+     */
+    public function getPreviousItems(): Collection
+    {
+        return $this->previous_items;
     }
 }
