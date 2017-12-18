@@ -11,6 +11,9 @@ web_profiler:
     toolbar: true
     intercept_redirects: false
 
+hautelook_alice:
+    fixtures_path: 'Resources/fixtures'
+
 monolog:
     handlers:
         main:
