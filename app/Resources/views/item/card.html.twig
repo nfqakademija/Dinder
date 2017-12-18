@@ -22,7 +22,7 @@
             {% if contacts is defined and item.previous %}
                 <div class="col-xs-12">
                     <p>
-                        {{ 'item.owner.title'|trans }}<br>
+                        <h4>{{ 'item.owner.title'|trans }}</h4>
                         {{ 'item.owner.email'|trans }}: {{ item.previous.email }}<br>
                         {{ 'item.owner.phone'|trans }}: {{ item.previous.phone }}
                     </p>
@@ -79,12 +79,12 @@
     {% endif %}
     {% if exchange is defined %}
         <a class="btn btn-default btn-block link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
-            <i class="fa fa-exchange" aria-hidden="true"></i> {{ 'item.button.exchange'|trans }}
+            {{ 'item.button.exchange'|trans }}
         </a>
     {% endif %}
     {% if activate is defined %}
         <a class="btn btn-default btn-block link-activate" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
-            {{ 'item.button.active'|trans }}
+            {{ 'item.button.activate'|trans }}
         </a>
     {% endif %}
     {% if matchOwner is defined %}

@@ -147,6 +147,14 @@
     border-bottom-right-radius: 10px;
   }
 
+  .item-match-decline {
+    border-bottom-left-radius: 10px;
+  }
+
+  .item-match-trade {
+    border-bottom-right-radius: 10px;
+  }
+
   .item-categories {
     margin-bottom: 8px;
 
@@ -175,7 +183,6 @@
     border: 0;
     border-top: 1px solid $c-white2;
     padding: 10px 16px;
-    font-size: 0;
     text-align: center;
   }
 }

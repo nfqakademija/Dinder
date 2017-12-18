@@ -7,41 +7,47 @@
     <div class="row">
         <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
             <h1 class="title">{{ 'user.show.title'|trans }}</h1>
-            <dl class="dl-horizontal">
-                <dt><strong>{{ 'user.label.name'|trans }}</strong></dt>
-                <dd>
-                    {{ user.name }}
-                </dd>
-                {% if not user.facebookId %}
-                    <dt><strong>{{ 'user.label.username'|trans }}</strong></dt>
-                    <dd>
-                        {{ user.username }}
-                    </dd>
-                    <dt><strong>{{ 'user.label.email'|trans }}</strong></dt>
-                    <dd>
-                        {{ user.email }}
-                    </dd>
-                {% endif %}
 
-                <dt><strong>{{ 'user.label.phone'|trans }}</strong></dt>
-                <dd>
-                    {{ user.phone }}
-                </dd>
-                <dt><strong>{{ 'user.label.location'|trans }}</strong></dt>
-                <dd>
-                    {% if user.location %}
-                        {{ user.location }}
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered">
+                    <tr>
+                        <th>{{ 'user.label.name'|trans }}</th>
+                        <td>{{ user.name }}</td>
+                    </tr>
+                    {% if not user.facebookId %}
+                        <tr>
+                            <th>{{ 'user.label.username'|trans }}</th>
+                            <td>{{ user.username }}</td>
+                        </tr>
+                        <tr>
+                            <th>{{ 'user.label.email'|trans }}</th>
+                            <td>{{ user.email }}</td>
+                        </tr>
                     {% endif %}
-                </dd>
-                <dt><strong>{{ 'user.label.preferred'|trans }}</strong></dt>
-                <dd>
-                    <ul>
-                        {% for locationToMatch in user.locationsToMatch %}
-                            <li>{{ locationToMatch }}</li>
-                        {% endfor %}
-                    </ul>
-                </dd>
-            </dl>
+                    <tr>
+                        <th>{{ 'user.label.phone'|trans }}</th>
+                        <td>{{ user.phone }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'user.label.location'|trans }}</th>
+                        <td>
+                            {% if user.location %}
+                                {{ user.location }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'user.label.preferred'|trans }}</th>
+                        <td>
+                            <ul class="list-group">
+                                {% for locationToMatch in user.locationsToMatch %}
+                                    <li class="list-group-item">{{ locationToMatch }}</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                </table>
+            </div>
 
             <a class="btn btn-default" href="{{ path('user_edit') }}">{{ 'user.button.edit'|trans }}</a>
         </div>

@@ -1,6 +1,19 @@
 <header>
     <nav class="navbar navbar-default">
         <div class="container">
+            {% if app.user %}
+                <div class="row hidden-xs hidden-ms">
+                    <div class="col-xs-12">
+                        <div class="current-user">
+                            {% if app.user.name %}
+                                {{ app.user.name }}
+                            {% else %}
+                                {{ app.user.email }}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
                         data-target="#navbar-collapse-2">

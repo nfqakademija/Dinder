@@ -3,6 +3,14 @@ header {
   background: $c-white;
 }
 
+.current-user {
+  position: absolute;
+  top: -12px;
+  right: 35px;
+  color: $c-gray;
+  font-size: 12px;
+}
+
 .vich-image {
   img {
     max-width: 100%;
