@@ -111,7 +111,7 @@ vich_uploader:
             namer:              vich_uploader.namer_uniqid
 
 easy_admin:
-    site_name: '<img src="/images/logo.png" alt="Dinder">'
+    site_name: '<img src="/build/images/logo.png" alt="Dinder">'
     design:
         brand_color: '#161616'
         assets:
