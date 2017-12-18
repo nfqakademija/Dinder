@@ -1,6 +1,6 @@
 AppBundle\Entity\Category:
     category_{1..10}:
-        title (unique): <colorName()>
+        title (unique): <itemCategory()>
     auto:
         title: Auto
     clothes:
