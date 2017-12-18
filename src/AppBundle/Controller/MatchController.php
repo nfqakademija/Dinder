@@ -67,7 +67,7 @@ class MatchController extends Controller
 
         $type = $request->get('type', false);
 
-        if(!$type || !in_array($type, ['received', 'declined', 'sent'])) {
+        if (!$type || !in_array($type, ['received', 'declined', 'sent'])) {
             return new JsonResponse([], 500);
         }
 

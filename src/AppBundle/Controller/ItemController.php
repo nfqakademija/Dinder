@@ -70,7 +70,7 @@ class ItemController extends Controller
 
         $type = $request->get('type', false);
 
-        if(!$type || !in_array($type, ['traded', 'active'])) {
+        if (!$type || !in_array($type, ['traded', 'active'])) {
             return new JsonResponse([], 500);
         }
 
