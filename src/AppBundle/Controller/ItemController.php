@@ -115,7 +115,7 @@ class ItemController extends Controller
     {
         $user = $this->getUser();
 
-        if(!$user->getPhone()) {
+        if (!$user->getPhone()) {
             $this->addFlash('warning', $this->get('translator')->trans('item.new.missing-profile'));
 
             return $this->redirectToRoute('user_edit');
