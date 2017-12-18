@@ -113,6 +113,14 @@ class ItemController extends Controller
      */
     public function newAction(Request $request): Response
     {
+        $user = $this->getUser();
+
+        if(!$user->getPhone()) {
+            $this->addFlash('warning', $this->get('translator')->trans('item.new.missing-profile'));
+
+            return $this->redirectToRoute('user_edit');
+        }
+
         $item = new Item();
 
         $form = $this->createForm('AppBundle\Form\ItemType', $item, ['action_type' => 'create']);

@@ -50,6 +50,7 @@ item:
     new:
         title: Post New Item
         message: Please make sure that entered data is correct.<br>If you edit item - all sent and received offers will be deleted.
+        missing-profile: In order to create item you must provide your contact data
     label:
         approvals: Approvals
         rejections: Rejections

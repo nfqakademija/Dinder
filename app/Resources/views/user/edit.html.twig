@@ -6,6 +6,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-12 col-xs-12 col-sm-12">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endfor %}
+
             <h1 class="title">{{ 'user.edit.title'|trans }}</h1>
             {{ form_start(edit_form) }}
             {{ form_widget(edit_form) }}
