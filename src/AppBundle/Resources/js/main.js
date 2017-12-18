@@ -7,6 +7,8 @@ import slick from 'slick-carousel';
  */
 $(document).ready(function () {
 
+    initializeSelect2();
+
     // Every link with an attribute data-method
     $('body').on('click', 'a[data-method]', function(event) {
         event.preventDefault();
@@ -65,7 +67,7 @@ $(document).ready(function () {
         }
     });
 
-    $('.item-categories-form').submit(function(event) {
+    $('body').on('submit', '.item-categories-form', function(event) {
         event.preventDefault();
         const $me = $(this);
 
@@ -129,6 +131,8 @@ $(document).ready(function () {
             'url': $me.attr('href'),
             'method': 'GET',
             success: function(data) {
+                $('.item-card').removeClass('active');
+                itemOwner.find('.item-card').addClass('active');
                 $('#matches-container').html(data.template).show();
             }
         });
@@ -145,6 +149,8 @@ $(document).ready(function () {
             'url': $me.attr('href'),
             'method': 'GET',
             success: function(data) {
+                $('.item-card').removeClass('active');
+                itemRespondent.find('.item-card').addClass('active');
                 $('#matches-container').html(data.template).show();
             }
         });
@@ -260,6 +266,7 @@ function loadTabTemplate($tab) {
         success: function(data) {
             $($tab.attr('href')).html(data.template);
             initializeSlider();
+            initializeSelect2();
         }
     });
 }
@@ -269,22 +276,40 @@ function initializeSlider() {
         infinite: true,
         slidesToShow: 4,
         responsive: [{
-            breakpoint: 992,
+            breakpoint: 1200,
             settings: {
                 slidesToShow: 3,
             }
         }, {
-            breakpoint: 756,
+            breakpoint: 992,
             settings: {
                 slidesToShow: 2,
             }
         }, {
-            breakpoint: 480,
+            breakpoint: 490,
             settings: {
                 slidesToShow: 1,
             }
         }],
         prevArrow: '<i class="slick-prev fa fa-chevron-left" aria-hidden="true"></i>',
         nextArrow: '<i class="slick-next fa fa-chevron-right" aria-hidden="true"></i>'
+    });
+}
+
+function initializeSelect2() {
+    $('select').each(function() {
+        const max = $(this).data('max');
+
+        const params = {
+            placeholder: "Select an option",
+            allowClear: true,
+            width: '100%'
+        };
+
+        if (typeof max !== 'undefined') {
+            params.maximumSelectionLength = 3;
+        }
+
+        $(this).select2(params);
     });
 }

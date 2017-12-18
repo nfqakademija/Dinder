@@ -84,17 +84,17 @@
     {% endif %}
     {% if activate is defined %}
         <a class="btn btn-default btn-block link-activate" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
-            <i class="fa fa-exchange" aria-hidden="true"></i> Activate
+            {{ 'item.button.active'|trans }}
         </a>
     {% endif %}
     {% if matchOwner is defined %}
         <a class="btn btn-default btn-block item-owner" data-id="{{ item.id }}" href="{{ path('item_respondents', {id: item.id}) }}">
-            <i class="fa fa-exchange" aria-hidden="true"></i> Show
+            {{ 'item.button.show'|trans }}
         </a>
     {% endif %}
     {% if matchResponent is defined %}
         <a class="btn btn-default btn-block item-respondent" data-id="{{ item.id }}" href="{{ path('item_owners', {id: item.id}) }}">
-            <i class="fa fa-exchange" aria-hidden="true"></i> Show
+            {{ 'item.button.show'|trans }}
         </a>
     {% endif %}
 </div>

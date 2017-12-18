@@ -31,6 +31,15 @@
   }
 }
 
+.list-group-item {
+  display: inline-block;
+  order-radius: 4px;
+  padding: 4px 8px;
+  font-size: 14px;
+  margin-top: 8px;
+  margin-right: 8px;
+}
+
 .nav-tabs > li > a {
   color: $c-gray;
 }
@@ -38,5 +47,12 @@
 .badge {
   &.badge-highlight {
     background-color: $c1;
+  }
+}
+
+.fa {
+  &.fa-exchange {
+    font-size: 32px;
+    color: $c-gray2;
   }
 }

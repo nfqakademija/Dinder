@@ -58,6 +58,8 @@ item:
     button:
         exchange: Exchange
         edit: Edit item
+        show: Show
+        activate: Activate
         category.add: Add
         delete: Delete
         submit: Submit

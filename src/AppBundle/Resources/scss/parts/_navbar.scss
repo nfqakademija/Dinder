@@ -24,11 +24,21 @@
 
 .navbar {
   margin-bottom: 0;
+  padding: 16px 0;
+  background: $c-white;
   .navbar-collapse {
     position: relative;
     overflow: hidden !important;
     .navbar-right > li:last-child {
       padding-left: 22px;
+      padding-right: 22px;
+    }
+  }
+  li {
+    a {
+      padding-left: 16px;
+      padding-right: 16px;
+      margin-left: 8px;
     }
   }
   .nav-collapse {
@@ -43,8 +53,12 @@
     padding-left: 80px;
     width: 100%;
   }
-  &.navbar-default .nav-collapse {
-    background-color: #f8f8f8;
+  &.navbar-default {
+    background: $c-white;
+
+    .nav-collapse {
+      background-color: #f8f8f8;
+    }
   }
   &.navbar-inverse .nav-collapse {
     background-color: #222;
