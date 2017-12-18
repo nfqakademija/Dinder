@@ -2,8 +2,8 @@ AppBundle\Entity\Item:
     user1item_{1..15}:
         user: '@user_1'
         status: 1
-        title: <word()>
-        imageName: <image('web/images/items', 640, 480, 'technics', 0)>
+        title: <itemTitle()>
+        imageName: <image('web/images/items', 640, 480, 0, 0)>
         description: <sentence()>
         value: <randomDigitNotNull()>
         category: '@category_1'
@@ -14,8 +14,8 @@ AppBundle\Entity\Item:
     user2item_{1..15}:
         user: '@user_2'
         status: 1
-        title: <word()>
-        imageName: <image('web/images/items', 640, 480, 'technics', 0)>
+        title: <itemTitle()>
+        imageName: <image('web/images/items', 640, 480, 0, 0)>
         description: <sentence()>
         value: <randomDigitNotNull()>
         category: '@category_2'
@@ -26,8 +26,8 @@ AppBundle\Entity\Item:
     someitem_{1..100}:
         user: '@somebody_*'
         status: 1
-        title: <word()>
-        imageName: <image('web/images/items', 640, 480, 'technics', 0)>
+        title: <itemTitle()>
+        imageName: <image('web/images/items', 640, 480, 0, 0)>
         description: <sentence()>
         value: <randomDigitNotNull()>
         category: '@category_*'
@@ -47,12 +47,48 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
-    auto_{2..4}:
+    auto_2:
         user: '@elis'
         status: 1
-        title: <word()>
-        imageName: auto<current()>.jpg
-        description: <sentence()>
+        title: Žalias karutis
+        imageName: auto2.jpg
+        description: Karučio padangos kaip naujos
+        value: 100
+        category: '@auto'
+        categoriesToMatch: ['@auto']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    auto_3:
+        user: '@elis'
+        status: 1
+        title: Vežimas
+        imageName: auto3.jpg
+        description: Vežimas su dviguba registracija
+        value: 100
+        category: '@auto'
+        categoriesToMatch: ['@auto']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    auto_4:
+        user: '@elis'
+        status: 1
+        title: Запорожець
+        imageName: auto4.jpg
+        description: Patogus miesto automobilis, nedaug parudijęs
+        value: 100
+        category: '@auto'
+        categoriesToMatch: ['@auto']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    auto_5:
+        user: '@elis'
+        status: 1
+        title: Motociklas URAL
+        imageName: auto5.jpg
+        description: Su krepšiu, gali važiuoti keturiese
         value: 100
         category: '@auto'
         categoriesToMatch: ['@auto']
@@ -71,12 +107,48 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
-    clothes_{2..5}:
+    clothes_2:
         user: '@elis'
         status: 1
-        title: <word()>
-        imageName: rubai<current()>.jpg
-        description: <sentence()>
+        title: Ožio kepurė
+        imageName: rubai2.jpg
+        description: Iš Kašmyro ožio vilnos
+        value: 10
+        category: '@clothes'
+        categoriesToMatch: ['@clothes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    clothes_3:
+        user: '@elis'
+        status: 1
+        title: Senelio plaukų kepurė
+        imageName: rubai3.jpg
+        description: Originalas - jokia žiema nebus baisi
+        value: 10
+        category: '@clothes'
+        categoriesToMatch: ['@clothes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    clothes_4:
+        user: '@elis'
+        status: 1
+        title: Liemenukas
+        imageName: rubai4.jpg
+        description: Prabangus spygliuotas liemenukas
+        value: 10
+        category: '@clothes'
+        categoriesToMatch: ['@clothes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    clothes_5:
+        user: '@elis'
+        status: 1
+        title: Korsetas
+        imageName: rubai5.jpg
+        description: Tinka ir moterims ir vyrams
         value: 10
         category: '@clothes'
         categoriesToMatch: ['@clothes']
@@ -95,12 +167,48 @@ AppBundle\Entity\Item:
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
-    shoes_{2..4}:
+    shoes_2:
         user: '@elis'
         status: 1
-        title: <word()>
-        imageName: batai<current()>.jpg
-        description: <sentence()>
+        title: Bateliai ir kojinės
+        imageName: batai2.jpg
+        description: Tinka visomis progoms
+        value: 20
+        category: '@shoes'
+        categoriesToMatch: ['@shoes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    shoes_3:
+        user: '@elis'
+        status: 1
+        title: Kroksai
+        imageName: batai3.jpg
+        description: Solidūs baliniai bateliai
+        value: 20
+        category: '@shoes'
+        categoriesToMatch: ['@shoes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    shoes_4:
+        user: '@elis'
+        status: 1
+        title: Vyriška rankinė
+        imageName: batai4.jpg
+        description: Rimtam bachūrui
+        value: 20
+        category: '@shoes'
+        categoriesToMatch: ['@shoes']
+        approvals: <randomDigitNotNull()>
+        rejections: <randomDigitNotNull()>
+        created: <dateTimeBetween('-12 month', '-1 month')>
+    shoes_5:
+        user: '@elis'
+        status: 1
+        title: Tapkės
+        imageName: batai5.jpg
+        description: Su kolinėmis netrina
         value: 20
         category: '@shoes'
         categoriesToMatch: ['@shoes']

@@ -27,3 +27,7 @@ services:
         arguments:
             - '@fos_user.user_manager'
             - {facebook: facebook_id}
+
+    data_fixtures.provider.item:
+            class: AppBundle\DataFixtures\ItemProvider
+            tags: [ { name: nelmio_alice.faker.provider } ]
