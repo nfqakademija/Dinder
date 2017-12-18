@@ -6,47 +6,23 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation"{% if traded_items %} class="active"{% endif %}>
-                        <a href="#items-traded" aria-controls="items-traded" role="tab" data-toggle="tab">
-                            {{ 'item.index.traded'|trans }}
-                            <span class="badge {% if app.user and unseen_count.countUnseenItems(app.user) > 0 %} badge-highlight{% endif %}">{{ traded_items|length }}</span>
-                        </a>
-                    </li>
-                    <li role="presentation"{% if not traded_items %} class="active"{% endif %}>
-                        <a href="#items-active" aria-controls="items-active" role="tab" data-toggle="tab">
+                <ul class="nav nav-tabs nav-tabs-load" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#items-active" aria-controls="items-active" role="tab" data-toggle="tab" data-load="{{ path('items_load', {'type': 'active'}) }}">
                             {{ 'item.index.active'|trans }}
                             <span class="badge">{{ items|length }}</span>
                         </a>
                     </li>
+                    <li role="presentation">
+                        <a href="#items-traded" aria-controls="items-traded" role="tab" data-toggle="tab" data-load="{{ path('items_load', {'type': 'traded'}) }}">
+                            {{ 'item.index.traded'|trans }}
+                            <span class="badge {% if app.user and unseen_count.countUnseenItems(app.user) > 0 %} badge-highlight{% endif %}">{{ traded_items|length }}</span>
+                        </a>
+                    </li>
                 </ul>
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade{% if traded_items %} in active{% endif %}" id="items-traded">
-                        {% if traded_items %}
-                            <div class="items-slider">
-                                {% for item in traded_items  %}
-                                    {% include 'item/card.html.twig' with {'item': item, 'activate': true, 'edit': true, 'contacts': true} %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-warning">
-                                {{ 'item.index.no-items'|trans }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade{% if not traded_items %} in active{% endif %}" id="items-active">
-                        {% if items %}
-                            <div class="items-slider">
-                                {% for item in items %}
-                                    {% include 'item/card.html.twig' with {'item': item, 'exchange': true, 'edit': true} %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-warning">
-                                {{ 'item.index.no-items'|trans }}
-                            </div>
-                        {% endif %}
-                    </div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="items-active"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="items-traded"></div>
                 </div>
             </div>
         </div>

@@ -6,21 +6,21 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <ul class="nav nav-tabs" role="tablist">
+                <ul class="nav nav-tabs nav-tabs-load" role="tablist">
                     <li role="presentation" class="active">
-                        <a href="#matches-received" aria-controls="matches-received" role="tab" data-toggle="tab">
+                        <a href="#matches-received" aria-controls="matches-received" role="tab" data-toggle="tab" data-load="{{ path('matches_load', {'type': 'received'}) }}">
                             {{ 'match.offers.received'|trans }}
                             <span class="badge">{{ received_offers|length }}</span>
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#matches-declined" aria-controls="matches-declined" role="tab" data-toggle="tab">
+                        <a href="#matches-declined" aria-controls="matches-declined" role="tab" data-toggle="tab" data-load="{{ path('matches_load', {'type': 'declined'}) }}">
                             {{ 'match.offers.declined'|trans }}
                             <span class="badge">{{ declined_offers|length }}</span>
                         </a>
                     </li>
                     <li role="presentation">
-                        <a href="#matches-sent" aria-controls="matches-sent" role="tab" data-toggle="tab">
+                        <a href="#matches-sent" aria-controls="matches-sent" role="tab" data-toggle="tab" data-load="{{ path('matches_load', {'type': 'sent'}) }}">
                             {{ 'match.offers.sent'|trans }}
                             <span class="badge">{{ sent_offers|length }}</span>
                         </a>
@@ -28,45 +28,9 @@
                 </ul>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade in active" id="matches-received">
-                        {% if received_offers %}
-                            <div class="items-slider">
-                                {% for item in received_offers %}
-                                    {% include 'item/card.html.twig' with {'matchResponent': true} %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-warning">
-                                {{ 'match.offers.no.message'|trans }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="matches-declined">
-                        {% if declined_offers %}
-                            <div class="items-slider">
-                                {% for item in declined_offers %}
-                                    {% include 'item/card.html.twig' with {'matchOwner': true} %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-warning">
-                                {{ 'match.index.no-items'|trans }}
-                            </div>
-                        {% endif %}
-                    </div>
-                    <div role="tabpanel" class="tab-pane fade" id="matches-sent">
-                        {% if sent_offers %}
-                            <div class="items-slider">
-                                {% for item in sent_offers %}
-                                    {% include 'item/card.html.twig' with {'matchOwner': true} %}
-                                {% endfor %}
-                            </div>
-                        {% else %}
-                            <div class="alert alert-warning">
-                                {{ 'match.index.no-items'|trans }}
-                            </div>
-                        {% endif %}
-                    </div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="matches-received"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="matches-declined"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="matches-sent"></div>
                 </div>
             </div>
             <div class="col-xs-12" id="matches-container"></div>

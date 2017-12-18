@@ -22,11 +22,9 @@
                         <li>
                             <a href="{{ path('item_index') }}">
                                 {{ 'nav.items'|trans }}
-                                {% if app.user and unseen_count.countUnseenItems(app.user) > 0 %}
-                                    <span class="badge">
-                                        {{ unseen_count.countUnseenItems(app.user) }}
-                                    </span>
-                                {% endif %}
+                                <span id="menu-items-count" class="badge{% if app.user and unseen_count.countUnseenItems(app.user) == 0 %} hidden{% endif %}">
+                                    {{ unseen_count.countUnseenItems(app.user) }}
+                                </span>
                             </a>
                         </li>
                         <li>

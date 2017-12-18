@@ -1,5 +1,3 @@
-import slick from 'slick-carousel';
-
 $(function() {
     $('select').each(function() {
         const max = $(this).data('max');
@@ -24,13 +22,6 @@ $(function() {
     $('#appbundle_item_value').keyup(function() {
         calculateItemValueMargins();
     });
-
-    initializeSlider();
-
-    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-        $('.slick-slider').slick('refresh');
-        $('#matches-container').empty().hide();
-    })
 });
 
 function calculateItemValueMargins() {
@@ -41,29 +32,4 @@ function calculateItemValueMargins() {
     const marginMax = value * (1 + margin / 100);
 
     $('#appbundle_item_value_margins').text(marginMin.toFixed(2) + '€ - ' + marginMax.toFixed(2) + '€');
-}
-
-function initializeSlider() {
-    $('.items-slider').slick({
-        infinite: true,
-        slidesToShow: 4,
-        responsive: [{
-            breakpoint: 992,
-            settings: {
-                slidesToShow: 3,
-            }
-        }, {
-            breakpoint: 756,
-            settings: {
-                slidesToShow: 2,
-            }
-        }, {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-            }
-        }],
-        prevArrow: '<i class="slick-prev fa fa-chevron-left" aria-hidden="true"></i>',
-        nextArrow: '<i class="slick-next fa fa-chevron-right" aria-hidden="true"></i>'
-    });
 }

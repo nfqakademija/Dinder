@@ -49,17 +49,55 @@ class ItemController extends Controller
             'status' => Item::STATUS_TRADED,
         ]);
 
-        $categories = $em->getRepository(Category::class)->findAll();
-
-        $response = $this->render('item/index.html.twig', array(
+        return $this->render('item/index.html.twig', array(
             'items' => $activeItems,
             'traded_items' => $tradedItems,
-            'categories' => $categories
         ));
+    }
 
-        $this->markItemsAsSeen($tradedItems);
+    /**
+     * Load tab items
+     *
+     * @Route("/load", name="items_load")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function loadAction(Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
 
-        return $response;
+        $type = $request->get('type', false);
+
+        if(!$type || !in_array($type, ['traded', 'active'])) {
+            return new JsonResponse([], 500);
+        }
+
+        $user = $this->getUser();
+        $categories = $em->getRepository(Category::class)->findAll();
+
+        if ($type === 'traded') {
+            $items = $em->getRepository(Item::class)->findBy([
+                'user' => $user,
+                'status' => Item::STATUS_TRADED,
+            ]);
+
+            $this->markItemsAsSeen($items);
+        } elseif ($type === 'active') {
+            $items = $em->getRepository(Item::class)->findBy([
+                'user' => $user,
+                'status' => Item::STATUS_ACTIVE,
+            ]);
+        }
+
+        return new JsonResponse([
+            'template' => $this->renderView('item/list.html.twig', [
+                'items' => $items,
+                'type' => $type,
+                'categories' => $categories,
+            ])
+        ]);
     }
 
     /**

@@ -51,6 +51,48 @@ class MatchController extends Controller
     }
 
     /**
+     * Load tab match items
+     *
+     * @Route("/load", name="matches_load")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function loadAction(Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $type = $request->get('type', false);
+
+        if(!$type || !in_array($type, ['received', 'declined', 'sent'])) {
+            return new JsonResponse([], 500);
+        }
+
+        if ($type === 'received') {
+            $receivedOffersMatches = $em->getRepository(Match::class)->findMatchesByRespondent($user);
+            $items = $em->getRepository(Item::class)->findItemsByMatchRespondent($user);
+
+            if ($receivedOffersMatches) {
+                $this->markMatchesAsSeen($receivedOffersMatches);
+            }
+        } elseif ($type === 'declined') {
+            $items = $em->getRepository(Item::class)->findItemsByMatchOwner($user, Match::STATUS_DECLINED);
+        } elseif ($type === 'sent') {
+            $items = $em->getRepository(Item::class)->findItemsByMatchOwner($user);
+        }
+
+        return new JsonResponse([
+            'template' => $this->renderView('match/list.html.twig', [
+                'items' => $items,
+                'type' => $type,
+            ])
+        ]);
+    }
+
+    /**
      * @Route("/{id}/trade", name="match_trade")
      *
      * @Method("PUT")
