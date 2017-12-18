@@ -1,0 +1,63 @@
+<div class="row">
+    {% for item in items %}
+        <div class="col-xs-12 col-ms-6 col-sm-6 col-md-4 col-lg-3">
+            <div class="item-card">
+                <div class="item-header">
+                    <img class="img-responsive" src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
+
+                    <div class="item-description">
+                        {{ item.description }}
+                    </div>
+                </div>
+                <div class="item-content">
+                    <div class="item-content-header">
+                        <h3 class="item-title">{{ item.title }}</h3>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-4">
+                            <div class="item-value">
+                                <span>{{ item.value }}€</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-8">
+                            <div class="item-category">
+                                <span>{{ item.category.title }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item-info">
+                        <div class="info-section text-left">
+                            <label>{{ 'item.label.approvals'|trans }}</label>
+                            <span>{{ item.approvals }}</span>
+                        </div>
+                        {% if app.user and app.user == item.user %}
+                            <div class="info-section text-right">
+                                <label>{{ 'item.label.rejections'|trans }}</label>
+                                <span>{{ item.rejections }}</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if deleteMatch is defined %}
+                    <a class="btn btn-default btn-block item-match-delete" data-token="{{ csrf_token(item.id) }}" href="{{ path('match_remove', {id: item.id}) }}">
+                        {{ 'match.button.remove'|trans }}
+                    </a>
+                {% endif %}
+                {% if respondMatch is defined %}
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <a class="btn btn-primary btn-block item-match-decline" data-token="{{ csrf_token(item.id) }}" href="{{ path('match_decline', {id: item.id}) }}">
+                                {{ 'match.button.decline'|trans }}
+                            </a>
+                        </div>
+                        <div class="col-xs-6">
+                            <a class="btn btn-default btn-block item-match-trade" data-token="{{ csrf_token(item.id) }}" href="{{ path('match_trade', {id: item.id}) }}">
+                                {{ 'match.button.trade'|trans }}
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    {% endfor %}
+</div>

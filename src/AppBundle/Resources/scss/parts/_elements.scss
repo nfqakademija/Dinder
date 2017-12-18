@@ -31,14 +31,12 @@
   }
 }
 
-.spacer {
-  height: 30px;
+.nav-tabs > li > a {
+  color: $c-gray;
 }
 
-.content {
-  margin-top: 30px;
-}
-
-.title {
-  margin-bottom: 30px;
+.badge {
+  &.badge-highlight {
+    background-color: $c1;
+  }
 }

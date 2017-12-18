@@ -49,17 +49,55 @@ class ItemController extends Controller
             'status' => Item::STATUS_TRADED,
         ]);
 
-        $categories = $em->getRepository(Category::class)->findAll();
-
-        $response = $this->render('item/index.html.twig', array(
+        return $this->render('item/index.html.twig', array(
             'items' => $activeItems,
             'traded_items' => $tradedItems,
-            'categories' => $categories
         ));
+    }
 
-        $this->markItemsAsSeen($tradedItems);
+    /**
+     * Load tab items
+     *
+     * @Route("/load", name="items_load")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function loadAction(Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
 
-        return $response;
+        $type = $request->get('type', false);
+
+        if (!$type || !in_array($type, ['traded', 'active'])) {
+            return new JsonResponse([], 500);
+        }
+
+        $user = $this->getUser();
+        $categories = $em->getRepository(Category::class)->findAll();
+
+        if ($type === 'traded') {
+            $items = $em->getRepository(Item::class)->findBy([
+                'user' => $user,
+                'status' => Item::STATUS_TRADED,
+            ]);
+
+            $this->markItemsAsSeen($items);
+        } elseif ($type === 'active') {
+            $items = $em->getRepository(Item::class)->findBy([
+                'user' => $user,
+                'status' => Item::STATUS_ACTIVE,
+            ]);
+        }
+
+        return new JsonResponse([
+            'template' => $this->renderView('item/list.html.twig', [
+                'items' => $items,
+                'type' => $type,
+                'categories' => $categories,
+            ])
+        ]);
     }
 
     /**
@@ -133,6 +171,10 @@ class ItemController extends Controller
 
         $item->setStatus(Item::STATUS_ACTIVE);
         $this->getDoctrine()->getManager()->flush();
+
+        if ($request->isXmlHttpRequest()) {
+            return new JsonResponse();
+        }
 
         return $this->redirectToRoute('item_index');
     }
@@ -395,6 +437,54 @@ class ItemController extends Controller
         }
 
         return $this->redirectToRoute('item_index');
+    }
+
+    /**
+     * @Route("/{id}/respondents", name="item_respondents")
+     *
+     * @param Request $request
+     * @param Item $item
+     *
+     * @return Response
+     */
+    public function respondentAction(Request $request, Item $item): Response
+    {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $items = $this->getDoctrine()->getRepository(Item::class)->findItemMatchRespondents($item);
+
+        return new JsonResponse([
+            'template' => $this->renderView('item/cards-matched.html.twig', [
+                'items' => $items,
+                'deleteMatch' => true,
+            ])
+        ]);
+    }
+
+    /**
+     * @Route("/{id}/owners", name="item_owners")
+     *
+     * @param Request $request
+     * @param Item $item
+     *
+     * @return Response
+     */
+    public function ownerAction(Request $request, Item $item): Response
+    {
+        if ($this->getUser() !== $item->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $items = $this->getDoctrine()->getRepository(Item::class)->findItemMatchOwners($item);
+
+        return new JsonResponse([
+            'template' => $this->renderView('item/cards-matched.html.twig', [
+                'items' => $items,
+                'respondMatch' => true,
+            ])
+        ]);
     }
 
     /**

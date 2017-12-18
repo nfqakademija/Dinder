@@ -3,96 +3,37 @@
 {% block title %}Dinder - {{ 'match.index.title'|trans }}{% endblock %}
 
 {% block body %}
-    <!-- =-=-=-=-=-=-= Home Tabs =-=-=-=-=-=-= -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
-                    <div class="text-center alert alert-info{% if received_offers or declined_offers or sent_offers %} hidden{% endif %}" id="no-items-left">
-                        <p>{{ 'match.offers.no.message' }}</p>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-tabs-load" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#matches-received" aria-controls="matches-received" role="tab" data-toggle="tab" data-load="{{ path('matches_load', {'type': 'received'}) }}">
+                            {{ 'match.offers.received'|trans }}
+                            <span class="badge">{{ received_offers|length }}</span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#matches-declined" aria-controls="matches-declined" role="tab" data-toggle="tab" data-load="{{ path('matches_load', {'type': 'declined'}) }}">
+                            {{ 'match.offers.declined'|trans }}
+                            <span class="badge">{{ declined_offers|length }}</span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#matches-sent" aria-controls="matches-sent" role="tab" data-toggle="tab" data-load="{{ path('matches_load', {'type': 'sent'}) }}">
+                            {{ 'match.offers.sent'|trans }}
+                            <span class="badge">{{ sent_offers|length }}</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="matches-received"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="matches-declined"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="matches-sent"></div>
                 </div>
             </div>
-
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="offers-block">
-                        {% if received_offers %}
-                            <div class="heading-panel">
-                                <h2 class="title">{{ 'match.offers.received'|trans }}</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-ms-5 col-sm-5">
-                                            <h4 class="text-center">{{ 'match.offers.my_item'|trans }}</h4>
-                                        </div>
-                                        <div class="col-xs-6 col-ms-5 col-sm-5 col-ms-offset-2 col-sm-offset-2">
-                                            <h4 class="text-center">{{ 'match.offers.offered_item'|trans }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                {% for match in received_offers %}
-                                    {% include 'match/pair.html.twig' with {'match': match, 'trade': true} %}
-                                {% endfor %}
-                            </div>
-                        {% endif %}
-                    </div>
-
-                    {% if declined_offers %}
-                        <div class="offers-block">
-                            <div class="heading-panel">
-                                <h2 class="title">{{ 'match.offers.declined'|trans }}</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-ms-5 col-sm-5">
-                                            <h4 class="text-center">{{ 'match.offers.my_item'|trans }}</h4>
-                                        </div>
-                                        <div class="col-xs-6 col-ms-5 col-sm-5 col-ms-offset-2 col-sm-offset-2">
-                                            <h4 class="text-center">{{ 'match.offers.wanted_item'|trans }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                {% for match in declined_offers %}
-                                    {% include 'match/pair.html.twig' with {'match': match, 'switch': true, 'delete': true} %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-
-                    {% if sent_offers %}
-                        <div class="offers-block">
-                            <div class="heading-panel">
-                                <h2 class="title">{{ 'match.offers.sent'|trans }}</h2>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
-                                    <div class="row">
-                                        <div class="col-xs-6 col-ms-5 col-sm-5">
-                                            <h4 class="text-center">{{ 'match.offers.my_item'|trans }}</h4>
-                                        </div>
-                                        <div class="col-xs-6 col-ms-5 col-sm-5 col-ms-offset-2 col-sm-offset-2">
-                                            <h4 class="text-center">{{ 'match.offers.wanted_item'|trans }}</h4>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                {% for match in sent_offers %}
-                                    {% include 'match/pair.html.twig' with {'match': match, 'switch': true, 'delete': true} %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    {% endif %}
-
-                </div>
-            </div>
+            <div class="col-xs-12" id="matches-container"></div>
         </div>
-    </section>
+    </div>
 {% endblock %}

@@ -53,6 +53,14 @@ class Item
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
+    
+    /**
+     * @var User
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="previous_items")
+     * @ORM\JoinColumn(name="previous_user_id", referencedColumnName="id")
+     */
+    private $previous;
 
     /**
      * @var string
@@ -617,5 +625,29 @@ class Item
     public function __toString()
     {
         return $this->title;
+    }
+
+    /**
+     * Set previous
+     *
+     * @param User $previous
+     *
+     * @return Item
+     */
+    public function setPrevious(User $previous = null): Item
+    {
+        $this->previous = $previous;
+
+        return $this;
+    }
+
+    /**
+     * Get previous
+     *
+     * @return User
+     */
+    public function getPrevious(): ?User
+    {
+        return $this->previous;
     }
 }

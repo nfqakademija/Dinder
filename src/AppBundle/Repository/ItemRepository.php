@@ -103,4 +103,94 @@ class ItemRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Return array of incoming item matches for given user
+     *
+     * @param User $user
+     * @param int $status
+     *
+     * @return array
+     */
+    public function findItemsByMatchRespondent(User $user, int $status = Match::STATUS_ACCEPTED): array
+    {
+        $items = $this->createQueryBuilder('i')
+            ->leftJoin('i.matchesResponseItem', 'm')
+            ->where('i.user = :user')
+            ->andWhere('m.status = :status')
+            ->setParameters([
+                'user' => $user,
+                'status' => $status,
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return $items;
+    }
+
+    /**
+     * Return array of incoming item matches for given user
+     *
+     * @param User $user
+     * @param int $status
+     *
+     * @return array
+     */
+    public function findItemsByMatchOwner(User $user, int $status = Match::STATUS_ACCEPTED): array
+    {
+        $items = $this->createQueryBuilder('i')
+            ->leftJoin('i.matchesOwnItem', 'm')
+            ->where('i.user = :user')
+            ->andWhere('m.status = :status')
+            ->setParameters([
+                'user' => $user,
+                'status' => $status,
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return $items;
+    }
+
+    /**
+     * Return array of item match respondents
+     *
+     * @param Item $item
+     *
+     * @return array
+     */
+    public function findItemMatchRespondents(Item $item): array
+    {
+        $items = $this->createQueryBuilder('i')
+            ->leftJoin('i.matchesResponseItem', 'm')
+            ->where('m.itemOwner = :item')
+            ->setParameter('item', $item)
+            ->getQuery()
+            ->getResult();
+
+        return $items;
+    }
+
+    /**
+     * Return array of item match owners
+     *
+     * @param Item $item
+     *
+     * @return array
+     */
+    public function findItemMatchOwners(Item $item): array
+    {
+        $items = $this->createQueryBuilder('i')
+            ->leftJoin('i.matchesOwnItem', 'm')
+            ->where('m.itemRespondent = :item')
+            ->andWhere('m.status = :status')
+            ->setParameters([
+                'item' => $item,
+                'status' => Match::STATUS_ACCEPTED,
+            ])
+            ->getQuery()
+            ->getResult();
+
+        return $items;
+    }
 }

@@ -1,79 +1,100 @@
-<div class="col-xs-12 col-ms-6 col-sm-6 col-md-4 col-lg-3">
-    <div class="item-card">
-        <div class="item-header">
-            {% if edit is defined %}
-                <a class="btn btn-default item-edit" href="{{ path('item_edit', { 'id': item.id }) }}">{{ 'item.button.edit'|trans }}</a>
-            {% endif %}
+<div class="item-card">
+    <div class="item-header">
+        {% if item.lastHistory and not item.lastHistory.seen %}
+            <div class="item-new">{{ 'item.label.new'|trans }}</div>
+        {% endif %}
 
-            <img class="img-responsive" src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
-
-            <div class="item-description">
-                {{ item.description }}
-            </div>
-        </div>
-        <div class="item-content">
-            <div class="item-content-header">
-                <h3 class="item-title">{{ item.title }}</h3>
-            </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-4">
-                    <div class="item-value">
-                        <span>{{ item.value }}€</span>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-8">
-                    <div class="item-category">
-                        <span>{{ item.category.title }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="item-info">
-                <div class="info-section text-left">
-                    <label>{{ 'item.label.approvals'|trans }}</label>
-                    <span>{{ item.approvals }}</span>
-                </div>
-                {% if app.user and app.user == item.user %}
-                    <div class="info-section text-right">
-                        <label>{{ 'item.label.rejections'|trans }}</label>
-                        <span>{{ item.rejections }}</span>
-                    </div>
-                {% endif %}
-            </div>
-        </div>
         {% if edit is defined %}
-            <div class="item-categories">
-                <h5>{{ 'item.label.categories'|trans }}</h5>
-                <ul class="list-group">
-                    {% include 'item/card-categories-to-match.html.twig' with {'item': item} %}
-                </ul>
-                <form class="item-categories-form{% if item.categoriesToMatch|length > 2 %} hidden{% endif %}" id="item-categories-form-{{ item.id }}" action="{{ path('item_category_add') }}" method="POST">
-                    <input type="hidden" name="item" value="{{ item.id }}"/>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <select class="select2" name="category">
-                                {% for category in categories %}
-                                    {% if category.id not in item.getCategoriesToMatchArray %}
-                                        <option value="{{ category.id }}">{{ category.title }}</option>
-                                    {% endif %}
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="col-xs-12">
-                            <button class="item-category-add btn btn-default btn-block">{{ 'item.button.category.add'|trans }}</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
+            <a class="btn btn-default item-edit" href="{{ path('item_edit', { 'id': item.id }) }}">{{ 'item.button.edit'|trans }}</a>
         {% endif %}
-        {% if exchange is defined %}
-            <a class="btn btn-default btn-block link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
-                <i class="fa fa-exchange" aria-hidden="true"></i> {{ 'item.button.exchange'|trans }}
-            </a>
-        {% endif %}
-        {% if activate is defined %}
-            <a class="btn btn-default btn-block" data-method="PUT" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
-                <i class="fa fa-exchange" aria-hidden="true"></i> Activate
-            </a>
-        {% endif %}
+
+        <img class="img-responsive" src="{{ vich_uploader_asset(item, 'file')}}" alt="{{ item.title }}" />
+
+        <div class="item-description">
+            {{ item.description }}
+        </div>
     </div>
+    <div class="item-content">
+        <div class="item-content-header">
+            <h3 class="item-title">{{ item.title }}</h3>
+        </div>
+        <div class="row">
+            {% if contacts is defined and item.previous %}
+                <div class="col-xs-12">
+                    <p>
+                        {{ 'item.owner.title'|trans }}<br>
+                        {{ 'item.owner.email'|trans }}: {{ item.previous.email }}<br>
+                        {{ 'item.owner.phone'|trans }}: {{ item.previous.phone }}
+                    </p>
+                </div>
+            {% endif %}
+            <div class="col-xs-12 col-sm-4">
+                <div class="item-value">
+                    <span>{{ item.value }}€</span>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-8">
+                <div class="item-category">
+                    <span>{{ item.category.title }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="item-info">
+            <div class="info-section text-left">
+                <label>{{ 'item.label.approvals'|trans }}</label>
+                <span>{{ item.approvals }}</span>
+            </div>
+            {% if app.user and app.user == item.user %}
+                <div class="info-section text-right">
+                    <label>{{ 'item.label.rejections'|trans }}</label>
+                    <span>{{ item.rejections }}</span>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    {% if edit is defined %}
+        <div class="item-categories">
+            <h5>{{ 'item.label.categories'|trans }}</h5>
+            <ul class="list-group">
+                {% include 'item/card-categories-to-match.html.twig' with {'item': item} %}
+            </ul>
+            <form class="item-categories-form{% if item.categoriesToMatch|length > 2 %} hidden{% endif %}" id="item-categories-form-{{ item.id }}" action="{{ path('item_category_add') }}" method="POST">
+                <input type="hidden" name="item" value="{{ item.id }}"/>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <select class="select2" name="category">
+                            {% for category in categories %}
+                                {% if category.id not in item.getCategoriesToMatchArray %}
+                                    <option value="{{ category.id }}">{{ category.title }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-xs-12">
+                        <button class="item-category-add btn btn-default btn-block">{{ 'item.button.category.add'|trans }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    {% endif %}
+    {% if exchange is defined %}
+        <a class="btn btn-default btn-block link-exchange" data-id="{{ item.id }}" href="{{ path('item_show', {id: item.id}) }}">
+            <i class="fa fa-exchange" aria-hidden="true"></i> {{ 'item.button.exchange'|trans }}
+        </a>
+    {% endif %}
+    {% if activate is defined %}
+        <a class="btn btn-default btn-block link-activate" data-token="{{ csrf_token(item.id) }}" data-id="{{ item.id }}" href="{{ path('item_activate', {id: item.id}) }}">
+            <i class="fa fa-exchange" aria-hidden="true"></i> Activate
+        </a>
+    {% endif %}
+    {% if matchOwner is defined %}
+        <a class="btn btn-default btn-block item-owner" data-id="{{ item.id }}" href="{{ path('item_respondents', {id: item.id}) }}">
+            <i class="fa fa-exchange" aria-hidden="true"></i> Show
+        </a>
+    {% endif %}
+    {% if matchResponent is defined %}
+        <a class="btn btn-default btn-block item-respondent" data-id="{{ item.id }}" href="{{ path('item_owners', {id: item.id}) }}">
+            <i class="fa fa-exchange" aria-hidden="true"></i> Show
+        </a>
+    {% endif %}
 </div>

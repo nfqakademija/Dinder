@@ -3,54 +3,30 @@
 {% block title %}Dinder - {{ 'item.index.title'|trans }}{% endblock %}
 
 {% block body %}
-    <!-- =-=-=-=-=-=-= Home Tabs =-=-=-=-=-=-= -->
-    <section class="section-padding">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    {% if traded_items %}
-                        <div class="heading-panel">
-                            <h2 class="title">{{ 'item.index.traded'|trans }}</h2>
-                        </div>
-                        <div class="row">
-                            {% for item in traded_items  %}
-                                {% include 'item/card.html.twig' with {'item': item, 'activate': true} %}
-
-                                {% if loop.index0 % 4 == 3 %}
-                                    <div class="clearfix visible-lg"></div>
-                                {% endif %}
-                                {% if loop.index0 % 3 == 2 %}
-                                    <div class="clearfix visible-md"></div>
-                                {% endif %}
-                                {% if loop.index0 % 2 == 1 %}
-                                    <div class="clearfix visible-sm visible-ms"></div>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                    <div class="heading-panel">
-                        <h2 class="title">{{ 'item.index.active'|trans }}</h2>
-                    </div>
-                    <div class="row">
-                        {% for item in items %}
-                            {% include 'item/card.html.twig' with {'item': item, 'exchange': true, 'edit': true} %}
-
-                            {% if loop.index0 % 4 == 3 %}
-                                <div class="clearfix visible-lg"></div>
-                            {% endif %}
-                            {% if loop.index0 % 3 == 2 %}
-                                <div class="clearfix visible-md"></div>
-                            {% endif %}
-                            {% if loop.index0 % 2 == 1 %}
-                                <div class="clearfix visible-sm visible-ms"></div>
-                            {% endif %}
-                        {% endfor %}
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="nav nav-tabs nav-tabs-load" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#items-active" aria-controls="items-active" role="tab" data-toggle="tab" data-load="{{ path('items_load', {'type': 'active'}) }}">
+                            {{ 'item.index.active'|trans }}
+                            <span class="badge">{{ items|length }}</span>
+                        </a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#items-traded" aria-controls="items-traded" role="tab" data-toggle="tab" data-load="{{ path('items_load', {'type': 'traded'}) }}">
+                            {{ 'item.index.traded'|trans }}
+                            <span class="badge {% if app.user and unseen_count.countUnseenItems(app.user) > 0 %} badge-highlight{% endif %}">{{ traded_items|length }}</span>
+                        </a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane fade in active" id="items-active"></div>
+                    <div role="tabpanel" class="tab-pane fade" id="items-traded"></div>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- =-=-=-=-=-=-= Home Tabs End =-=-=-=-=-=-= -->
+    </div>
 
     <div class="modal fade" id="exchangeModal" tabindex="-1" role="dialog">
         <div class="modal-dialog modal-sm" role="document">

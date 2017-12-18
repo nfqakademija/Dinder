@@ -32,9 +32,10 @@ class MatchController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
-        $receivedOffers = $em->getRepository(Match::class)->findMatchesByRespondent($user);
-        $sentOffers = $em->getRepository(Match::class)->findMatchesByOwner($user);
-        $declinedOffers = $em->getRepository(Match::class)->findMatchesByOwner($user, Match::STATUS_DECLINED);
+        $receivedOffersMatches = $em->getRepository(Match::class)->findMatchesByRespondent($user);
+        $receivedOffers = $em->getRepository(Item::class)->findItemsByMatchRespondent($user);
+        $sentOffers = $em->getRepository(Item::class)->findItemsByMatchOwner($user);
+        $declinedOffers = $em->getRepository(Item::class)->findItemsByMatchOwner($user, Match::STATUS_DECLINED);
 
         $response = $this->render('match/index.html.twig', array(
             'received_offers' => $receivedOffers,
@@ -42,11 +43,53 @@ class MatchController extends Controller
             'sent_offers' => $sentOffers,
         ));
 
-        if ($receivedOffers) {
-            $this->markMatchesAsSeen($receivedOffers);
+        if ($receivedOffersMatches) {
+            $this->markMatchesAsSeen($receivedOffersMatches);
         }
 
         return $response;
+    }
+
+    /**
+     * Load tab match items
+     *
+     * @Route("/load", name="matches_load")
+     *
+     * @Method("GET")
+     *
+     * @return Response
+     */
+    public function loadAction(Request $request): Response
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $this->getUser();
+
+        $type = $request->get('type', false);
+
+        if (!$type || !in_array($type, ['received', 'declined', 'sent'])) {
+            return new JsonResponse([], 500);
+        }
+
+        if ($type === 'received') {
+            $receivedOffersMatches = $em->getRepository(Match::class)->findMatchesByRespondent($user);
+            $items = $em->getRepository(Item::class)->findItemsByMatchRespondent($user);
+
+            if ($receivedOffersMatches) {
+                $this->markMatchesAsSeen($receivedOffersMatches);
+            }
+        } elseif ($type === 'declined') {
+            $items = $em->getRepository(Item::class)->findItemsByMatchOwner($user, Match::STATUS_DECLINED);
+        } elseif ($type === 'sent') {
+            $items = $em->getRepository(Item::class)->findItemsByMatchOwner($user);
+        }
+
+        return new JsonResponse([
+            'template' => $this->renderView('match/list.html.twig', [
+                'items' => $items,
+                'type' => $type,
+            ])
+        ]);
     }
 
     /**
@@ -59,27 +102,42 @@ class MatchController extends Controller
      *
      * @return Response
      */
-    public function tradeAction(Request $request, Match $match): Response
+    public function tradeAction(Request $request, Item $item): Response
     {
-        if (!$this->isCsrfTokenValid($match->getId(), $request->get('_token'))) {
+        if (!$this->isCsrfTokenValid($item->getId(), $request->get('_token'))) {
             throw $this->createAccessDeniedException('CSRF token is invalid');
         }
 
-        $ownedItem = $match->getItemRespondent();
-        $offeredItem = $match->getItemOwner();
+        $itemRespondentId = $request->get('respondent', false);
 
-        if ($this->getUser() !== $ownedItem->getUser()) {
+        if (!$itemRespondentId) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
         $em = $this->getDoctrine()->getManager();
 
+        $itemRespondent = $em->getRepository(Item::class)->find($itemRespondentId);
+
+        if ($this->getUser() !== $itemRespondent->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $match = $em->getRepository(Match::class)->findOneBy([
+            'itemOwner' => $item,
+            'itemRespondent' => $itemRespondent,
+        ]);
+
+        $ownedItem = $match->getItemRespondent();
+        $offeredItem = $match->getItemOwner();
+
         $ownedItem
             ->setStatus(Item::STATUS_TRADED)
+            ->setPrevious($ownedItem->getUser())
             ->setUser($offeredItem->getUser());
 
         $offeredItem
             ->setStatus(Item::STATUS_TRADED)
+            ->setPrevious($offeredItem->getUser())
             ->setUser($this->getUser());
 
         $historyOwner = new History();
@@ -94,11 +152,7 @@ class MatchController extends Controller
         $em->getRepository(Match::class)->deleteRelatedMathes($match);
         $em->flush();
 
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse();
-        }
-
-        return $this->redirectToRoute('match_index');
+        return new JsonResponse();
     }
 
     /**
@@ -111,24 +165,37 @@ class MatchController extends Controller
      *
      * @return Response
      */
-    public function declineAction(Request $request, Match $match): Response
+    public function declineAction(Request $request, Item $item): Response
     {
-        if (!$this->isCsrfTokenValid($match->getId(), $request->get('_token'))) {
+        if (!$this->isCsrfTokenValid($item->getId(), $request->get('_token'))) {
             throw $this->createAccessDeniedException('CSRF token is invalid');
         }
 
-        if ($this->getUser() !== $match->getItemRespondent()->getUser()) {
+        $itemRespondentId = $request->get('respondent', false);
+
+        if (!$itemRespondentId) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
+
+        $em = $this->getDoctrine()->getManager();
+
+        $itemRespondent = $em->getRepository(Item::class)->find($itemRespondentId);
+
+        if ($this->getUser() !== $itemRespondent->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $match = $em->getRepository(Match::class)->findOneBy([
+            'itemOwner' => $item,
+            'itemRespondent' => $itemRespondent,
+        ]);
 
         $match->setStatus(Match::STATUS_DECLINED);
         $this->getDoctrine()->getManager()->flush();
 
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse();
-        }
-
-        return $this->redirectToRoute('match_index');
+        return $this->forward('AppBundle:Item:owner', [
+            'id' => $itemRespondentId
+        ]);
     }
 
     /**
@@ -141,25 +208,37 @@ class MatchController extends Controller
      *
      * @return Response
      */
-    public function removeAction(Request $request, Match $match): Response
+    public function removeAction(Request $request, Item $item): Response
     {
-        if (!$this->isCsrfTokenValid($match->getId(), $request->get('_token'))) {
+        if (!$this->isCsrfTokenValid($item->getId(), $request->get('_token'))) {
             throw $this->createAccessDeniedException('CSRF token is invalid');
         }
 
-        if ($this->getUser() !== $match->getItemOwner()->getUser()) {
+        $itemOwnerId = $request->get('owner', false);
+
+        if (!$itemOwnerId) {
             throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
         }
 
         $em = $this->getDoctrine()->getManager();
+
+        $itemOwner = $em->getRepository(Item::class)->find($itemOwnerId);
+
+        if ($this->getUser() !== $itemOwner->getUser()) {
+            throw $this->createAccessDeniedException("It's not your item. Please stop cheating!");
+        }
+
+        $match = $em->getRepository(Match::class)->findOneBy([
+            'itemOwner' => $itemOwner,
+            'itemRespondent' => $item,
+        ]);
+
         $em->remove($match);
         $em->flush();
 
-        if ($request->isXmlHttpRequest()) {
-            return new JsonResponse();
-        }
-
-        return $this->redirectToRoute('match_index');
+        return $this->forward('AppBundle:Item:respondent', [
+            'id' => $itemOwnerId
+        ]);
     }
 
     /**
