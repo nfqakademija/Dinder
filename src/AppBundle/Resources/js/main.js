@@ -229,15 +229,10 @@ $(document).ready(function () {
                 '_token': $me.data('token')
             },
             success: function() {
-                const badge = itemRespondent.closest('.tab-content').prev().find('.active .badge');
-                badge.text(parseInt(badge.text()) - 1);
-
-                if(itemRespondent.closest('.slick-slider').find('.slick-slide').length === 1) {
-                    itemRespondent.closest('.slick-slider').next().removeClass('hidden');
-                }
+                const $tab = $('a[aria-controls="matches-received"]');
+                loadTabTemplate($tab, true);
 
                 $('#matches-container').empty().hide();
-                itemRespondent.closest('.slick-slider').slick('slickRemove', itemRespondent.closest('.slick-slide').attr('data-slick-index')).slick('refresh');
 
                 $('#menu-items-count').text(parseInt($('#menu-items-count').text()) + 1).removeClass('hidden');
             }
@@ -256,7 +251,7 @@ $(document).ready(function () {
     });
 });
 
-function loadTabTemplate($tab) {
+function loadTabTemplate($tab, updateBadge = false) {
     $.ajax({
         url: $tab.data('load'),
         method: 'GET',
@@ -265,6 +260,11 @@ function loadTabTemplate($tab) {
         },
         success: function(data) {
             $($tab.attr('href')).html(data.template);
+
+            if(updateBadge) {
+                $tab.find('.badge').text($(data.template).find('.item-card').length);
+            }
+
             initializeSlider();
             initializeSelect2();
         }
