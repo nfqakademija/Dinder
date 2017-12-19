@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Count;
+use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ItemType extends AbstractType
@@ -37,6 +38,14 @@ class ItemType extends AbstractType
                 'image_uri' => true,
                 'allow_delete' => false,
                 'required' => $options['action_type'] === 'create',
+                'constraints' => [new File([
+                    'maxSize' => '5M',
+                    'mimeTypes' => [
+                        'image/png',
+                        'image/jpeg',
+                        'image/jpg',
+                    ]
+                ])],
             ));
         ;
     }
