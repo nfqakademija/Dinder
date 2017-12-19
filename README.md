@@ -17,10 +17,11 @@ DINDER - Rejoice in Exchange
 
 # <a name="project-description"></a>Project Description
 
-Often people have unneeded things which they do not use anymore and would like to trade it. But what if you do not know what you want instead?    
-Here comes *DINDER* for help! Just add the item you don't need and SWIPE it to exchange with other users! And that is it!
+Often people have unneeded things which they do not use anymore and would like to trade it. But what if you do not know what you want instead? Here comes **DINDER** for help! Just add the item you do not need and **SWIPE** it to exchange with other users!
+ 
+**And that is It!**
 
-Dinder - developed for exchanging items the fun way!
+**Dinder** - developed for exchanging items the fun way!
 
 # <a name="requirements"></a>Requirements
 
