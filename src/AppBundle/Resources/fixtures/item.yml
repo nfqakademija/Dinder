@@ -182,7 +182,7 @@ AppBundle\Entity\Item:
     shoes_3:
         user: '@elis'
         status: 1
-        title: Kroksai
+        title: KRUOKSAI
         imageName: batai3.jpg
         description: Solidūs baliniai bateliai
         value: 20
