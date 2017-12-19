@@ -117,7 +117,7 @@ export default class Swinger extends React.Component {
                     credentials: 'same-origin'
                 });
 
-                setTimeout(() => this.setState({throwing: false}), 250);
+                setTimeout(() => this.setState({throwing: false}), 150);
                 this.props.updateCards(newSet);
             }
         }
