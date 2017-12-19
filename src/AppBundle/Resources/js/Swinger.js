@@ -51,9 +51,9 @@ export default class Swinger extends React.Component {
 
                     if (!this.state.holding) {
                         if (_.size(json) && _.differenceBy(nextProps.cards, json, 'id').length) {
-                            const unionCards = _.unionBy(nextProps.cards, json, 'id');
+                            // const unionCards = _.unionBy(nextProps.cards, json, 'id');
+                            const unionCards = _.union(_.differenceBy(json, nextProps.cards, 'id'), nextProps.cards);
                             this.props.updateCards(unionCards);
-                            // _.union(_.differenceBy(json, nextProps.cards, 'id'), nextProps.cards)
                         } else {
                             this.setState({more: false});
                         }
