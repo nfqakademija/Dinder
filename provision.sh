@@ -8,7 +8,7 @@ docker-compose exec fpm composer install --prefer-dist -n
 if [[ $1 == '--schema' ]]; then
     docker-compose exec fpm bin/console doc:database:drop --force
     docker-compose exec fpm bin/console doc:database:create
-    docker-compose exec fpm bin/console doc:schema:update --force
+    docker-compose exec fpm bin/console doc:migrations:migrate --no-interaction
     if [[ $2 == '--with-fixtures' ]]; then
         echo -e "Generating project fixtures. It may take some time..."
         if [ -d web/images/items ]; then
