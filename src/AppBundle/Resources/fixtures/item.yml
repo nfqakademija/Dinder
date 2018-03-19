@@ -6,8 +6,8 @@ AppBundle\Entity\Item:
         imageName: <image('web/images/items', 640, 480, 'technics', 0, 0)>
         description: <sentence()>
         value: <numberBetween(1000, 1050)>
-        category: '@computers'
-        categoriesToMatch: ['@computers']
+        category: '@technics'
+        categoriesToMatch: ['@technics']
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
@@ -18,8 +18,8 @@ AppBundle\Entity\Item:
         imageName: <image('web/images/items', 640, 480, 'technics', 0, 0)>
         description: <sentence()>
         value: <numberBetween(1000, 1050)>
-        category: '@computers'
-        categoriesToMatch: ['@computers']
+        category: '@technics'
+        categoriesToMatch: ['@technics']
         approvals: <randomDigitNotNull()>
         rejections: <randomDigitNotNull()>
         created: <dateTimeBetween('-12 month', '-1 month')>
