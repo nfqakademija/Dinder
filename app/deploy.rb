@@ -4,7 +4,7 @@ set :repo_url, '#'
 set :deploy_to, '/home/dinder/'
 
 set :archive_cache, true
-set :branch, 'vu_career_days'
+set :branch, 'master'
 set :scm, :rsync
 set :exclude, ['.git', 'node_modules', 'web/app_dev.php']
 
