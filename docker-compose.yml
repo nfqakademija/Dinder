@@ -32,7 +32,7 @@ services:
     user: "$LOCAL_USER_ID:$LOCAL_GROUP_ID"
     volumes:
       - ".docker/.npm:/home/.npm"
-      - "./:/home/app:cached"
+      - "./:/home/app"
       - "/usr/local/lib/node_modules"
     networks:
       - frontend
