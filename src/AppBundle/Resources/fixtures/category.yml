@@ -1,9 +1,5 @@
 AppBundle\Entity\Category:
-    category_{1..10}:
-        title (unique): <itemCategory()>
-    auto:
-        title: Auto
-    clothes:
-        title: Clothes
-    shoes:
-        title: Shoes
+    technics:
+        title: Technics
+    demo:
+        title: for-demonstration
