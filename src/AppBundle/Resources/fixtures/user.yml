@@ -5,6 +5,6 @@ AppBundle\Entity\User:
         email: <safeEmail()>
         roles: [ROLE_USER]
         enabled: true
-        name: '<firstName()> <lastName()>'
+        name: 'Vardenis<current()> Pavardenis<current()>'
         phone: <lt_LT:phoneNumber()>
         location: '@location_*'
