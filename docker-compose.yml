@@ -8,7 +8,7 @@ services:
       - "$LOCAL_NGINX_PORT:80"
     volumes:
       - ".docker/config/nginx/default.conf:/etc/nginx/conf.d/default.conf"
-      - "./:/var/www:cached"
+      - "./:/var/www"
     networks:
       - frontend
   fpm:
@@ -22,7 +22,7 @@ services:
       - mariadb
     volumes:
       - ".docker/.composer:/.composer"
-      - "./:/var/www:cached"
+      - "./:/var/www"
       - "$LOCAL_SSH_PRIVATE_KEY:/home/user/.ssh/id_rsa:ro"
     networks:
       - frontend

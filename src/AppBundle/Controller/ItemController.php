@@ -40,14 +40,24 @@ class ItemController extends Controller
 
         $user = $this->get('security.token_storage')->getToken()->getUser();
 
-        $activeItems = $em->getRepository(Item::class)->findBy([
-            'user' => $user,
-            'status' => Item::STATUS_ACTIVE,
-        ]);
-        $tradedItems = $em->getRepository(Item::class)->findBy([
-            'user' => $user,
-            'status' => Item::STATUS_TRADED,
-        ]);
+        $activeItems = $em->getRepository(Item::class)->findBy(
+            [
+                'user' => $user,
+                'status' => Item::STATUS_ACTIVE,
+            ],
+            [
+                'id' => 'DESC',
+            ]
+        );
+        $tradedItems = $em->getRepository(Item::class)->findBy(
+            [
+                'user' => $user,
+                'status' => Item::STATUS_TRADED,
+            ],
+            [
+                'id' => 'DESC',
+            ]
+        );
 
         return $this->render('item/index.html.twig', array(
             'items' => $activeItems,
@@ -507,8 +517,7 @@ class ItemController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('item_delete', array('id' => $item->getId())))
             ->setMethod('DELETE')
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**

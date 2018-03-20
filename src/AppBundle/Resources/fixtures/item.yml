@@ -4,22 +4,22 @@ AppBundle\Entity\Item:
         status: 1
         title: <itemTitle()>
         imageName: <image('web/images/items', 640, 480, 'technics', 0, 0)>
-        description: <sentence()>
-        value: <numberBetween(1000, 1050)>
+        description: <catchPhrase()>
+        value: <numberBetween(1000, 1200)>
         category: '@technics'
         categoriesToMatch: ['@technics']
-        approvals: <randomDigitNotNull()>
-        rejections: <randomDigitNotNull()>
+        approvals: <numberBetween(0, 30)>
+        rejections: <numberBetween(0, 30)>
         created: <dateTimeBetween('-12 month', '-1 month')>
     user2item_{1..50}:
         user: '@user_2'
         status: 1
         title: <itemTitle()>
         imageName: <image('web/images/items', 640, 480, 'technics', 0, 0)>
-        description: <sentence()>
-        value: <numberBetween(1000, 1050)>
+        description: <catchPhrase()>
+        value: <numberBetween(1000, 1200)>
         category: '@technics'
         categoriesToMatch: ['@technics']
-        approvals: <randomDigitNotNull()>
-        rejections: <randomDigitNotNull()>
+        approvals: <numberBetween(0, 30)>
+        rejections: <numberBetween(0, 30)>
         created: <dateTimeBetween('-12 month', '-1 month')>
